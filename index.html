@@ -8,13 +8,11 @@
   <!-- Tailwind (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* tiny helper for a fade-in anim used in your hero */
     @keyframes fade-in { from { opacity: 0 } to { opacity: 1 } }
     .animate-fade-in { animation: fade-in 0.8s ease-out both; }
   </style>
 </head>
 <body class="min-h-screen bg-white">
-  <!-- NAV + APP ROOT WILL RENDER HERE -->
   <div id="root"></div>
 
   <!-- React + ReactDOM (CDN) -->
@@ -23,7 +21,6 @@
   <!-- Babel so we can use JSX in the browser -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-  <!-- Your app (JSX) -->
   <script type="text/babel">
     const { useState, useEffect } = React;
 
@@ -31,45 +28,77 @@
       const [currentSlide, setCurrentSlide] = useState(0);
       const [activeCategory, setActiveCategory] = useState('all');
 
+      /* ---------- HERO: use your real photos ---------- */
       const heroSlides = [
-        { image: "https://placehold.co/1200x600/ff6b9d/ffffff?text=Rose+Bouquet+with+Balloons", title: "Elegant Rose Bouquets", subtitle: "Perfect for Anniversaries & Special Occasions" },
-        { image: "https://placehold.co/1200x600/ffb6c1/ffffff?text=Money+Bouquet", title: "Money Bouquets", subtitle: "The Gift That Keeps on Giving" },
-        { image: "https://placehold.co/1200x600/ff7f7f/ffffff?text=Hot+Wheels+Bouquet", title: "Hot Wheels Bouquets", subtitle: "Unique Gift for Car Lovers" },
-        { image: "https://placehold.co/1200x600/ff69b4/ffffff?text=Plushie+Bouquet", title: "Plushie Bouquets", subtitle: "Adorable & Huggable Creations" }
+        { image: "images/photo-1.jpg",  title: "Custom Bouquets",   subtitle: "Handmade • Unique • Memorable" },
+        { image: "images/photo-5.jpg",  title: "Balloon Setups",    subtitle: "Backdrops & party decor" },
+        { image: "images/photo-8.jpg",  title: "Special Occasions", subtitle: "Birthdays • Quinceañeras • More" },
+        { image: "images/photo-20.jpg", title: "Signature Style",   subtitle: "Moonlit Petals by Fátima" },
       ];
 
-      const galleryImages = [
-        { src: "https://placehold.co/400x400/ff6b9d/ffffff?text=Birthday", category: "birthdays", alt: "Birthday Bouquet" },
-        { src: "https://placehold.co/400x400/ffb6c1/ffffff?text=Quinceañera", category: "quinceaneras", alt: "Quinceañera Decor" },
-        { src: "https://placehold.co/400x400/ff7f7f/ffffff?text=Romantic", category: "romantic", alt: "Romantic Bouquet" },
-        { src: "https://placehold.co/400x400/ff69b4/ffffff?text=Custom", category: "custom", alt: "Custom Design" },
-        { src: "https://placehold.co/400x400/ff6b9d/ffffff?text=Birthday+2", category: "birthdays", alt: "Birthday Balloons" },
-        { src: "https://placehold.co/400x400/ffb6c1/ffffff?text=Quinceañera+2", category: "quinceaneras", alt: "Quinceañera Setup" },
-        { src: "https://placehold.co/400x400/ff7f7f/ffffff?text=Romantic+2", category: "romantic", alt: "Romantic Setup" },
-        { src: "https://placehold.co/400x400/ff69b4/ffffff?text=Custom+2", category: "custom", alt: "Custom Bouquet" },
-        { src: "https://placehold.co/400x400/ff6b9d/ffffff?text=Birthday+3", category: "birthdays", alt: "Birthday Backdrop" },
-        { src: "https://placehold.co/400x400/ffb6c1/ffffff?text=Quinceañera+3", category: "quinceaneras", alt: "Quinceañera Balloons" },
-        { src: "https://placehold.co/400x400/ff7f7f/ffffff?text=Romantic+3", category: "romantic", alt: "Romantic Balloons" },
-        { src: "https://placehold.co/400x400/ff69b4/ffffff?text=Custom+3", category: "custom", alt: "Custom Design" }
+      /* ---------- GALLERY: manifest for all 26 photos ---------- */
+      const galleryManifest = [
+        ["photo-1.jpg",  "birthdays",   "Balloon wall with plushies"],
+        ["photo-2.jpg",  "custom",      "Wrapped money bouquet"],
+        ["photo-3.jpg",  "romantic",    "Red rose bouquet"],
+        ["photo-4.jpg",  "custom",      "Dessert & balloons table"],
+        ["photo-5.jpg",  "custom",      "Trunk surprise setup"],
+        ["photo-6.jpg",  "birthdays",   "Pink balloon stand"],
+        ["photo-7.jpg",  "custom",      "Neon balloon room"],
+        ["photo-8.jpg",  "birthdays",   "Birthday gift box & roses"],
+        ["photo-9.jpg",  "romantic",    "Heart rose bouquet"],
+        ["photo-10.jpg", "quinceaneras","Crown money bouquet"],
+        ["photo-11.jpg", "romantic",    "Round rose bouquet"],
+        ["photo-12.jpg", "birthdays",   "Column balloon decor"],
+        ["photo-13.jpg", "romantic",    "Pink floral bouquet"],
+        ["photo-14.jpg", "quinceaneras","Crown floral bouquet"],
+        ["photo-15.jpg", "birthdays",   "Character bouquet"],
+        ["photo-16.jpg", "birthdays",   "Character bouquet 2"],
+        ["photo-17.jpg", "custom",      "Stitch plushie bouquet"],
+        ["photo-18.jpg", "romantic",    "Green & pink bouquet"],
+        ["photo-19.jpg", "custom",      "Treat box & balloons"],
+        ["photo-20.jpg", "romantic",    "Layered red bouquet"],
+        ["photo-21.jpg", "custom",      "Snack/drink bouquet"],
+        ["photo-22.jpg", "custom",      "LED red decor"],
+        ["photo-23.jpg", "romantic",    "Pink round bouquet"],
+        ["photo-24.jpg", "romantic",    "Purple floral bouquet"],
+        ["photo-25.jpg", "custom",      "Stitch plushie bouquet 2"],
+        ["photo-26.jpg", "romantic",    "Red & gold bouquet"],
       ];
 
+      const galleryImages = galleryManifest.map(([file, category, alt]) => ({
+        src: `images/${file}`,
+        category,
+        alt
+      }));
+
+      /* ---------- SERVICES: swap placeholders for your pics ---------- */
       const services = [
-        { category: "Bouquets", items: [
-          { name: "Rose Bouquets", price: "Starting at $45", image: "https://placehold.co/300x300/ff6b9d/ffffff?text=Rose+Bouquet" },
-          { name: "Plushie Bouquets", price: "Starting at $55", image: "https://placehold.co/300x300/ffb6c1/ffffff?text=Plushie+Bouquet" },
-          { name: "Money Bouquets", price: "Starting at $65", image: "https://placehold.co/300x300/ff7f7f/ffffff?text=Money+Bouquet" },
-          { name: "Hot Wheels Bouquets", price: "Starting at $75", image: "https://placehold.co/300x300/ff69b4/ffffff?text=Hot+Wheels" }
-        ]},
-        { category: "Balloon Decorations", items: [
-          { name: "Balloon Arches", price: "Starting at $85", image: "https://placehold.co/300x300/ff6b9d/ffffff?text=Balloon+Arch" },
-          { name: "Balloon Bouquets", price: "Starting at $35", image: "https://placehold.co/300x300/ffb6c1/ffffff?text=Balloon+Bouquet" },
-          { name: "Number Balloons", price: "Starting at $25", image: "https://placehold.co/300x300/ff7f7f/ffffff?text=Number+Balloon" }
-        ]},
-        { category: "Party Setups & Backdrops", items: [
-          { name: "Photo Backdrops", price: "Starting at $120", image: "https://placehold.co/300x300/ff6b9d/ffffff?text=Photo+Backdrop" },
-          { name: "Table Decorations", price: "Starting at $75", image: "https://placehold.co/300x300/ffb6c1/ffffff?text=Table+Decor" },
-          { name: "Full Party Setup", price: "Contact for pricing", image: "https://placehold.co/300x300/ff7f7f/ffffff?text=Full+Setup" }
-        ]}
+        {
+          category: "Bouquets",
+          items: [
+            { name: "Rose Bouquets",       price: "Starting at $45", image: "images/photo-11.jpg" },
+            { name: "Plushie Bouquets",    price: "Starting at $55", image: "images/photo-17.jpg" },
+            { name: "Money Bouquets",      price: "Starting at $65", image: "images/photo-10.jpg" },
+            { name: "Hot Wheels Bouquets", price: "Starting at $75", image: "images/photo-3.jpg"  },
+          ]
+        },
+        {
+          category: "Balloon Decorations",
+          items: [
+            { name: "Balloon Arches",      price: "Starting at $85", image: "images/photo-6.jpg"  },
+            { name: "Balloon Bouquets",    price: "Starting at $35", image: "images/photo-23.jpg" },
+            { name: "Number Balloons",     price: "Starting at $25", image: "images/photo-12.jpg" },
+          ]
+        },
+        {
+          category: "Party Setups & Backdrops",
+          items: [
+            { name: "Photo Backdrops",     price: "Starting at $120", image: "images/photo-1.jpg"  },
+            { name: "Table Decorations",   price: "Starting at $75",  image: "images/photo-19.jpg" },
+            { name: "Full Party Setup",    price: "Contact for pricing", image: "images/photo-5.jpg" },
+          ]
+        }
       ];
 
       useEffect(() => {
@@ -83,9 +112,9 @@
         ? galleryImages
         : galleryImages.filter(img => img.category === activeCategory);
 
-      const whatsappUrl = "https://wa.me/16093791145";
+      const whatsappUrl  = "https://wa.me/16093791145";
       const instagramUrl = "https://instagram.com/moonlit_petals03";
-      const tiktokUrl = "https://tiktok.com/@moonlit_petals03";
+      const tiktokUrl    = "https://tiktok.com/@moonlit_petals03";
 
       return (
         <div className="min-h-screen bg-white">
@@ -100,10 +129,10 @@
                   <span className="ml-3 text-2xl font-bold text-gray-800">Moonlit Petals</span>
                 </div>
                 <div className="hidden md:flex space-x-8">
-                  <a href="#home" className="text-gray-700 hover:text-pink-500 font-medium transition-colors">Home</a>
-                  <a href="#about" className="text-gray-700 hover:text-pink-500 font-medium transition-colors">About</a>
-                  <a href="#services" className="text-gray-700 hover:text-pink-500 font-medium transition-colors">Shop</a>
-                  <a href="#order" className="text-gray-700 hover:text-pink-500 font-medium transition-colors">Order</a>
+                  <a href="#home"    className="text-gray-700 hover:text-pink-500 font-medium transition-colors">Home</a>
+                  <a href="#about"   className="text-gray-700 hover:text-pink-500 font-medium transition-colors">About</a>
+                  <a href="#services"className="text-gray-700 hover:text-pink-500 font-medium transition-colors">Shop</a>
+                  <a href="#order"   className="text-gray-700 hover:text-pink-500 font-medium transition-colors">Order</a>
                   <a href="#gallery" className="text-gray-700 hover:text-pink-500 font-medium transition-colors">Gallery</a>
                   <a href="#contact" className="text-gray-700 hover:text-pink-500 font-medium transition-colors">Contact</a>
                 </div>
@@ -129,7 +158,7 @@
               {heroSlides.map((slide, index) => (
                 <div key={index} className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}>
                   <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+                  <div className="absolute inset-0 bg-black/40"></div>
                 </div>
               ))}
             </div>
@@ -165,7 +194,7 @@
               <div className="flex flex-col md:flex-row items-center gap-12">
                 <div className="md:w-1/2">
                   <div className="bg-white p-8 rounded-3xl shadow-xl">
-                    <img src="https://placehold.co/400x400/ff6b9d/ffffff?text=F%C3%A1tima+Marroqu%C3%ADn" alt="Fátima Marroquín" className="w-full h-96 object-cover rounded-2xl mb-6" />
+                    <img src="images/photo-23.jpg" alt="Owner & lead designer" className="w-full h-96 object-cover rounded-2xl mb-6" />
                     <div className="text-center">
                       <h3 className="text-2xl font-bold text-gray-800 mb-2">Fátima Marroquín</h3>
                       <p className="text-pink-500 font-medium">Owner & Lead Designer</p>
