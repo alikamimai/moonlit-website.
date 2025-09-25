@@ -65,7 +65,7 @@
   <script type="text/babel">
     const { useState, useEffect } = React;
 
-    // Product Catalog (products.json)
+    // Updated Product Catalog with new pricing
     const products = [
       {
         "id": "personalized-bouquet",
@@ -380,7 +380,7 @@
             </div>
           </section>
 
-          {/* Services - Updated with Product Catalog */}
+          {/* Services - Updated with new product catalog */}
           <section id="services" className="py-20 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
@@ -398,11 +398,11 @@
                         <img src={product.image} alt={product.name} className="w-full h-64 object-cover" />
                         <div className="p-6">
                           <h4 className="text-xl font-bold text-mp-text mb-2">{product.name}</h4>
-                          <p className="text-mp-purple font-semibold text-lg mb-2">Starting at ${product.price}+</p>
+                          <p className="text-mp-purple font-semibold text-lg mb-2">Starting at ${product.price}</p>
                           <p className="text-mp-text text-sm mb-4">{product.description}</p>
                           <a
                             href={`https://wa.me/16093791145?text=${encodeURIComponent(
-                              `Hi! I’d like to order: ${product.name} (Starting at $${product.price}+). My event date is: ____`
+                              `Hi! I’d like to order: ${product.name} (Starting at $${product.price}). My event date is: ____`
                             )}`}
                             target="_blank" 
                             rel="noopener noreferrer" 
