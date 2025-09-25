@@ -65,6 +65,98 @@
   <script type="text/babel">
     const { useState, useEffect } = React;
 
+    // Product Catalog (products.json)
+    const products = [
+      {
+        "id": "personalized-bouquet",
+        "name": "Personalized Bouquets",
+        "price": 50,
+        "description": "Custom-designed bouquets tailored to your theme or occasion.",
+        "image": "images/photo-11.jpg",
+        "category": "Bouquets"
+      },
+      {
+        "id": "flower-bouquet",
+        "name": "Flower Bouquets",
+        "price": 90,
+        "description": "Elegant fresh flower bouquets starting at $90.",
+        "image": "images/photo-3.jpg",
+        "category": "Bouquets"
+      },
+      {
+        "id": "hotwheels-bouquet",
+        "name": "Hot Wheels Bouquet",
+        "price": 50,
+        "description": "Fun themed bouquet with Hot Wheels toys and flowers.",
+        "image": "images/photo-3.jpg",
+        "category": "Specialty"
+      },
+      {
+        "id": "plushie-arrangement",
+        "name": "Plushie Arrangements",
+        "price": 90,
+        "description": "Bouquet arrangements with plush toys included.",
+        "image": "images/photo-17.jpg",
+        "category": "Specialty"
+      },
+      {
+        "id": "flower-mix",
+        "name": "Flower Mix",
+        "price": 120,
+        "description": "A beautiful mix of seasonal flowers.",
+        "image": "images/photo-13.jpg",
+        "category": "Bouquets"
+      },
+      {
+        "id": "graduation-lei-cap",
+        "name": "Graduation Leis & Cap",
+        "price": 75,
+        "description": "Festive leis and decorated graduation caps.",
+        "image": "images/photo-8.jpg",
+        "category": "Graduation"
+      },
+      {
+        "id": "surprise-box",
+        "name": "Surprise Boxes",
+        "price": 100,
+        "description": "Customizable surprise gift boxes with flowers, treats, and more.",
+        "image": "images/photo-5.jpg",
+        "category": "Gifts"
+      },
+      {
+        "id": "eternal-roses",
+        "name": "Eternal Roses",
+        "price": 65,
+        "description": "Long-lasting roses that make a perfect gift.",
+        "image": "images/photo-20.jpg",
+        "category": "Bouquets"
+      },
+      {
+        "id": "balloon-arch",
+        "name": "Balloon Arch",
+        "price": 250,
+        "description": "Large custom balloon arch for parties or events.",
+        "image": "images/photo-6.jpg",
+        "category": "Decor"
+      },
+      {
+        "id": "room-decoration",
+        "name": "Room Decoration",
+        "price": 200,
+        "description": "Themed room decoration for special occasions.",
+        "image": "images/photo-7.jpg",
+        "category": "Decor"
+      },
+      {
+        "id": "money-bouquet",
+        "name": "Money Bouquet",
+        "price": 50,
+        "description": "Bouquet wrapped with roses and cash notes.",
+        "image": "images/photo-10.jpg",
+        "category": "Specialty"
+      }
+    ];
+
     // Social media data (equivalent to /data/sections.json)
     const socialData = {
       contact: {
@@ -155,34 +247,12 @@
         alt
       }));
 
-      /* ---------- SERVICES: swap placeholders for your pics ---------- */
-      const services = [
-        {
-          category: "Bouquets",
-          items: [
-            { name: "Rose Bouquets",       price: "Starting at $45", image: "images/photo-11.jpg" },
-            { name: "Plushie Bouquets",    price: "Starting at $55", image: "images/photo-17.jpg" },
-            { name: "Money Bouquets",      price: "Starting at $65", image: "images/photo-10.jpg" },
-            { name: "Hot Wheels Bouquets", price: "Starting at $75", image: "images/photo-3.jpg"  },
-          ]
-        },
-        {
-          category: "Balloon Decorations",
-          items: [
-            { name: "Balloon Arches",      price: "Starting at $85", image: "images/photo-6.jpg"  },
-            { name: "Balloon Bouquets",    price: "Starting at $35", image: "images/photo-23.jpg" },
-            { name: "Number Balloons",     price: "Starting at $25", image: "images/photo-12.jpg" },
-          ]
-        },
-        {
-          category: "Party Setups & Backdrops",
-          items: [
-            { name: "Photo Backdrops",     price: "Starting at $120", image: "images/photo-1.jpg"  },
-            { name: "Table Decorations",   price: "Starting at $75",  image: "images/photo-19.jpg" },
-            { name: "Full Party Setup",    price: "Contact for pricing", image: "images/photo-5.jpg" },
-          ]
-        }
-      ];
+      // Group products by category for display
+      const categories = [...new Set(products.map(p => p.category))];
+      const groupedProducts = categories.reduce((acc, category) => {
+        acc[category] = products.filter(p => p.category === category);
+        return acc;
+      }, {});
 
       useEffect(() => {
         const timer = setInterval(() => {
@@ -310,27 +380,29 @@
             </div>
           </section>
 
-          {/* Services */}
+          {/* Services - Updated with Product Catalog */}
           <section id="services" className="py-20 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">Our Services</h2>
+                <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">Our Products</h2>
                 <p className="text-xl text-mp-text max-w-3xl mx-auto">Explore our collection of beautifully crafted bouquets and decorations for every occasion</p>
                 <div className="w-24 h-1 bg-gradient-to-r from-mp-lilac to-mp-purple mx-auto mt-8"></div>
               </div>
-              {services.map((serviceCategory, index) => (
-                <div key={index} className="mb-16">
-                  <h3 className="text-3xl font-bold text-mp-text mb-8 text-center">{serviceCategory.category}</h3>
+              
+              {Object.entries(groupedProducts).map(([category, items]) => (
+                <div key={category} className="mb-16">
+                  <h3 className="text-3xl font-bold text-mp-text mb-8 text-center">{category}</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {serviceCategory.items.map((item, itemIndex) => (
-                      <div key={itemIndex} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                        <img src={item.image} alt={item.name} className="w-full h-64 object-cover" />
+                    {items.map((product, index) => (
+                      <div key={index} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                        <img src={product.image} alt={product.name} className="w-full h-64 object-cover" />
                         <div className="p-6">
-                          <h4 className="text-xl font-bold text-mp-text mb-2">{item.name}</h4>
-                          <p className="text-mp-purple font-semibold text-lg mb-4">{item.price}</p>
+                          <h4 className="text-xl font-bold text-mp-text mb-2">{product.name}</h4>
+                          <p className="text-mp-purple font-semibold text-lg mb-2">Starting at ${product.price}+</p>
+                          <p className="text-mp-text text-sm mb-4">{product.description}</p>
                           <a
                             href={`https://wa.me/16093791145?text=${encodeURIComponent(
-                              `Hi! I’d like to order: ${item.name} (${item.price}). My event date is: ____`
+                              `Hi! I’d like to order: ${product.name} (Starting at $${product.price}+). My event date is: ____`
                             )}`}
                             target="_blank" 
                             rel="noopener noreferrer" 
