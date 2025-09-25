@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Moonlit Petals — Bouquets & Party Décor</title>
   <meta name="description" content="Handmade bouquets, balloon backdrops, and custom party décor for quinceañeras, birthdays, and special moments. English & Spanish." />
+  <meta name="theme-color" content="#e11d48">
+  <meta property="og:title" content="Moonlit Petals — Bouquets & Party Décor">
+  <meta property="og:description" content="Handmade bouquets, balloon backdrops & custom décor for quinceañeras, birthdays and more. Trenton, NJ & Bronx, NY.">
+  <meta property="og:image" content="images/photo-1.jpg">
+  <link rel="icon" href="images/photo-23.jpg">
   <!-- Tailwind (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -158,7 +163,7 @@
               {heroSlides.map((slide, index) => (
                 <div key={index} className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}>
                   <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-black/40"></div>
+                  <div className="absolute inset-0 bg-black/50"></div> {/* Increased from /40 to /50 for better readability */}
                 </div>
               ))}
             </div>
@@ -240,7 +245,14 @@
                         <div className="p-6">
                           <h4 className="text-xl font-bold text-gray-800 mb-2">{item.name}</h4>
                           <p className="text-pink-500 font-semibold text-lg mb-4">{item.price}</p>
-                          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="block w-full text-center bg-gradient-to-r from-pink-500 to-red-500 text-white py-3 rounded-lg font-medium hover:from-pink-600 hover:to-red-600 transition-colors">
+                          <a
+                            href={`https://wa.me/16093791145?text=${encodeURIComponent(
+                              `Hi! I’d like to order: ${item.name} (${item.price}). My event date is: ____`
+                            )}`}
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="block w-full text-center bg-gradient-to-r from-pink-500 to-red-500 text-white py-3 rounded-lg font-medium hover:from-pink-600 hover:to-red-600 transition-colors"
+                          >
                             Order Now
                           </a>
                         </div>
@@ -280,7 +292,14 @@
                   </div>
                 </div>
                 <div className="mt-12 text-center">
-                  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="inline-block bg-gradient-to-r from-pink-500 to-red-500 text-white px-8 py-4 rounded-full text-xl font-semibold hover:from-pink-600 hover:to-red-600 transform hover:scale-105 transition-all duration-300 shadow-lg">
+                  <a
+                    href={`https://wa.me/16093791145?text=${encodeURIComponent(
+                      `Hi! I’d like to place an order. My event date is: ____`
+                    )}`}
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="inline-block bg-gradient-to-r from-pink-500 to-red-500 text-white px-8 py-4 rounded-full text-xl font-semibold hover:from-pink-600 hover:to-red-600 transform hover:scale-105 transition-all duration-300 shadow-lg"
+                  >
                     Place Your Order
                   </a>
                 </div>
@@ -306,7 +325,13 @@
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {filteredGallery.map((image, index) => (
                   <div key={index} className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                    <img src={image.src} alt={image.alt} className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <img 
+                      loading="lazy" 
+                      width="800" 
+                      height="800"
+                      src={image.src} 
+                      alt={image.alt} 
+                      className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500" />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
                       <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white text-xl font-semibold">{image.alt}</div>
                     </div>
@@ -329,7 +354,16 @@
                   <div className="text-center">
                     <h4 className="text-xl font-bold text-gray-800 mb-2">Phone/WhatsApp</h4>
                     <p className="text-gray-600">609-379-1145</p>
-                    <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-2 text-pink-500 font-medium hover:text-pink-600">Click to Chat</a>
+                    <a 
+                      href={`https://wa.me/16093791145?text=${encodeURIComponent(
+                        `Hi! I have a question about my order.`
+                      )}`}
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="inline-block mt-2 text-pink-500 font-medium hover:text-pink-600"
+                    >
+                      Click to Chat
+                    </a>
                   </div>
                   <div className="text-center">
                     <h4 className="text-xl font-bold text-gray-800 mb-2">Instagram</h4>
@@ -343,7 +377,14 @@
                   </div>
                 </div>
                 <div className="text-center">
-                  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="inline-block bg-gradient-to-r from-pink-500 to-red-500 text-white px-8 py-4 rounded-full text-xl font-semibold hover:from-pink-600 hover:to-red-600 transform hover:scale-105 transition-all duration-300 shadow-lg">
+                  <a
+                    href={`https://wa.me/16093791145?text=${encodeURIComponent(
+                      `Hi! I’d like to place an order. My event date is: ____`
+                    )}`}
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="inline-block bg-gradient-to-r from-pink-500 to-red-500 text-white px-8 py-4 rounded-full text-xl font-semibold hover:from-pink-600 hover:to-red-600 transform hover:scale-105 transition-all duration-300 shadow-lg"
+                  >
                     Message Us on WhatsApp
                   </a>
                 </div>
@@ -372,5 +413,8 @@
     const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(<App />);
   </script>
+
+  <!-- Tidio Live Chat Widget -->
+  <script src="//code.tidio.co/rgji6f7tm0bpgy46zwvbo8bayrpjhbp7.js" async></script>
 </body>
 </html>
