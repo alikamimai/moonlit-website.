@@ -8,10 +8,10 @@
   <meta name="theme-color" content="#e11d48">
   <meta property="og:title" content="Moonlit Petals — Bouquets & Party Décor">
   <meta property="og:description" content="Handmade bouquets, balloon backdrops & custom décor for quinceañeras, birthdays and more. Trenton, NJ & Bronx, NY.">
-  <meta property="og:image" content="images/photo-1.jpg">
+  <meta property="og:image" content="photo-1.jpg">
   <meta property="og:url" content="https://moonlitpetals.com">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" href="images/photo-23.jpg">
+  <link rel="icon" href="photo-23.jpg">
   <link rel="me" href="https://www.instagram.com/moonlit_petals03">
   
   <!-- JSON-LD Schema -->
@@ -157,12 +157,11 @@
       }
     ];
 
-    // Function to get the first image from a category folder
-    // In a real implementation, you'd fetch the actual images, but for now we'll use placeholder logic
+    // Function to get the first image from a category folder (updated path)
     function getFirstImageFromFolder(folderName) {
       // This assumes you have at least one image in each folder named "1.jpg", "2.jpg", etc.
       // You can adjust this pattern based on your actual file naming
-      return `images/${folderName}/1.jpg`;
+      return `${folderName}/1.jpg`;
     }
 
     // Social media data
@@ -213,10 +212,10 @@
 
       /* ---------- HERO: use your real photos ---------- */
       const heroSlides = [
-        { image: "images/photo-1.jpg",  title: "Custom Bouquets",   subtitle: "Handmade • Unique • Memorable" },
-        { image: "images/photo-5.jpg",  title: "Balloon Setups",    subtitle: "Backdrops & party decor" },
-        { image: "images/photo-8.jpg",  title: "Special Occasions", subtitle: "Birthdays • Quinceañeras • More" },
-        { image: "images/photo-20.jpg", title: "Signature Style",   subtitle: "Moonlit Petals by Fátima" },
+        { image: "photo-1.jpg",  title: "Custom Bouquets",   subtitle: "Handmade • Unique • Memorable" },
+        { image: "photo-5.jpg",  title: "Balloon Setups",    subtitle: "Backdrops & party decor" },
+        { image: "photo-8.jpg",  title: "Special Occasions", subtitle: "Birthdays • Quinceañeras • More" },
+        { image: "photo-20.jpg", title: "Signature Style",   subtitle: "Moonlit Petals by Fátima" },
       ];
 
       /* ---------- GALLERY: manifest for all 26 photos ---------- */
@@ -250,7 +249,7 @@
       ];
 
       const galleryImages = galleryManifest.map(([file, category, alt]) => ({
-        src: `images/${file}`,
+        src: `${file}`,
         category,
         alt
       }));
@@ -360,7 +359,7 @@
               <div className="flex flex-col md:flex-row items-center gap-12">
                 <div className="md:w-1/2">
                   <div className="bg-white p-8 rounded-3xl shadow-xl">
-                    <img src="images/photo-23.jpg" alt="Owner & lead designer" className="w-full h-96 object-cover rounded-2xl mb-6" />
+                    <img src="photo-23.jpg" alt="Owner & lead designer" className="w-full h-96 object-cover rounded-2xl mb-6" />
                     <div className="text-center">
                       <h3 className="text-2xl font-bold text-mp-text mb-2">Fátima Marroquín</h3>
                       <p className="text-mp-purple font-medium">Owner & Lead Designer</p>
@@ -409,7 +408,7 @@
                           className="w-full h-64 object-cover"
                           onError={(e) => {
                             // Fallback to a generic image if the specific one doesn't exist
-                            e.target.src = "images/photo-1.jpg";
+                            e.target.src = "photo-1.jpg";
                           }}
                         />
                         <div className="p-6">
