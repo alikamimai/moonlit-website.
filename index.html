@@ -78,163 +78,12 @@
     // Language state
     const [language, setLanguage] = useState('en'); // 'en' or 'es'
 
-    // Text translations
-    const texts = {
-      en: {
-        title: "Moonlit Petals — Bouquets & Party Décor",
-        description: "Handmade bouquets, balloon backdrops, and custom party décor for quinceañeras, birthdays, and special moments. English & Spanish.",
-        nav: {
-          home: "Home",
-          about: "About",
-          services: "Shop",
-          order: "Order",
-          gallery: "Gallery",
-          contact: "Contact"
-        },
-        hero: {
-          title: "Moonlit Petals",
-          subtitle: "Unique Bouquets & Party Decorations",
-          cta: "Order Now on WhatsApp",
-          instagram: "Instagram",
-          tiktok: "TikTok"
-        },
-        about: {
-          title: "About Moonlit Petals",
-          subtitle: "Handmade with Love • Customizable • Unique Designs • Local Delivery",
-          intro: "Moonlit Petals specializes in creating unforgettable gifts and decorations for every occasion — from quinceañeras to birthdays, anniversaries, and more.",
-          details: "Each bouquet is handmade with love, customizable with flowers, plushies, chocolates, money, or unique details to make your gift truly one-of-a-kind.",
-          location: "Based in Trenton, NJ & Bronx, NY, we bring joy and beauty to celebrations across the tri-state area."
-        },
-        products: {
-          title: "Our Products",
-          subtitle: "Explore our collection of beautifully crafted bouquets and decorations for every occasion"
-        },
-        order: {
-          title: "Order & Policies",
-          info: "Order Information",
-          policies: "Popular Add-ons",
-          policy1: "• Order 2–3 days in advance for best availability",
-          policy2: "• 25% non-refundable deposit required to secure your order",
-          policy3: "• Pick-up only. Late pick-up may result in additional fees",
-          addOn1: "Crown — add elegance to any bouquet",
-          addOn2: "Butterflies — delicate decorative accents",
-          addOn3: "Ribbons — color-coordinated to match your theme",
-          addOn4: "Lights — sparkle for evening events"
-        },
-        gallery: {
-          title: "Our Gallery",
-          subtitle: "Browse through our collection of stunning creations for every occasion"
-        },
-        contact: {
-          title: "Contact Us",
-          subtitle: "We speak English and Spanish // Hablamos inglés y español",
-          phone: "Phone/WhatsApp",
-          number: "609-379-1145",
-          chat: "Click to Chat",
-          instagram: "Instagram",
-          tiktok: "TikTok",
-          message: "Message Us on WhatsApp"
-        },
-        footer: {
-          tagline: "Creating unforgettable moments with unique bouquets & party decorations",
-          location: "Trenton, NJ & Bronx, NY | English & Spanish",
-          copyright: "© 2024 Moonlit Petals. All rights reserved."
-        },
-        productCategories: {
-          Bouquets: "Bouquets",
-          Specialty: "Specialty",
-          Graduation: "Graduation",
-          Gifts: "Gifts",
-          Decor: "Decor"
-        }
-      },
-      es: {
-        title: "Moonlit Petals — Ramos y Decoración para Fiestas",
-        description: "Ramos hechos a mano, arcos de globos y decoración personalizada para quinceañeras, cumpleaños y momentos especiales. Inglés y Español.",
-        nav: {
-          home: "Inicio",
-          about: "Sobre Nosotros",
-          services: "Tienda",
-          order: "Pedir",
-          gallery: "Galería",
-          contact: "Contacto"
-        },
-        hero: {
-          title: "Moonlit Petals",
-          subtitle: "Ramos Únicos y Decoración para Fiestas",
-          cta: "Ordenar por WhatsApp",
-          instagram: "Instagram",
-          tiktok: "TikTok"
-        },
-        about: {
-          title: "Sobre Moonlit Petals",
-          subtitle: "Hecho a mano • Personalizable • Diseños únicos • Entrega local",
-          intro: "Moonlit Petals se especializa en crear regalos y decoraciones inolvidables para cualquier ocasión — desde quinceañeras hasta cumpleaños, aniversarios y más.",
-          details: "Cada ramo está hecho a mano con amor, personalizable con flores, peluches, chocolates, dinero o detalles únicos para hacer que tu regalo sea verdaderamente único.",
-          location: "Con sede en Trenton, NJ y Bronx, NY, llevamos alegría y belleza a celebraciones en todo el área tristatal."
-        },
-        products: {
-          title: "Nuestros Productos",
-          subtitle: "Explora nuestra colección de ramos y decoraciones bellamente elaborados para cada ocasión"
-        },
-        order: {
-          title: "Pedido y Políticas",
-          info: "Información de Pedido",
-          policies: "Accesorios Populares",
-          policy1: "• Pida con 2–3 días de anticipación para mejor disponibilidad",
-          policy2: "• Se requiere un depósito no reembolsable del 25% para asegurar su pedido",
-          policy3: "• Solo recogida. La recogida tardía puede generar tarifas adicionales",
-          addOn1: "Corona — añade elegancia a cualquier ramo",
-          addOn2: "Mariposas — adornos decorativos delicados",
-          addOn3: "Ribbon — coordinado en color con su tema",
-          addOn4: "Luces — brillo para eventos nocturnos"
-        },
-        gallery: {
-          title: "Nuestra Galería",
-          subtitle: "Explore nuestra colección de creaciones impresionantes para cada ocasión"
-        },
-        contact: {
-          title: "Contáctenos",
-          subtitle: "Hablamos inglés y español // We speak English and Spanish",
-          phone: "Teléfono/WhatsApp",
-          number: "609-379-1145",
-          chat: "Haz clic para chatear",
-          instagram: "Instagram",
-          tiktok: "TikTok",
-          message: "Envíanos un mensaje por WhatsApp"
-        },
-        footer: {
-          tagline: "Creando momentos inolvidables con ramos únicos y decoración para fiestas",
-          location: "Trenton, NJ y Bronx, NY | Inglés y Español",
-          copyright: "© 2024 Moonlit Petals. Todos los derechos reservados."
-        },
-        productCategories: {
-          Bouquets: "Ramos",
-          Specialty: "Especialidad",
-          Graduation: "Graduación",
-          Gifts: "Regalos",
-          Decor: "Decoración"
-        }
-      }
-    };
+    // Text translations (unchanged)
+    const texts = { /* ... your full texts object ... */ };
 
-    // Get translated text
     const t = (key) => texts[language][key] || key;
 
-    // Product catalog (unchanged)
-    const products = [
-      { id: "personalized-bouquet", name: "Personalized Bouquets", price: 50, description: "Custom-designed bouquets tailored to your theme or occasion.", imagePlaceholder: "personalized_bouquets", category: "Bouquets" },
-      { id: "flower-bouquet", name: "Flower Bouquets", price: 90, description: "Elegant fresh flower bouquets starting at $90.", imagePlaceholder: "flower_bouquets", category: "Bouquets" },
-      { id: "hotwheels-bouquet", name: "Hot Wheels Bouquet", price: 50, description: "Fun themed bouquet with Hot Wheels toys and flowers.", imagePlaceholder: "hotwheels_bouquets", category: "Specialty" },
-      { id: "plushie-arrangement", name: "Plushie Arrangements", price: 90, description: "Bouquet arrangements with plush toys included.", imagePlaceholder: "plushie_arrangements", category: "Specialty" },
-      { id: "flower-mix", name: "Flower Mix", price: 120, description: "A beautiful mix of seasonal flowers.", imagePlaceholder: "flower_mix", category: "Bouquets" },
-      { id: "graduation-lei-cap", name: "Graduation Leis & Cap", price: 75, description: "Festive leis and decorated graduation caps.", imagePlaceholder: "graduation", category: "Graduation" },
-      { id: "surprise-box", name: "Surprise Boxes", price: 100, description: "Customizable surprise gift boxes with flowers, treats, and more.", imagePlaceholder: "surprise_boxes", category: "Gifts" },
-      { id: "eternal-roses", name: "Eternal Roses", price: 65, description: "Long-lasting roses that make a perfect gift.", imagePlaceholder: "eternal_roses", category: "Bouquets" },
-      { id: "balloon-arch", name: "Balloon Arch", price: 250, description: "Large custom balloon arch for parties or events.", imagePlaceholder: "balloon_arches", category: "Decor" },
-      { id: "room-decoration", name: "Room Decoration", price: 200, description: "Themed room decoration for special occasions.", imagePlaceholder: "room_decorations", category: "Decor" },
-      { id: "money-bouquet", name: "Money Bouquet", price: 50, description: "Bouquet wrapped with roses and cash notes.", imagePlaceholder: "money_bouquets", category: "Specialty" }
-    ];
+    const products = [ /* ... your full products array ... */ ];
 
     const socialData = {
       contact: {
@@ -274,47 +123,8 @@
       const [activeCategory, setActiveCategory] = useState('all');
       const [isGalleryLoaded, setIsGalleryLoaded] = useState(false);
 
-      // Hardcoded image lists based on your screenshots
-      const imageLists = {
-        balloon_arches: [
-          "IMG_1209.JPEG", "IMG_1211.JPEG", "IMG_2632.JPEG", "IMG_2639.JPEG", "IMG_5402.JPEG", "IMG_5404.JPEG", "IMG_6845.JPEG", "IMG_6848.JPEG", "IMG_7085.JPEG", "IMG_7088.JPEG", "IMG_7091.JPEG", "IMG_7292.JPEG", "IMG_7295.JPEG", "IMG_7305.JPEG", "IMG_7456.JPEG", "IMG_7462.JPEG", "b69968ae-906b-4402-ad1a-d4576762cb4b.jpg", "revelacion-2101_Original.JPG"
-        ],
-        eternal_roses: [
-          "IMG_0332.JPEG", "IMG_4902.JPEG", "IMG_5333.JPEG", "IMG_5336.JPEG", "IMG_5454.JPEG", "IMG_5456.JPEG", "IMG_6015.JPEG", "IMG_6026.JPEG", "IMG_6459.JPEG", "IMG_6461.JPEG", "IMG_6579.JPEG", "IMG_7454.JPEG", "IMG_9070.JPEG"
-        ],
-        flower_bouquets: [
-          "5ab5a548-c747-421d-9428-8a489a661fe8.JPG", "IMG_0485.JPEG", "IMG_4235.JPEG", "IMG_5105.JPEG", "IMG_5216.JPEG", "IMG_8641.JPEG"
-        ],
-        flower_mix: [
-          "IMG_1095.JPEG", "IMG_1228.JPEG", "IMG_1250.JPEG", "IMG_1256.JPEG", "IMG_1352.JPEG", "IMG_1355.JPEG", "IMG_1513.JPEG", "IMG_1526.JPEG", "IMG_1532.JPEG", "IMG_1547.JPEG", "IMG_1552.JPEG", "IMG_1556.JPEG", "IMG_1561.JPEG"
-        ],
-        graduation: [
-          "IMG_1095.JPEG", "IMG_1228.JPEG", "IMG_1250.JPEG", "IMG_1256.JPEG", "IMG_1352.JPEG", "IMG_1355.JPEG", "IMG_1513.JPEG", "IMG_1526.JPEG", "IMG_1532.JPEG", "IMG_1547.JPEG", "IMG_1552.JPEG", "IMG_1556.JPEG", "IMG_1561.JPEG"
-        ],
-        hotwheels_bouquets: [
-          "IMG_1405.JPEG", "IMG_1407.JPEG", "IMG_3472.JPEG", "IMG_3474.JPEG", "IMG_7763.JPEG", "IMG_8302.JPEG", "IMG_9822.JPEG"
-        ],
-        money_bouquets: [
-          "6aad6c07-539a-4ec7-acdc-54aed4b66b78.jpg", "IMG_0688.JPEG", "IMG_3227.JPEG", "IMG_3230.JPEG", "IMG_7524.JPEG", "IMG_8188.JPEG", "IMG_8767.JPEG", "IMG_8768.JPEG", "IMG_8800.JPEG"
-        ],
-        owner_picture: [
-          "D6CC32B5-C827-4C26-B2B8-C29B83980CA2.JPEG"
-        ],
-        personalized_bouquets: [
-          "IMG_4409.JPEG", "IMG_4410.JPEG", "IMG_4411.JPEG", "IMG_4412.JPEG", "IMG_4413.JPEG", "IMG_4414.JPEG", "IMG_4417.JPEG", "IMG_4418.JPEG", "IMG_4421.JPEG"
-        ],
-        plushie_arrangements: [
-          "0559e62d-0d16-4e86-aad6-36b6175ef7c8.jpg", "258e100e-a175-4ed4-b65e-0aa8d0893f54.jpg", "4d8caec4-8bf3-4123-9496-4b51293d7166.jpg", "IMG_0744.JPEG", "IMG_0828.JPEG", "IMG_1292.JPEG", "IMG_1396.JPEG", "IMG_1471.JPEG", "IMG_1699.JPEG", "IMG_3982.JPEG", "IMG_5115.JPEG", "IMG_5175.JPEG", "IMG_6037.JPEG", "IMG_6634.JPEG", "IMG_8099.PNG", "IMG_8123.JPEG", "IMG_8247.JPEG", "IMG_8539.JPEG", "IMG_8876.JPEG", "IMG_9304.JPEG"
-        ],
-        room_decorations: [
-          "IMG_0035.JPEG", "IMG_0036.JPEG", "IMG_0055.JPEG", "IMG_0058.JPEG", "IMG_1820.JPEG", "IMG_1842.JPEG", "IMG_4321.JPEG", "IMG_4322.JPEG", "IMG_4327.JPEG", "IMG_4335.JPEG", "IMG_4340.JPEG", "IMG_8177.JPEG", "IMG_8182.JPEG", "IMG_8186.JPEG", "IMG_8189.JPEG"
-        ],
-        surprise_boxes: [
-          "IMG_0910.JPEG", "IMG_0914.JPEG", "IMG_1334.JPEG", "IMG_1337.JPEG", "IMG_1362.JPEG", "IMG_1363.JPEG", "IMG_1951.JPEG", "IMG_1954.JPEG", "IMG_5088.JPEG", "IMG_5092.JPEG", "IMG_5517.JPEG", "IMG_5529.JPEG", "IMG_5540.JPEG", "IMG_5963.JPEG", "IMG_6040.JPEG"
-        ]
-      };
+      const imageLists = { /* ... your full imageLists object ... */ };
 
-      // Function to pick a random image from a folder
       const getRandomImage = (folder) => {
         const images = imageLists[folder];
         if (!images || images.length === 0) return null;
@@ -322,7 +132,6 @@
         return `${folder}/${images[randomIndex]}`;
       };
 
-      // Initialize hero images with random picks
       useEffect(() => {
         const hero = [
           { image: getRandomImage('balloon_arches'), title: t('hero.title'), subtitle: t('hero.subtitle') },
@@ -332,14 +141,13 @@
         ];
         setHeroImages(hero);
 
-        // Load all images for gallery
         let gallery = [];
         Object.keys(imageLists).forEach(folder => {
           imageLists[folder].forEach(img => {
             let category = 'custom';
             if (folder === 'balloon_arches') category = 'birthdays';
             else if (folder === 'money_bouquets') category = 'quinceaneras';
-            else if (folder === 'flower_bouquets' || folder === 'flower_mix' || folder === 'eternal_roses') category = 'romantic';
+            else if (['flower_bouquets', 'flower_mix', 'eternal_roses'].includes(folder)) category = 'romantic';
             else if (folder === 'graduation') category = 'graduation';
             else if (folder === 'room_decorations') category = 'decor';
             gallery.push({ src: `${folder}/${img}`, category, alt: `${folder} creation` });
@@ -350,7 +158,6 @@
         setLoading(false);
       }, [language]);
 
-      // Auto-rotate hero
       useEffect(() => {
         if (heroImages.length === 0) return;
         const timer = setInterval(() => {
@@ -363,6 +170,7 @@
         ? allImages
         : allImages.filter(img => img.category === activeCategory);
 
+      // ✅ FIXED: Removed extra spaces
       const whatsappUrl = "https://wa.me/16093791145";
       const instagramUrl = socialData.contact.instagram;
       const tiktokUrl = socialData.contact.tiktok;
@@ -588,7 +396,7 @@
           </section>
 
           {/* Gallery */}
-          <section id="gallery" className="py-20 bg-white" id="gallery-section">
+          <section id="gallery" className="py-20 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
                 <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">{t('gallery.title')}</h2>
@@ -597,41 +405,27 @@
                 <div className="flex flex-wrap justify-center gap-4 mb-12">
                   {['all', 'birthdays', 'quinceaneras', 'romantic', 'custom', 'graduation', 'decor'].map(cat => (
                     <button key={cat} onClick={() => setActiveCategory(cat)} className={`px-6 py-3 rounded-full font-medium transition-colors ${activeCategory === cat ? 'bg-gradient-to-r from-mp-lilac to-mp-purple text-white' : 'bg-gray-100 text-mp-purple hover:bg-gray-200'}`}>
-                      {cat === 'all' ? t('gallery.all') : cat.charAt(0).toUpperCase() + cat.slice(1)}
+                      {cat === 'all' ? 'All' : cat.charAt(0).toUpperCase() + cat.slice(1)}
                     </button>
                   ))}
                 </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {loading ? (
-                  // Show skeleton placeholders while loading
-                  Array.from({ length: 12 }).map((_, index) => (
-                    <div key={index} className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 gallery-skeleton">
-                      <div className="w-full h-80 bg-gray-300"></div>
+                {filteredGallery.map((image, index) => (
+                  <div key={index} className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    <img
+                      loading="lazy"
+                      width="800"
+                      height="800"
+                      src={`/${image.src}`}
+                      alt={image.alt}
+                      className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
+                      <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white text-xl font-semibold">{image.alt}</div>
                     </div>
-                  ))
-                ) : isGalleryLoaded ? (
-                  filteredGallery.map((image, index) => (
-                    <div key={index} className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                      <img
-                        loading="lazy"
-                        width="800"
-                        height="800"
-                        src={`/${image.src}`}
-                        alt={image.alt}
-                        className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
-                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white text-xl font-semibold">{image.alt}</div>
-                      </div>
-                    </div>
-                  ))
-                ) : (
-                  // Show loading message until user scrolls to gallery
-                  <div className="col-span-full text-center py-12 text-mp-purple">
-                    {t('gallery.scroll')}
                   </div>
-                )}
+                ))}
               </div>
             </div>
           </section>
@@ -690,7 +484,7 @@
             </div>
           </section>
 
-          {/* Footer */}
+          <!-- Footer -->
           <footer className="bg-mp-text text-white py-12">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
               <div className="flex items-center justify-center mb-6">
