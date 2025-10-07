@@ -11,7 +11,7 @@
   <meta property="og:image" content="balloon_arches/IMG_1209.JPEG">
   <meta property="og:url" content="https://moonlitpetals.com">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" href="owner_picture/D6CC32B5-C827-4C26-82B8-C29883980CA2.JPEG">
+  <link rel="icon" href="owner_picture/D6CC32B5-C827-4C26-B2B8-C29B83980CA2.JPEG">
   <link rel="me" href="https://www.instagram.com/moonlit_petals03">
 
   <!-- JSON-LD Schema -->
@@ -74,6 +74,152 @@
 
   <script type="text/babel">
     const { useState, useEffect } = React;
+
+    // Language state
+    const [language, setLanguage] = useState('en'); // 'en' or 'es'
+
+    // Text translations
+    const texts = {
+      en: {
+        title: "Moonlit Petals — Bouquets & Party Décor",
+        description: "Handmade bouquets, balloon backdrops, and custom party décor for quinceañeras, birthdays, and special moments. English & Spanish.",
+        nav: {
+          home: "Home",
+          about: "About",
+          services: "Shop",
+          order: "Order",
+          gallery: "Gallery",
+          contact: "Contact"
+        },
+        hero: {
+          title: "Moonlit Petals",
+          subtitle: "Unique Bouquets & Party Decorations",
+          cta: "Order Now on WhatsApp",
+          instagram: "Instagram",
+          tiktok: "TikTok"
+        },
+        about: {
+          title: "About Moonlit Petals",
+          subtitle: "Handmade with Love • Customizable • Unique Designs • Local Delivery",
+          intro: "Moonlit Petals specializes in creating unforgettable gifts and decorations for every occasion — from quinceañeras to birthdays, anniversaries, and more.",
+          details: "Each bouquet is handmade with love, customizable with flowers, plushies, chocolates, money, or unique details to make your gift truly one-of-a-kind.",
+          location: "Based in Trenton, NJ & Bronx, NY, we bring joy and beauty to celebrations across the tri-state area."
+        },
+        products: {
+          title: "Our Products",
+          subtitle: "Explore our collection of beautifully crafted bouquets and decorations for every occasion"
+        },
+        order: {
+          title: "Order & Policies",
+          info: "Order Information",
+          policies: "Popular Add-ons",
+          policy1: "• Order 2–3 days in advance for best availability",
+          policy2: "• 25% non-refundable deposit required to secure your order",
+          policy3: "• Pick-up only. Late pick-up may result in additional fees",
+          addOn1: "Crown — add elegance to any bouquet",
+          addOn2: "Butterflies — delicate decorative accents",
+          addOn3: "Ribbons — color-coordinated to match your theme",
+          addOn4: "Lights — sparkle for evening events"
+        },
+        gallery: {
+          title: "Our Gallery",
+          subtitle: "Browse through our collection of stunning creations for every occasion"
+        },
+        contact: {
+          title: "Contact Us",
+          subtitle: "We speak English and Spanish // Hablamos inglés y español",
+          phone: "Phone/WhatsApp",
+          number: "609-379-1145",
+          chat: "Click to Chat",
+          instagram: "Instagram",
+          tiktok: "TikTok",
+          message: "Message Us on WhatsApp"
+        },
+        footer: {
+          tagline: "Creating unforgettable moments with unique bouquets & party decorations",
+          location: "Trenton, NJ & Bronx, NY | English & Spanish",
+          copyright: "© 2024 Moonlit Petals. All rights reserved."
+        },
+        productCategories: {
+          Bouquets: "Bouquets",
+          Specialty: "Specialty",
+          Graduation: "Graduation",
+          Gifts: "Gifts",
+          Decor: "Decor"
+        }
+      },
+      es: {
+        title: "Moonlit Petals — Ramos y Decoración para Fiestas",
+        description: "Ramos hechos a mano, arcos de globos y decoración personalizada para quinceañeras, cumpleaños y momentos especiales. Inglés y Español.",
+        nav: {
+          home: "Inicio",
+          about: "Sobre Nosotros",
+          services: "Tienda",
+          order: "Pedir",
+          gallery: "Galería",
+          contact: "Contacto"
+        },
+        hero: {
+          title: "Moonlit Petals",
+          subtitle: "Ramos Únicos y Decoración para Fiestas",
+          cta: "Ordenar por WhatsApp",
+          instagram: "Instagram",
+          tiktok: "TikTok"
+        },
+        about: {
+          title: "Sobre Moonlit Petals",
+          subtitle: "Hecho a mano • Personalizable • Diseños únicos • Entrega local",
+          intro: "Moonlit Petals se especializa en crear regalos y decoraciones inolvidables para cualquier ocasión — desde quinceañeras hasta cumpleaños, aniversarios y más.",
+          details: "Cada ramo está hecho a mano con amor, personalizable con flores, peluches, chocolates, dinero o detalles únicos para hacer que tu regalo sea verdaderamente único.",
+          location: "Con sede en Trenton, NJ y Bronx, NY, llevamos alegría y belleza a celebraciones en todo el área tristatal."
+        },
+        products: {
+          title: "Nuestros Productos",
+          subtitle: "Explora nuestra colección de ramos y decoraciones bellamente elaborados para cada ocasión"
+        },
+        order: {
+          title: "Pedido y Políticas",
+          info: "Información de Pedido",
+          policies: "Accesorios Populares",
+          policy1: "• Pida con 2–3 días de anticipación para mejor disponibilidad",
+          policy2: "• Se requiere un depósito no reembolsable del 25% para asegurar su pedido",
+          policy3: "• Solo recogida. La recogida tardía puede generar tarifas adicionales",
+          addOn1: "Corona — añade elegancia a cualquier ramo",
+          addOn2: "Mariposas — adornos decorativos delicados",
+          addOn3: "Ribbon — coordinado en color con su tema",
+          addOn4: "Luces — brillo para eventos nocturnos"
+        },
+        gallery: {
+          title: "Nuestra Galería",
+          subtitle: "Explore nuestra colección de creaciones impresionantes para cada ocasión"
+        },
+        contact: {
+          title: "Contáctenos",
+          subtitle: "Hablamos inglés y español // We speak English and Spanish",
+          phone: "Teléfono/WhatsApp",
+          number: "609-379-1145",
+          chat: "Haz clic para chatear",
+          instagram: "Instagram",
+          tiktok: "TikTok",
+          message: "Envíanos un mensaje por WhatsApp"
+        },
+        footer: {
+          tagline: "Creando momentos inolvidables con ramos únicos y decoración para fiestas",
+          location: "Trenton, NJ y Bronx, NY | Inglés y Español",
+          copyright: "© 2024 Moonlit Petals. Todos los derechos reservados."
+        },
+        productCategories: {
+          Bouquets: "Ramos",
+          Specialty: "Especialidad",
+          Graduation: "Graduación",
+          Gifts: "Regalos",
+          Decor: "Decoración"
+        }
+      }
+    };
+
+    // Get translated text
+    const t = (key) => texts[language][key] || key;
 
     // Product catalog (unchanged)
     const products = [
@@ -152,7 +298,7 @@
           "6aad6c07-539a-4ec7-acdc-54aed4b66b78.jpg", "IMG_0688.JPEG", "IMG_3227.JPEG", "IMG_3230.JPEG", "IMG_7524.JPEG", "IMG_8188.JPEG", "IMG_8767.JPEG", "IMG_8768.JPEG", "IMG_8800.JPEG"
         ],
         owner_picture: [
-          "D6CC32B5-C827-4C26-82B8-C29883980CA2.JPEG"
+          "D6CC32B5-C827-4C26-B2B8-C29B83980CA2.JPEG"
         ],
         personalized_bouquets: [
           "IMG_4409.JPEG", "IMG_4410.JPEG", "IMG_4411.JPEG", "IMG_4412.JPEG", "IMG_4413.JPEG", "IMG_4414.JPEG", "IMG_4417.JPEG", "IMG_4418.JPEG", "IMG_4421.JPEG"
@@ -179,10 +325,10 @@
       // Initialize hero images with random picks
       useEffect(() => {
         const hero = [
-          { image: getRandomImage('balloon_arches'), title: "Custom Bouquets", subtitle: "Handmade • Unique • Memorable" },
-          { image: getRandomImage('surprise_boxes'), title: "Balloon Setups", subtitle: "Backdrops & party decor" },
-          { image: getRandomImage('graduation'), title: "Special Occasions", subtitle: "Birthdays • Quinceañeras • More" },
-          { image: getRandomImage('eternal_roses'), title: "Signature Style", subtitle: "Moonlit Petals by Fátima" }
+          { image: getRandomImage('balloon_arches'), title: t('hero.title'), subtitle: t('hero.subtitle') },
+          { image: getRandomImage('surprise_boxes'), title: t('hero.title'), subtitle: t('hero.subtitle') },
+          { image: getRandomImage('graduation'), title: t('hero.title'), subtitle: t('hero.subtitle') },
+          { image: getRandomImage('eternal_roses'), title: t('hero.title'), subtitle: t('hero.subtitle') }
         ];
         setHeroImages(hero);
 
@@ -202,7 +348,7 @@
 
         setAllImages(gallery);
         setLoading(false);
-      }, []);
+      }, [language]);
 
       // Auto-rotate hero
       useEffect(() => {
@@ -231,6 +377,16 @@
 
       return (
         <div className="min-h-screen bg-mp-bg">
+          {/* Language Toggle */}
+          <div className="fixed top-4 right-4 z-50">
+            <button
+              onClick={() => setLanguage(language === 'en' ? 'es' : 'en')}
+              className="bg-mp-purple text-white px-4 py-2 rounded-full font-medium hover:bg-mp-lilac transition-colors"
+            >
+              {language === 'en' ? 'ES' : 'EN'}
+            </button>
+          </div>
+
           {/* Navigation */}
           <nav className="bg-white shadow-lg sticky top-0 z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -239,19 +395,19 @@
                   <div className="w-12 h-12 bg-gradient-to-r from-mp-lilac to-mp-purple rounded-full flex items-center justify-center">
                     <span className="text-white font-bold text-xl">MP</span>
                   </div>
-                  <span className="ml-3 text-2xl font-bold text-mp-text">Moonlit Petals</span>
+                  <span className="ml-3 text-2xl font-bold text-mp-text">{t('title')}</span>
                 </div>
                 <div className="hidden md:flex space-x-8">
-                  <a href="#home" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Home</a>
-                  <a href="#about" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">About</a>
-                  <a href="#services" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Shop</a>
-                  <a href="#order" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Order</a>
-                  <a href="#gallery" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Gallery</a>
-                  <a href="#contact" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Contact</a>
+                  <a href="#home" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">{t('nav.home')}</a>
+                  <a href="#about" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">{t('nav.about')}</a>
+                  <a href="#services" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">{t('nav.services')}</a>
+                  <a href="#order" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">{t('nav.order')}</a>
+                  <a href="#gallery" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">{t('nav.gallery')}</a>
+                  <a href="#contact" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">{t('nav.contact')}</a>
                 </div>
                 <div className="flex items-center space-x-4">
                   <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="bg-mp-purple text-white px-4 py-2 rounded-full font-medium hover:bg-mp-lilac transition-colors">
-                    WhatsApp
+                    {t('hero.cta')}
                   </a>
                   <SocialLinks className="hidden md:flex" />
                   <div className="md:hidden">
@@ -278,18 +434,18 @@
             </div>
             <div className="relative z-10 flex items-center justify-center h-full text-center text-white px-4">
               <div className="max-w-4xl">
-                <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">Moonlit Petals</h1>
-                <p className="text-2xl md:text-3xl mb-8 font-light">Unique Bouquets & Party Decorations</p>
+                <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">{t('hero.title')}</h1>
+                <p className="text-2xl md:text-3xl mb-8 font-light">{t('hero.subtitle')}</p>
                 <div className="space-y-4">
                   <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="inline-block bg-mp-purple text-white px-8 py-4 rounded-full text-xl font-semibold hover:bg-mp-lilac transform hover:scale-105 transition-all duration-300 shadow-lg">
-                    Order Now on WhatsApp
+                    {t('hero.cta')}
                   </a>
                   <div className="flex justify-center space-x-4 mt-4">
                     <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="bg-mp-purple text-white px-6 py-3 rounded-full font-medium hover:bg-mp-lilac transition-colors">
-                      Instagram
+                      {t('hero.instagram')}
                     </a>
                     <a href={tiktokUrl} target="_blank" rel="noopener noreferrer" className="bg-black text-white px-6 py-3 rounded-full font-medium hover:bg-gray-800 transition-colors">
-                      TikTok
+                      {t('hero.tiktok')}
                     </a>
                   </div>
                 </div>
@@ -306,7 +462,7 @@
           <section id="about" className="py-20 bg-gradient-to-b from-mp-bg to-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">About Moonlit Petals</h2>
+                <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">{t('about.title')}</h2>
                 <div className="w-24 h-1 bg-gradient-to-r from-mp-lilac to-mp-purple mx-auto mb-8"></div>
               </div>
               <div className="flex flex-col md:flex-row items-center gap-12">
@@ -319,25 +475,25 @@
                     )}
                     <div className="text-center">
                       <h3 className="text-2xl font-bold text-mp-text mb-2">Fátima Marroquín</h3>
-                      <p className="text-mp-purple font-medium">Owner & Lead Designer</p>
+                      <p className="text-mp-purple font-medium">{t('about.subtitle')}</p>
                     </div>
                   </div>
                 </div>
                 <div className="md:w-1/2">
                   <p className="text-xl text-mp-text leading-relaxed mb-6">
-                    Moonlit Petals specializes in creating unforgettable gifts and decorations for every occasion — from quinceañeras to birthdays, anniversaries, and more.
+                    {t('about.intro')}
                   </p>
                   <p className="text-xl text-mp-text leading-relaxed mb-6">
-                    Each bouquet is handmade with love, customizable with flowers, plushies, chocolates, money, or unique details to make your gift truly one-of-a-kind.
+                    {t('about.details')}
                   </p>
                   <p className="text-xl text-mp-text leading-relaxed">
-                    Based in Trenton, NJ & Bronx, NY, we bring joy and beauty to celebrations across the tri-state area.
+                    {t('about.location')}
                   </p>
                   <div className="mt-8 flex flex-wrap gap-4">
-                    <span className="bg-mp-lilac text-mp-purple px-4 py-2 rounded-full font-medium">Handmade with Love</span>
-                    <span className="bg-mp-sky text-mp-purple px-4 py-2 rounded-full font-medium">Customizable</span>
-                    <span className="bg-purple-100 text-mp-purple px-4 py-2 rounded-full font-medium">Unique Designs</span>
-                    <span className="bg-yellow-100 text-mp-purple px-4 py-2 rounded-full font-medium">Local Delivery</span>
+                    <span className="bg-mp-lilac text-mp-purple px-4 py-2 rounded-full font-medium">{t('about.subtitle').split(' • ')[0]}</span>
+                    <span className="bg-mp-sky text-mp-purple px-4 py-2 rounded-full font-medium">{t('about.subtitle').split(' • ')[1]}</span>
+                    <span className="bg-purple-100 text-mp-purple px-4 py-2 rounded-full font-medium">{t('about.subtitle').split(' • ')[2]}</span>
+                    <span className="bg-yellow-100 text-mp-purple px-4 py-2 rounded-full font-medium">{t('about.subtitle').split(' • ')[3]}</span>
                   </div>
                 </div>
               </div>
@@ -348,8 +504,8 @@
           <section id="services" className="py-20 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">Our Products</h2>
-                <p className="text-xl text-mp-text max-w-3xl mx-auto">Explore our collection of beautifully crafted bouquets and decorations for every occasion</p>
+                <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">{t('products.title')}</h2>
+                <p className="text-xl text-mp-text max-w-3xl mx-auto">{t('products.subtitle')}</p>
                 <div className="w-24 h-1 bg-gradient-to-r from-mp-lilac to-mp-purple mx-auto mt-8"></div>
               </div>
 
@@ -357,7 +513,7 @@
                 const firstImage = allImages.find(img => img.src.startsWith(product.imagePlaceholder + '/'));
                 return (
                   <div key={idx} className="mb-16">
-                    <h3 className="text-3xl font-bold text-mp-text mb-8 text-center">{product.category}</h3>
+                    <h3 className="text-3xl font-bold text-mp-text mb-8 text-center">{t(`productCategories.${product.category}`)}</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                       <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                         {firstImage ? (
@@ -377,7 +533,7 @@
                             rel="noopener noreferrer"
                             className="block w-full text-center bg-mp-purple text-white py-3 rounded-lg font-medium hover:bg-mp-lilac transition-colors"
                           >
-                            Order Now
+                            {t('hero.cta')}
                           </a>
                         </div>
                       </div>
@@ -392,26 +548,26 @@
           <section id="order" className="py-20 bg-gradient-to-b from-mp-bg to-white">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">Order & Policies</h2>
+                <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">{t('order.title')}</h2>
                 <div className="w-24 h-1 bg-gradient-to-r from-mp-lilac to-mp-purple mx-auto mb-8"></div>
               </div>
               <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12">
                 <div className="grid md:grid-cols-2 gap-8">
                   <div>
-                    <h3 className="text-2xl font-bold text-mp-text mb-6">Order Information</h3>
+                    <h3 className="text-2xl font-bold text-mp-text mb-6">{t('order.info')}</h3>
                     <ul className="space-y-4 text-mp-text">
-                      <li>• Order 2–3 days in advance for best availability</li>
-                      <li>• 25% non-refundable deposit required to secure your order</li>
-                      <li>• Pick-up only. Late pick-up may result in additional fees</li>
+                      <li>{t('order.policy1')}</li>
+                      <li>{t('order.policy2')}</li>
+                      <li>{t('order.policy3')}</li>
                     </ul>
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold text-mp-text mb-6">Popular Add-ons</h3>
+                    <h3 className="text-2xl font-bold text-mp-text mb-6">{t('order.policies')}</h3>
                     <ul className="space-y-3 text-mp-text">
-                      <li><span className="font-semibold">Crown</span> — add elegance to any bouquet</li>
-                      <li><span className="font-semibold">Butterflies</span> — delicate decorative accents</li>
-                      <li><span className="font-semibold">Ribbons</span> — color-coordinated to match your theme</li>
-                      <li><span className="font-semibold">Lights</span> — sparkle for evening events</li>
+                      <li><span className="font-semibold">{t('order.addOn1')}</span></li>
+                      <li><span className="font-semibold">{t('order.addOn2')}</span></li>
+                      <li><span className="font-semibold">{t('order.addOn3')}</span></li>
+                      <li><span className="font-semibold">{t('order.addOn4')}</span></li>
                     </ul>
                   </div>
                 </div>
@@ -424,7 +580,7 @@
                     rel="noopener noreferrer"
                     className="inline-block bg-mp-purple text-white px-8 py-4 rounded-full text-xl font-semibold hover:bg-mp-lilac transform hover:scale-105 transition-all duration-300 shadow-lg"
                   >
-                    Place Your Order
+                    {t('hero.cta')}
                   </a>
                 </div>
               </div>
@@ -435,13 +591,13 @@
           <section id="gallery" className="py-20 bg-white" id="gallery-section">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">Our Gallery</h2>
-                <p className="text-xl text-mp-text max-w-3xl mx-auto">Browse through our collection of stunning creations for every occasion</p>
+                <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">{t('gallery.title')}</h2>
+                <p className="text-xl text-mp-text max-w-3xl mx-auto">{t('gallery.subtitle')}</p>
                 <div className="w-24 h-1 bg-gradient-to-r from-mp-lilac to-mp-purple mx-auto mt-8 mb-8"></div>
                 <div className="flex flex-wrap justify-center gap-4 mb-12">
                   {['all', 'birthdays', 'quinceaneras', 'romantic', 'custom', 'graduation', 'decor'].map(cat => (
                     <button key={cat} onClick={() => setActiveCategory(cat)} className={`px-6 py-3 rounded-full font-medium transition-colors ${activeCategory === cat ? 'bg-gradient-to-r from-mp-lilac to-mp-purple text-white' : 'bg-gray-100 text-mp-purple hover:bg-gray-200'}`}>
-                      {cat === 'all' ? 'All' : cat.charAt(0).toUpperCase() + cat.slice(1)}
+                      {cat === 'all' ? t('gallery.all') : cat.charAt(0).toUpperCase() + cat.slice(1)}
                     </button>
                   ))}
                 </div>
@@ -473,7 +629,7 @@
                 ) : (
                   // Show loading message until user scrolls to gallery
                   <div className="col-span-full text-center py-12 text-mp-purple">
-                    Scroll down to see our gallery...
+                    {t('gallery.scroll')}
                   </div>
                 )}
               </div>
@@ -484,15 +640,15 @@
           <section id="contact" className="py-20 bg-gradient-to-b from-white to-mp-bg">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">Contact Us</h2>
-                <p className="text-xl text-mp-text mb-8">We speak English and Spanish // Hablamos inglés y español</p>
+                <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">{t('contact.title')}</h2>
+                <p className="text-xl text-mp-text mb-8">{t('contact.subtitle')}</p>
                 <div className="w-24 h-1 bg-gradient-to-r from-mp-lilac to-mp-purple mx-auto mb-8"></div>
               </div>
               <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12">
                 <div className="grid md:grid-cols-3 gap-8 mb-12">
                   <div className="text-center">
-                    <h4 className="text-xl font-bold text-mp-text mb-2">Phone/WhatsApp</h4>
-                    <p className="text-mp-text">609-379-1145</p>
+                    <h4 className="text-xl font-bold text-mp-text mb-2">{t('contact.phone')}</h4>
+                    <p className="text-mp-text">{t('contact.number')}</p>
                     <a
                       href={`https://wa.me/16093791145?text=${encodeURIComponent(
                         `Hi! I have a question about my order.`
@@ -501,16 +657,16 @@
                       rel="noopener noreferrer"
                       className="inline-block mt-2 text-mp-purple font-medium hover:text-mp-sky"
                     >
-                      Click to Chat
+                      {t('contact.chat')}
                     </a>
                   </div>
                   <div className="text-center">
-                    <h4 className="text-xl font-bold text-mp-text mb-2">Instagram</h4>
+                    <h4 className="text-xl font-bold text-mp-text mb-2">{t('contact.instagram')}</h4>
                     <p className="text-mp-text">@moonlit_petals03</p>
                     <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-2 text-mp-purple font-medium hover:text-mp-sky">Follow Us</a>
                   </div>
                   <div className="text-center">
-                    <h4 className="text-xl font-bold text-mp-text mb-2">TikTok</h4>
+                    <h4 className="text-xl font-bold text-mp-text mb-2">{t('contact.tiktok')}</h4>
                     <p className="text-mp-text">@moonlit_petals03</p>
                     <a href={tiktokUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-2 text-mp-purple font-medium hover:text-mp-sky">Follow Us</a>
                   </div>
@@ -524,7 +680,7 @@
                     rel="noopener noreferrer"
                     className="inline-block bg-mp-purple text-white px-8 py-4 rounded-full text-xl font-semibold hover:bg-mp-lilac transform hover:scale-105 transition-all duration-300 shadow-lg"
                   >
-                    Message Us on WhatsApp
+                    {t('contact.message')}
                   </a>
                 </div>
                 <div className="mt-8 flex justify-center">
@@ -546,9 +702,9 @@
               <div className="mb-6">
                 <SocialLinks />
               </div>
-              <p className="text-gray-300 mb-6">Creating unforgettable moments with unique bouquets & party decorations</p>
-              <p className="text-gray-400 mb-8">Trenton, NJ & Bronx, NY | English & Spanish</p>
-              <p className="text-gray-400 text-sm">© 2024 Moonlit Petals. All rights reserved.</p>
+              <p className="text-gray-300 mb-6">{t('footer.tagline')}</p>
+              <p className="text-gray-400 mb-8">{t('footer.location')}</p>
+              <p className="text-gray-400 text-sm">{t('footer.copyright')}</p>
             </div>
           </footer>
         </div>
