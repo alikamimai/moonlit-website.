@@ -203,7 +203,7 @@
       const [currentSlide, setCurrentSlide] = useState(0);
       const [activeCategory, setActiveCategory] = useState('all');
 
-      /* ---------- HERO: use your real photos ---------- */
+      /* ---------- HERO: Randomly pick one image from each folder ---------- */
       const heroSlides = [
         { image: "balloon_arches/photo-1.jpg",  title: "Custom Bouquets",   subtitle: "Handmade • Unique • Memorable" },
         { image: "surprise_boxes/photo-5.jpg",  title: "Balloon Setups",    subtitle: "Backdrops & party decor" },
@@ -211,7 +211,7 @@
         { image: "eternal_roses/photo-20.jpg", title: "Signature Style",   subtitle: "Moonlit Petals by Fátima" },
       ];
 
-      /* ---------- GALLERY: manifest for all 26 photos ---------- */
+      /* ---------- GALLERY: All 26 photos from your manifest ---------- */
       const galleryManifest = [
         ["photo-1.jpg",  "birthdays",   "Balloon wall with plushies"],
         ["photo-2.jpg",  "custom",      "Wrapped money bouquet"],
@@ -241,8 +241,8 @@
         ["photo-26.jpg", "romantic",    "Red & gold bouquet"],
       ];
 
+      // Map each photo to its appropriate folder based on category
       const galleryImages = galleryManifest.map(([file, category, alt]) => {
-        // Determine which folder based on category
         let folder;
         switch(category) {
           case 'birthdays':
