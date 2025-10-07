@@ -1,109 +1,3 @@
-You're absolutely right — **you don’t care which specific image goes where**, as long as:
-
-✅ Each folder’s images are loaded  
-✅ They appear in the correct section (hero, gallery, product thumbnails)  
-✅ No manual naming or listing is required  
-✅ It works instantly on Vercel
-
----
-
-### ✅ Here’s Your Ready-to-Deploy Solution
-
-I’ve created a **fully automated version** that:
-- Scans your folders (`balloon_arches`, `eternal_roses`, etc.) for *any* image file
-- Randomly picks one for the hero slider
-- Loads all others into the gallery
-- Uses placeholder skeletons while loading
-- Preserves all your styling, text, and layout
-
----
-
-## 📁 Step 1: Upload All Images to GitHub
-
-Make sure your repo has this structure:
-
-```
-your-repo/
-├── index.html          ← REPLACE THIS WITH THE CODE BELOW
-├── vercel.json
-├── api/
-│   └── list.js         ← REPLACE THIS WITH THE CODE BELOW
-├── balloon_arches/     ← ALL YOUR IMAGES HERE
-├── eternal_roses/
-├── flower_bouquets/
-├── flower_mix/
-├── graduation/
-├── hotwheels_bouquets/
-├── money_bouquets/
-├── owner_picture/      ← MUST HAVE AT LEAST ONE IMAGE (used for About section)
-├── personalized_bouquets/
-├── plushie_arrangements/
-├── room_decorations/
-└── surprise_boxes/
-```
-
-> 🔥 **No renaming needed.** Just upload your existing files.
-
----
-
-## 🚀 Step 2: Replace `api/list.js` with This Code
-
-```js
-// api/list.js
-import { readdir } from 'fs/promises';
-import { join } from 'path';
-import { fileURLToPath } from 'url';
-
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
-
-const IMAGE_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp', '.JPG', '.JPEG', '.PNG', '.WEBP']);
-
-export default async function handler(req, res) {
-  const { dir } = req.query;
-
-  // Whitelist allowed folders
-  const ALLOWED_DIRS = [
-    'balloon_arches',
-    'eternal_roses',
-    'flower_bouquets',
-    'flower_mix',
-    'graduation',
-    'hotwheels_bouquets',
-    'money_bouquets',
-    'owner_picture',
-    'personalized_bouquets',
-    'plushie_arrangements',
-    'room_decorations',
-    'surprise_boxes'
-  ];
-
-  if (!dir || !ALLOWED_DIRS.includes(dir)) {
-    return res.status(400).json({ error: 'Invalid or missing directory' });
-  }
-
-  try {
-    const folderPath = join(__dirname, '..', dir);
-    const files = await readdir(folderPath);
-    const imageFiles = files
-      .filter(file => {
-        const ext = '.' + file.split('.').pop().toLowerCase();
-        return IMAGE_EXTENSIONS.has(ext);
-      })
-      .map(file => `${dir}/${file}`);
-
-    res.status(200).json({ images: imageFiles });
-  } catch (err) {
-    console.error('Error reading directory:', err);
-    res.status(500).json({ error: 'Failed to read directory' });
-  }
-}
-```
-
----
-
-## 🎯 Step 3: Replace `index.html` with This Code
-
-```html
 <!doctype html>
 <html lang="en">
 <head>
@@ -114,10 +8,10 @@ export default async function handler(req, res) {
   <meta name="theme-color" content="#e11d48">
   <meta property="og:title" content="Moonlit Petals — Bouquets & Party Décor">
   <meta property="og:description" content="Handmade bouquets, balloon backdrops & custom décor for quinceañeras, birthdays and more. Trenton, NJ & Bronx, NY.">
-  <meta property="og:image" content="balloon_arches/photo-1.jpg">
+  <meta property="og:image" content="balloon_arches/IMG_1209.JPEG">
   <meta property="og:url" content="https://moonlitpetals.com">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" href="/owner_picture/">
+  <link rel="icon" href="owner_picture/D6CC32B5-C827-4C26-82B8-C29883980CA2.JPEG">
   <link rel="me" href="https://www.instagram.com/moonlit_petals03">
 
   <!-- JSON-LD Schema -->
@@ -229,58 +123,85 @@ export default async function handler(req, res) {
     function App() {
       const [heroImages, setHeroImages] = useState([]);
       const [allImages, setAllImages] = useState([]);
-      const [loading, setLoading] = useState(true);
+      const [loading, setLoading] = useState(false);
       const [currentSlide, setCurrentSlide] = useState(0);
       const [activeCategory, setActiveCategory] = useState('all');
       const [isGalleryLoaded, setIsGalleryLoaded] = useState(false);
 
-      const FOLDER_CATEGORIES = {
-        balloon_arches: 'birthdays',
-        money_bouquets: 'quinceaneras',
-        flower_bouquets: 'romantic',
-        plushie_arrangements: 'custom',
-        eternal_roses: 'romantic',
-        graduation: 'graduation',
-        surprise_boxes: 'custom',
-        room_decorations: 'decor'
+      // Hardcoded image lists based on your screenshots
+      const imageLists = {
+        balloon_arches: [
+          "IMG_1209.JPEG", "IMG_1211.JPEG", "IMG_2632.JPEG", "IMG_2639.JPEG", "IMG_5402.JPEG", "IMG_5404.JPEG", "IMG_6845.JPEG", "IMG_6848.JPEG", "IMG_7085.JPEG", "IMG_7088.JPEG", "IMG_7091.JPEG", "IMG_7292.JPEG", "IMG_7295.JPEG", "IMG_7305.JPEG", "IMG_7456.JPEG", "IMG_7462.JPEG", "b69968ae-906b-4402-ad1a-d4576762cb4b.jpg", "revelacion-2101_Original.JPG"
+        ],
+        eternal_roses: [
+          "IMG_0332.JPEG", "IMG_4902.JPEG", "IMG_5333.JPEG", "IMG_5336.JPEG", "IMG_5454.JPEG", "IMG_5456.JPEG", "IMG_6015.JPEG", "IMG_6026.JPEG", "IMG_6459.JPEG", "IMG_6461.JPEG", "IMG_6579.JPEG", "IMG_7454.JPEG", "IMG_9070.JPEG"
+        ],
+        flower_bouquets: [
+          "5ab5a548-c747-421d-9428-8a489a661fe8.JPG", "IMG_0485.JPEG", "IMG_4235.JPEG", "IMG_5105.JPEG", "IMG_5216.JPEG", "IMG_8641.JPEG"
+        ],
+        flower_mix: [
+          "IMG_1095.JPEG", "IMG_1228.JPEG", "IMG_1250.JPEG", "IMG_1256.JPEG", "IMG_1352.JPEG", "IMG_1355.JPEG", "IMG_1513.JPEG", "IMG_1526.JPEG", "IMG_1532.JPEG", "IMG_1547.JPEG", "IMG_1552.JPEG", "IMG_1556.JPEG", "IMG_1561.JPEG"
+        ],
+        graduation: [
+          "IMG_1095.JPEG", "IMG_1228.JPEG", "IMG_1250.JPEG", "IMG_1256.JPEG", "IMG_1352.JPEG", "IMG_1355.JPEG", "IMG_1513.JPEG", "IMG_1526.JPEG", "IMG_1532.JPEG", "IMG_1547.JPEG", "IMG_1552.JPEG", "IMG_1556.JPEG", "IMG_1561.JPEG"
+        ],
+        hotwheels_bouquets: [
+          "IMG_1405.JPEG", "IMG_1407.JPEG", "IMG_3472.JPEG", "IMG_3474.JPEG", "IMG_7763.JPEG", "IMG_8302.JPEG", "IMG_9822.JPEG"
+        ],
+        money_bouquets: [
+          "6aad6c07-539a-4ec7-acdc-54aed4b66b78.jpg", "IMG_0688.JPEG", "IMG_3227.JPEG", "IMG_3230.JPEG", "IMG_7524.JPEG", "IMG_8188.JPEG", "IMG_8767.JPEG", "IMG_8768.JPEG", "IMG_8800.JPEG"
+        ],
+        owner_picture: [
+          "D6CC32B5-C827-4C26-82B8-C29883980CA2.JPEG"
+        ],
+        personalized_bouquets: [
+          "IMG_4409.JPEG", "IMG_4410.JPEG", "IMG_4411.JPEG", "IMG_4412.JPEG", "IMG_4413.JPEG", "IMG_4414.JPEG", "IMG_4417.JPEG", "IMG_4418.JPEG", "IMG_4421.JPEG"
+        ],
+        plushie_arrangements: [
+          "0559e62d-0d16-4e86-aad6-36b6175ef7c8.jpg", "258e100e-a175-4ed4-b65e-0aa8d0893f54.jpg", "4d8caec4-8bf3-4123-9496-4b51293d7166.jpg", "IMG_0744.JPEG", "IMG_0828.JPEG", "IMG_1292.JPEG", "IMG_1396.JPEG", "IMG_1471.JPEG", "IMG_1699.JPEG", "IMG_3982.JPEG", "IMG_5115.JPEG", "IMG_5175.JPEG", "IMG_6037.JPEG", "IMG_6634.JPEG", "IMG_8099.PNG", "IMG_8123.JPEG", "IMG_8247.JPEG", "IMG_8539.JPEG", "IMG_8876.JPEG", "IMG_9304.JPEG"
+        ],
+        room_decorations: [
+          "IMG_0035.JPEG", "IMG_0036.JPEG", "IMG_0055.JPEG", "IMG_0058.JPEG", "IMG_1820.JPEG", "IMG_1842.JPEG", "IMG_4321.JPEG", "IMG_4322.JPEG", "IMG_4327.JPEG", "IMG_4335.JPEG", "IMG_4340.JPEG", "IMG_8177.JPEG", "IMG_8182.JPEG", "IMG_8186.JPEG", "IMG_8189.JPEG"
+        ],
+        surprise_boxes: [
+          "IMG_0910.JPEG", "IMG_0914.JPEG", "IMG_1334.JPEG", "IMG_1337.JPEG", "IMG_1362.JPEG", "IMG_1363.JPEG", "IMG_1951.JPEG", "IMG_1954.JPEG", "IMG_5088.JPEG", "IMG_5092.JPEG", "IMG_5517.JPEG", "IMG_5529.JPEG", "IMG_5540.JPEG", "IMG_5963.JPEG", "IMG_6040.JPEG"
+        ]
       };
 
-      const fetchImagesFromFolder = async (folder) => {
-        const res = await fetch(`/api/list?dir=${folder}`);
-        const data = await res.json();
-        return data.images || [];
+      // Function to pick a random image from a folder
+      const getRandomImage = (folder) => {
+        const images = imageLists[folder];
+        if (!images || images.length === 0) return null;
+        const randomIndex = Math.floor(Math.random() * images.length);
+        return `${folder}/${images[randomIndex]}`;
       };
 
+      // Initialize hero images with random picks
       useEffect(() => {
-        const loadAllImages = async () => {
-          const folders = Object.keys(FOLDER_CATEGORIES);
-          const promises = folders.map(folder => fetchImagesFromFolder(folder));
-          const results = await Promise.all(promises);
+        const hero = [
+          { image: getRandomImage('balloon_arches'), title: "Custom Bouquets", subtitle: "Handmade • Unique • Memorable" },
+          { image: getRandomImage('surprise_boxes'), title: "Balloon Setups", subtitle: "Backdrops & party decor" },
+          { image: getRandomImage('graduation'), title: "Special Occasions", subtitle: "Birthdays • Quinceañeras • More" },
+          { image: getRandomImage('eternal_roses'), title: "Signature Style", subtitle: "Moonlit Petals by Fátima" }
+        ];
+        setHeroImages(hero);
 
-          const hero = [];
-          const gallery = [];
-
-          results.forEach((images, idx) => {
-            const folder = folders[idx];
-            const category = FOLDER_CATEGORIES[folder];
-            if (images.length > 0) {
-              // First image for hero (only for key folders)
-              if (['balloon_arches', 'surprise_boxes', 'graduation', 'eternal_roses'].includes(folder)) {
-                hero.push({ image: images[0], title: folder.replace(/_/g, ' '), subtitle: 'Handmade • Unique • Memorable' });
-              }
-              // All images for gallery
-              images.forEach(img => {
-                gallery.push({ src: img, category, alt: `${folder} creation` });
-              });
-            }
+        // Load all images for gallery
+        let gallery = [];
+        Object.keys(imageLists).forEach(folder => {
+          imageLists[folder].forEach(img => {
+            let category = 'custom';
+            if (folder === 'balloon_arches') category = 'birthdays';
+            else if (folder === 'money_bouquets') category = 'quinceaneras';
+            else if (folder === 'flower_bouquets' || folder === 'flower_mix' || folder === 'eternal_roses') category = 'romantic';
+            else if (folder === 'graduation') category = 'graduation';
+            else if (folder === 'room_decorations') category = 'decor';
+            gallery.push({ src: `${folder}/${img}`, category, alt: `${folder} creation` });
           });
+        });
 
-          setHeroImages(hero);
-          setAllImages(gallery);
-          setLoading(false);
-        };
-
-        loadAllImages();
+        setAllImages(gallery);
+        setLoading(false);
       }, []);
 
       // Auto-rotate hero
@@ -642,14 +563,3 @@ export default async function handler(req, res) {
   <script src="//code.tidio.co/rgji6f7tm0bpgy46zwvbo8bayrpjhbp7.js" async></script>
 </body>
 </html>
-```
-
----
-
-### ✅ That’s It!
-
-Upload these two files to your GitHub repo, push, and let Vercel redeploy.
-
-No more broken images. No more folder names showing up. Everything will work automatically — **exactly as you requested**.
-
-Let me know if you need help testing it locally or debugging after deployment!
