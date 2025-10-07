@@ -74,7 +74,7 @@
   <script type="text/babel">
     const { useState, useEffect } = React;
 
-    // Product catalog (unchanged)
+    // Product catalog
     const products = [
       { id: "personalized-bouquet", name: "Personalized Bouquets", price: 50, description: "Custom-designed bouquets tailored to your theme or occasion.", imagePlaceholder: "personalized_bouquets", category: "Bouquets" },
       { id: "flower-bouquet", name: "Flower Bouquets", price: 90, description: "Elegant fresh flower bouquets starting at $90.", imagePlaceholder: "flower_bouquets", category: "Bouquets" },
@@ -127,7 +127,7 @@
       const [activeCategory, setActiveCategory] = useState('all');
       const [isGalleryLoaded, setIsGalleryLoaded] = useState(false);
 
-      // Hardcoded image lists based on your screenshots
+      // Hardcoded image lists
       const imageLists = {
         balloon_arches: [
           "IMG_1209.JPEG", "IMG_1211.JPEG", "IMG_2632.JPEG", "IMG_2639.JPEG", "IMG_5402.JPEG", "IMG_5404.JPEG", "IMG_6845.JPEG", "IMG_6848.JPEG", "IMG_7085.JPEG", "IMG_7088.JPEG", "IMG_7091.JPEG", "IMG_7292.JPEG", "IMG_7295.JPEG", "IMG_7305.JPEG", "IMG_7456.JPEG", "IMG_7462.JPEG", "b69968ae-906b-4402-ad1a-d4576762cb4b.jpg", "revelacion-2101_Original.JPG"
@@ -311,18 +311,19 @@
               <div className="flex flex-col md:flex-row items-center gap-12">
                 <div className="md:w-1/2">
                   <div className="bg-white p-8 rounded-3xl shadow-xl">
-                   <div className="bg-white p-8 rounded-3xl shadow-xl">
                     <img
-                    src="owner_picture/D6CC32B5-C827-4C26-82B8-C29883980CA2.JPEG"
-                      alt="Owner & Lead Designer"
-                        className="w-full h-96 object-cover rounded-2xl mb-6"
-                  />
-                <div className="text-center">
-                <h3 className="text-2xl font-bold text-mp-text mb-2">Fátima Marroquín</h3>
-                <p className="text-mp-purple font-medium">Owner & Lead Designer</p>
-              </div>
-          </div>
-
+                      src="owner_picture/D6CC32B5-C827-4C26-82B8-C29883980CA2.JPEG"
+                      alt="Fátima Marroquín, Owner & Lead Designer"
+                      className="w-full h-96 object-cover rounded-2xl mb-6"
+                      onError={(e) => {
+                        e.target.src = "https://via.placeholder.com/400x300?text=Owner+Photo+Unavailable";
+                        e.target.alt = "Owner photo unavailable";
+                      }}
+                    />
+                    <div className="text-center">
+                      <h3 className="text-2xl font-bold text-mp-text mb-2">Fátima Marroquín</h3>
+                      <p className="text-mp-purple font-medium">Owner & Lead Designer</p>
+                    </div>
                   </div>
                 </div>
                 <div className="md:w-1/2">
@@ -450,7 +451,6 @@
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {loading ? (
-                  // Show skeleton placeholders while loading
                   Array.from({ length: 12 }).map((_, index) => (
                     <div key={index} className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 gallery-skeleton">
                       <div className="w-full h-80 bg-gray-300"></div>
@@ -473,7 +473,6 @@
                     </div>
                   ))
                 ) : (
-                  // Show loading message until user scrolls to gallery
                   <div className="col-span-full text-center py-12 text-mp-purple">
                     Scroll down to see our gallery...
                   </div>
