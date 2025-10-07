@@ -1,1 +1,553 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Moonlit Petals — Bouquets & Party Décor</title>
+  <meta name="description" content="Handmade bouquets, balloon backdrops, and custom party décor for quinceañeras, birthdays, and special moments. English & Spanish." />
+  <meta name="theme-color" content="#e11d48">
+  <meta property="og:title" content="Moonlit Petals — Bouquets & Party Décor">
+  <meta property="og:description" content="Handmade bouquets, balloon backdrops & custom décor for quinceañeras, birthdays and more. Trenton, NJ & Bronx, NY.">
+  <meta property="og:image" content="balloon_arches/photo-1.jpg">
+  <meta property="og:url" content="https://moonlitpetals.com">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/owner_picture/photo-23.jpg">
+  <link rel="me" href="https://www.instagram.com/moonlit_petals03">
 
+  <!-- JSON-LD Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Moonlit Petals",
+    "url": "https://moonlitpetals.com",
+    "sameAs": [
+      "https://www.instagram.com/moonlit_petals03",
+      "https://www.tiktok.com/@moonlit_petals03"
+    ]
+  }
+  </script>
+
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            mp: {
+              lilac: '#C7A4F4',
+              sky: '#7EC8F8',
+              purple: '#6A3EEA',
+              text: '#1F1F29',
+              bg: '#FAF8FF'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @keyframes fade-in { from { opacity: 0 } to { opacity: 1 } }
+    .animate-fade-in { animation: fade-in 0.8s ease-out both; }
+    body { background-color: #FAF8FF; }
+    .gallery-skeleton {
+      background: linear-gradient(45deg, #f3f4f6, #e5e7eb);
+      border-radius: 0.75rem;
+      overflow: hidden;
+    }
+    .gallery-skeleton img {
+      opacity: 0;
+    }
+    .gallery-skeleton:hover img {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-mp-bg">
+  <div id="root"></div>
+
+  <!-- React + ReactDOM (CDN) -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    // Product catalog (unchanged)
+    const products = [
+      { id: "personalized-bouquet", name: "Personalized Bouquets", price: 50, description: "Custom-designed bouquets tailored to your theme or occasion.", imagePlaceholder: "personalized_bouquets", category: "Bouquets" },
+      { id: "flower-bouquet", name: "Flower Bouquets", price: 90, description: "Elegant fresh flower bouquets starting at $90.", imagePlaceholder: "flower_bouquets", category: "Bouquets" },
+      { id: "hotwheels-bouquet", name: "Hot Wheels Bouquet", price: 50, description: "Fun themed bouquet with Hot Wheels toys and flowers.", imagePlaceholder: "hotwheels_bouquets", category: "Specialty" },
+      { id: "plushie-arrangement", name: "Plushie Arrangements", price: 90, description: "Bouquet arrangements with plush toys included.", imagePlaceholder: "plushie_arrangements", category: "Specialty" },
+      { id: "flower-mix", name: "Flower Mix", price: 120, description: "A beautiful mix of seasonal flowers.", imagePlaceholder: "flower_mix", category: "Bouquets" },
+      { id: "graduation-lei-cap", name: "Graduation Leis & Cap", price: 75, description: "Festive leis and decorated graduation caps.", imagePlaceholder: "graduation", category: "Graduation" },
+      { id: "surprise-box", name: "Surprise Boxes", price: 100, description: "Customizable surprise gift boxes with flowers, treats, and more.", imagePlaceholder: "surprise_boxes", category: "Gifts" },
+      { id: "eternal-roses", name: "Eternal Roses", price: 65, description: "Long-lasting roses that make a perfect gift.", imagePlaceholder: "eternal_roses", category: "Bouquets" },
+      { id: "balloon-arch", name: "Balloon Arch", price: 250, description: "Large custom balloon arch for parties or events.", imagePlaceholder: "balloon_arches", category: "Decor" },
+      { id: "room-decoration", name: "Room Decoration", price: 200, description: "Themed room decoration for special occasions.", imagePlaceholder: "room_decorations", category: "Decor" },
+      { id: "money-bouquet", name: "Money Bouquet", price: 50, description: "Bouquet wrapped with roses and cash notes.", imagePlaceholder: "money_bouquets", category: "Specialty" }
+    ];
+
+    const socialData = {
+      contact: {
+        instagram: "https://www.instagram.com/moonlit_petals03?utm_source=instagram&utm_medium=social&utm_campaign=profile",
+        tiktok: "https://www.tiktok.com/@moonlit_petals03?utm_source=tiktok&utm_medium=social&utm_campaign=profile"
+      }
+    };
+
+    function SocialLinks({ className = "" }) {
+      return (
+        <div className={`flex items-center gap-3 ${className}`}>
+          {socialData.contact.instagram && (
+            <a href={socialData.contact.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+              className="text-mp-purple hover:text-mp-sky transition-colors">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+              </svg>
+            </a>
+          )}
+          {socialData.contact.tiktok && (
+            <a href={socialData.contact.tiktok} target="_blank" rel="noopener noreferrer" aria-label="TikTok"
+              className="text-mp-purple hover:text-mp-sky transition-colors">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-.33-.05A2.88 2.88 0 0 1 7.2 5.57a2.89 2.89 0 0 1 2.66-3.85 2.88 2.88 0 0 1 3.27 1.57h3.45v-.42a4.86 4.86 0 0 1 3.45 1.8zM12.05 20c-.23 0-.45-.02-.68-.05a2.89 2.89 0 0 1-2.24-3.74 2.89 2.89 0 0 1 2.31-1.62 2.89 2.89 0 0 1 2.53 1.57 2.89 2.89 0 0 1-1.92 4.84z" />
+              </svg>
+            </a>
+          )}
+        </div>
+      );
+    }
+
+    function App() {
+      const [heroImages, setHeroImages] = useState([
+        { image: "balloon_arches/photo-1.jpg", title: "Custom Bouquets", subtitle: "Handmade • Unique • Memorable" },
+        { image: "surprise_boxes/photo-5.jpg", title: "Balloon Setups", subtitle: "Backdrops & party decor" },
+        { image: "graduation/photo-8.jpg", title: "Special Occasions", subtitle: "Birthdays • Quinceañeras • More" },
+        { image: "eternal_roses/photo-20.jpg", title: "Signature Style", subtitle: "Moonlit Petals by Fátima" }
+      ]);
+      const [allImages, setAllImages] = useState([]);
+      const [loading, setLoading] = useState(true);
+      const [currentSlide, setCurrentSlide] = useState(0);
+      const [activeCategory, setActiveCategory] = useState('all');
+      const [isGalleryLoaded, setIsGalleryLoaded] = useState(false);
+
+      const FOLDER_CATEGORIES = {
+        balloon_arches: 'birthdays',
+        money_bouquets: 'quinceaneras',
+        flower_bouquets: 'romantic',
+        plushie_arrangements: 'custom',
+        eternal_roses: 'romantic',
+        graduation: 'graduation',
+        surprise_boxes: 'custom',
+        room_decorations: 'decor'
+      };
+
+      const fetchImagesFromFolder = async (folder) => {
+        const res = await fetch(`/api/list?dir=${folder}`);
+        const data = await res.json();
+        return data.images || [];
+      };
+
+      useEffect(() => {
+        const loadAllImages = async () => {
+          const folders = Object.keys(FOLDER_CATEGORIES);
+          const promises = folders.map(folder => fetchImagesFromFolder(folder));
+          const results = await Promise.all(promises);
+
+          const gallery = [];
+
+          results.forEach((images, idx) => {
+            const folder = folders[idx];
+            const category = FOLDER_CATEGORIES[folder];
+            if (images.length > 0) {
+              // All images for gallery
+              images.forEach(img => {
+                gallery.push({ src: img, category, alt: `${folder} creation` });
+              });
+            }
+          });
+
+          setAllImages(gallery);
+          setLoading(false);
+        };
+
+        // Start loading gallery after 1 second (let hero load first)
+        const timer = setTimeout(() => {
+          loadAllImages();
+        }, 1000);
+
+        return () => clearTimeout(timer);
+      }, []);
+
+      // Auto-rotate hero
+      useEffect(() => {
+        if (heroImages.length === 0) return;
+        const timer = setInterval(() => {
+          setCurrentSlide(prev => (prev + 1) % heroImages.length);
+        }, 5000);
+        return () => clearInterval(timer);
+      }, [heroImages]);
+
+      const filteredGallery = activeCategory === 'all'
+        ? allImages
+        : allImages.filter(img => img.category === activeCategory);
+
+      const whatsappUrl = "https://wa.me/16093791145";
+      const instagramUrl = socialData.contact.instagram;
+      const tiktokUrl = socialData.contact.tiktok;
+
+      // Lazy load gallery images when user scrolls near them
+      useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              setIsGalleryLoaded(true);
+              observer.disconnect();
+            }
+          });
+        }, { threshold: 0.1 });
+
+        const gallerySection = document.getElementById('gallery-section');
+        if (gallerySection) {
+          observer.observe(gallerySection);
+        }
+
+        return () => observer.disconnect();
+      }, []);
+
+      return (
+        <div className="min-h-screen bg-mp-bg">
+          {/* Navigation */}
+          <nav className="bg-white shadow-lg sticky top-0 z-50">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="flex justify-between items-center py-4">
+                <div className="flex items-center">
+                  <div className="w-12 h-12 bg-gradient-to-r from-mp-lilac to-mp-purple rounded-full flex items-center justify-center">
+                    <span className="text-white font-bold text-xl">MP</span>
+                  </div>
+                  <span className="ml-3 text-2xl font-bold text-mp-text">Moonlit Petals</span>
+                </div>
+                <div className="hidden md:flex space-x-8">
+                  <a href="#home" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Home</a>
+                  <a href="#about" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">About</a>
+                  <a href="#services" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Shop</a>
+                  <a href="#order" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Order</a>
+                  <a href="#gallery" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Gallery</a>
+                  <a href="#contact" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Contact</a>
+                </div>
+                <div className="flex items-center space-x-4">
+                  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="bg-mp-purple text-white px-4 py-2 rounded-full font-medium hover:bg-mp-lilac transition-colors">
+                    WhatsApp
+                  </a>
+                  <SocialLinks className="hidden md:flex" />
+                  <div className="md:hidden">
+                    <button className="text-mp-purple hover:text-mp-sky" aria-label="Menu">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
+
+          {/* Hero */}
+          <section id="home" className="relative h-screen overflow-hidden">
+            <div className="absolute inset-0">
+              {heroImages.map((slide, index) => (
+                <div key={index} className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}>
+                  <img src={`/${slide.image}`} alt={slide.title} className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-black/50"></div>
+                </div>
+              ))}
+            </div>
+            <div className="relative z-10 flex items-center justify-center h-full text-center text-white px-4">
+              <div className="max-w-4xl">
+                <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">Moonlit Petals</h1>
+                <p className="text-2xl md:text-3xl mb-8 font-light">Unique Bouquets & Party Decorations</p>
+                <div className="space-y-4">
+                  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="inline-block bg-mp-purple text-white px-8 py-4 rounded-full text-xl font-semibold hover:bg-mp-lilac transform hover:scale-105 transition-all duration-300 shadow-lg">
+                    Order Now on WhatsApp
+                  </a>
+                  <div className="flex justify-center space-x-4 mt-4">
+                    <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="bg-mp-purple text-white px-6 py-3 rounded-full font-medium hover:bg-mp-lilac transition-colors">
+                      Instagram
+                    </a>
+                    <a href={tiktokUrl} target="_blank" rel="noopener noreferrer" className="bg-black text-white px-6 py-3 rounded-full font-medium hover:bg-gray-800 transition-colors">
+                      TikTok
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-2">
+              {heroImages.map((_, index) => (
+                <button key={index} onClick={() => setCurrentSlide(index)} className={`w-3 h-3 rounded-full transition-colors ${index === currentSlide ? 'bg-white' : 'bg-white/50'}`} aria-label={`Go to slide ${index + 1}`} />
+              ))}
+            </div>
+          </section>
+
+          {/* About */}
+          <section id="about" className="py-20 bg-gradient-to-b from-mp-bg to-white">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">About Moonlit Petals</h2>
+                <div className="w-24 h-1 bg-gradient-to-r from-mp-lilac to-mp-purple mx-auto mb-8"></div>
+              </div>
+              <div className="flex flex-col md:flex-row items-center gap-12">
+                <div className="md:w-1/2">
+                  <div className="bg-white p-8 rounded-3xl shadow-xl">
+                    {allImages.find(img => img.src.startsWith('owner_picture/')) ? (
+                      <img src={`/${allImages.find(img => img.src.startsWith('owner_picture/')).src}`} alt="Owner & lead designer" className="w-full h-96 object-cover rounded-2xl mb-6" />
+                    ) : (
+                      <div className="w-full h-96 bg-gray-200 rounded-2xl mb-6 flex items-center justify-center">Owner Photo</div>
+                    )}
+                    <div className="text-center">
+                      <h3 className="text-2xl font-bold text-mp-text mb-2">Fátima Marroquín</h3>
+                      <p className="text-mp-purple font-medium">Owner & Lead Designer</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="md:w-1/2">
+                  <p className="text-xl text-mp-text leading-relaxed mb-6">
+                    Moonlit Petals specializes in creating unforgettable gifts and decorations for every occasion — from quinceañeras to birthdays, anniversaries, and more.
+                  </p>
+                  <p className="text-xl text-mp-text leading-relaxed mb-6">
+                    Each bouquet is handmade with love, customizable with flowers, plushies, chocolates, money, or unique details to make your gift truly one-of-a-kind.
+                  </p>
+                  <p className="text-xl text-mp-text leading-relaxed">
+                    Based in Trenton, NJ & Bronx, NY, we bring joy and beauty to celebrations across the tri-state area.
+                  </p>
+                  <div className="mt-8 flex flex-wrap gap-4">
+                    <span className="bg-mp-lilac text-mp-purple px-4 py-2 rounded-full font-medium">Handmade with Love</span>
+                    <span className="bg-mp-sky text-mp-purple px-4 py-2 rounded-full font-medium">Customizable</span>
+                    <span className="bg-purple-100 text-mp-purple px-4 py-2 rounded-full font-medium">Unique Designs</span>
+                    <span className="bg-yellow-100 text-mp-purple px-4 py-2 rounded-full font-medium">Local Delivery</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Services */}
+          <section id="services" className="py-20 bg-white">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">Our Products</h2>
+                <p className="text-xl text-mp-text max-w-3xl mx-auto">Explore our collection of beautifully crafted bouquets and decorations for every occasion</p>
+                <div className="w-24 h-1 bg-gradient-to-r from-mp-lilac to-mp-purple mx-auto mt-8"></div>
+              </div>
+
+              {products.map((product, idx) => {
+                const firstImage = allImages.find(img => img.src.startsWith(product.imagePlaceholder + '/'));
+                return (
+                  <div key={idx} className="mb-16">
+                    <h3 className="text-3xl font-bold text-mp-text mb-8 text-center">{product.category}</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                      <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                        {firstImage ? (
+                          <img src={`/${firstImage.src}`} alt={product.name} className="w-full h-64 object-cover" />
+                        ) : (
+                          <div className="w-full h-64 bg-gray-100 flex items-center justify-center">Image</div>
+                        )}
+                        <div className="p-6">
+                          <h4 className="text-xl font-bold text-mp-text mb-2">{product.name}</h4>
+                          <p className="text-mp-purple font-semibold text-lg mb-2">Starting at ${product.price}</p>
+                          <p className="text-mp-text text-sm mb-4">{product.description}</p>
+                          <a
+                            href={`https://wa.me/16093791145?text=${encodeURIComponent(
+                              `Hi! I’d like to order: ${product.name} (Starting at $${product.price}). My event date is: ____`
+                            )}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block w-full text-center bg-mp-purple text-white py-3 rounded-lg font-medium hover:bg-mp-lilac transition-colors"
+                          >
+                            Order Now
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* Order & Policies */}
+          <section id="order" className="py-20 bg-gradient-to-b from-mp-bg to-white">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">Order & Policies</h2>
+                <div className="w-24 h-1 bg-gradient-to-r from-mp-lilac to-mp-purple mx-auto mb-8"></div>
+              </div>
+              <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12">
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div>
+                    <h3 className="text-2xl font-bold text-mp-text mb-6">Order Information</h3>
+                    <ul className="space-y-4 text-mp-text">
+                      <li>• Order 2–3 days in advance for best availability</li>
+                      <li>• 25% non-refundable deposit required to secure your order</li>
+                      <li>• Pick-up only. Late pick-up may result in additional fees</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-mp-text mb-6">Popular Add-ons</h3>
+                    <ul className="space-y-3 text-mp-text">
+                      <li><span className="font-semibold">Crown</span> — add elegance to any bouquet</li>
+                      <li><span className="font-semibold">Butterflies</span> — delicate decorative accents</li>
+                      <li><span className="font-semibold">Ribbons</span> — color-coordinated to match your theme</li>
+                      <li><span className="font-semibold">Lights</span> — sparkle for evening events</li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="mt-12 text-center">
+                  <a
+                    href={`https://wa.me/16093791145?text=${encodeURIComponent(
+                      `Hi! I’d like to place an order. My event date is: ____`
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block bg-mp-purple text-white px-8 py-4 rounded-full text-xl font-semibold hover:bg-mp-lilac transform hover:scale-105 transition-all duration-300 shadow-lg"
+                  >
+                    Place Your Order
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Gallery */}
+          <section id="gallery" className="py-20 bg-white" id="gallery-section">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">Our Gallery</h2>
+                <p className="text-xl text-mp-text max-w-3xl mx-auto">Browse through our collection of stunning creations for every occasion</p>
+                <div className="w-24 h-1 bg-gradient-to-r from-mp-lilac to-mp-purple mx-auto mt-8 mb-8"></div>
+                <div className="flex flex-wrap justify-center gap-4 mb-12">
+                  {['all', 'birthdays', 'quinceaneras', 'romantic', 'custom', 'graduation', 'decor'].map(cat => (
+                    <button key={cat} onClick={() => setActiveCategory(cat)} className={`px-6 py-3 rounded-full font-medium transition-colors ${activeCategory === cat ? 'bg-gradient-to-r from-mp-lilac to-mp-purple text-white' : 'bg-gray-100 text-mp-purple hover:bg-gray-200'}`}>
+                      {cat === 'all' ? 'All' : cat.charAt(0).toUpperCase() + cat.slice(1)}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {loading ? (
+                  // Show skeleton placeholders while loading
+                  Array.from({ length: 12 }).map((_, index) => (
+                    <div key={index} className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 gallery-skeleton">
+                      <div className="w-full h-80 bg-gray-300"></div>
+                    </div>
+                  ))
+                ) : isGalleryLoaded ? (
+                  filteredGallery.map((image, index) => (
+                    <div key={index} className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                      <img
+                        loading="lazy"
+                        width="800"
+                        height="800"
+                        src={`/${image.src}`}
+                        alt={image.alt}
+                        className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
+                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white text-xl font-semibold">{image.alt}</div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  // Show loading message until user scrolls to gallery
+                  <div className="col-span-full text-center py-12 text-mp-purple">
+                    Scroll down to see our gallery...
+                  </div>
+                )}
+              </div>
+            </div>
+          </section>
+
+          {/* Contact */}
+          <section id="contact" className="py-20 bg-gradient-to-b from-white to-mp-bg">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">Contact Us</h2>
+                <p className="text-xl text-mp-text mb-8">We speak English and Spanish // Hablamos inglés y español</p>
+                <div className="w-24 h-1 bg-gradient-to-r from-mp-lilac to-mp-purple mx-auto mb-8"></div>
+              </div>
+              <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12">
+                <div className="grid md:grid-cols-3 gap-8 mb-12">
+                  <div className="text-center">
+                    <h4 className="text-xl font-bold text-mp-text mb-2">Phone/WhatsApp</h4>
+                    <p className="text-mp-text">609-379-1145</p>
+                    <a
+                      href={`https://wa.me/16093791145?text=${encodeURIComponent(
+                        `Hi! I have a question about my order.`
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block mt-2 text-mp-purple font-medium hover:text-mp-sky"
+                    >
+                      Click to Chat
+                    </a>
+                  </div>
+                  <div className="text-center">
+                    <h4 className="text-xl font-bold text-mp-text mb-2">Instagram</h4>
+                    <p className="text-mp-text">@moonlit_petals03</p>
+                    <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-2 text-mp-purple font-medium hover:text-mp-sky">Follow Us</a>
+                  </div>
+                  <div className="text-center">
+                    <h4 className="text-xl font-bold text-mp-text mb-2">TikTok</h4>
+                    <p className="text-mp-text">@moonlit_petals03</p>
+                    <a href={tiktokUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-2 text-mp-purple font-medium hover:text-mp-sky">Follow Us</a>
+                  </div>
+                </div>
+                <div className="text-center">
+                  <a
+                    href={`https://wa.me/16093791145?text=${encodeURIComponent(
+                      `Hi! I’d like to place an order. My event date is: ____`
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block bg-mp-purple text-white px-8 py-4 rounded-full text-xl font-semibold hover:bg-mp-lilac transform hover:scale-105 transition-all duration-300 shadow-lg"
+                  >
+                    Message Us on WhatsApp
+                  </a>
+                </div>
+                <div className="mt-8 flex justify-center">
+                  <SocialLinks />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Footer */}
+          <footer className="bg-mp-text text-white py-12">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+              <div className="flex items-center justify-center mb-6">
+                <div className="w-12 h-12 bg-gradient-to-r from-mp-lilac to-mp-purple rounded-full flex items-center justify-center mr-3">
+                  <span className="text-white font-bold text-xl">MP</span>
+                </div>
+                <span className="text-2xl font-bold">Moonlit Petals</span>
+              </div>
+              <div className="mb-6">
+                <SocialLinks />
+              </div>
+              <p className="text-gray-300 mb-6">Creating unforgettable moments with unique bouquets & party decorations</p>
+              <p className="text-gray-400 mb-8">Trenton, NJ & Bronx, NY | English & Spanish</p>
+              <p className="text-gray-400 text-sm">© 2024 Moonlit Petals. All rights reserved.</p>
+            </div>
+          </footer>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+
+  <!-- Tidio Live Chat Widget -->
+  <script src="//code.tidio.co/rgji6f7tm0bpgy46zwvbo8bayrpjhbp7.js" async></script>
+</body>
+</html>
