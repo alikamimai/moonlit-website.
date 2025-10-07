@@ -8,10 +8,10 @@
   <meta name="theme-color" content="#e11d48">
   <meta property="og:title" content="Moonlit Petals — Bouquets & Party Décor">
   <meta property="og:description" content="Handmade bouquets, balloon backdrops & custom décor for quinceañeras, birthdays and more. Trenton, NJ & Bronx, NY.">
-  <meta property="og:image" content="balloon_arches/photo-1.jpg">
+  <meta property="og:image" content="balloon_arches/">
   <meta property="og:url" content="https://moonlitpetals.com">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" href="owner_picture/photo-23.jpg">
+  <link rel="icon" href="/owner_picture/">
   <link rel="me" href="https://www.instagram.com/moonlit_petals03">
 
   <!-- JSON-LD Schema -->
@@ -28,7 +28,7 @@
   }
   </script>
 
-  <!-- Tailwind (CDN) with custom colors -->
+  <!-- Tailwind (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -59,105 +59,26 @@
   <!-- React + ReactDOM (CDN) -->
   <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-  <!-- Babel so we can use JSX in the browser -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   <script type="text/babel">
     const { useState, useEffect } = React;
 
-    // Updated Product Catalog with new pricing
+    // Product catalog (unchanged)
     const products = [
-      {
-        "id": "personalized-bouquet",
-        "name": "Personalized Bouquets",
-        "price": 50,
-        "description": "Custom-designed bouquets tailored to your theme or occasion.",
-        "image": "personalized_bouquets/photo-11.jpg",
-        "category": "Bouquets"
-      },
-      {
-        "id": "flower-bouquet",
-        "name": "Flower Bouquets",
-        "price": 90,
-        "description": "Elegant fresh flower bouquets starting at $90.",
-        "image": "flower_bouquets/photo-3.jpg",
-        "category": "Bouquets"
-      },
-      {
-        "id": "hotwheels-bouquet",
-        "name": "Hot Wheels Bouquet",
-        "price": 50,
-        "description": "Fun themed bouquet with Hot Wheels toys and flowers.",
-        "image": "hotwheels_bouquets/photo-3.jpg",
-        "category": "Specialty"
-      },
-      {
-        "id": "plushie-arrangement",
-        "name": "Plushie Arrangements",
-        "price": 90,
-        "description": "Bouquet arrangements with plush toys included.",
-        "image": "plushie_arrangements/photo-17.jpg",
-        "category": "Specialty"
-      },
-      {
-        "id": "flower-mix",
-        "name": "Flower Mix",
-        "price": 120,
-        "description": "A beautiful mix of seasonal flowers.",
-        "image": "flower_mix/photo-13.jpg",
-        "category": "Bouquets"
-      },
-      {
-        "id": "graduation-lei-cap",
-        "name": "Graduation Leis & Cap",
-        "price": 75,
-        "description": "Festive leis and decorated graduation caps.",
-        "image": "graduation/photo-8.jpg",
-        "category": "Graduation"
-      },
-      {
-        "id": "surprise-box",
-        "name": "Surprise Boxes",
-        "price": 100,
-        "description": "Customizable surprise gift boxes with flowers, treats, and more.",
-        "image": "surprise_boxes/photo-5.jpg",
-        "category": "Gifts"
-      },
-      {
-        "id": "eternal-roses",
-        "name": "Eternal Roses",
-        "price": 65,
-        "description": "Long-lasting roses that make a perfect gift.",
-        "image": "eternal_roses/photo-20.jpg",
-        "category": "Bouquets"
-      },
-      {
-        "id": "balloon-arch",
-        "name": "Balloon Arch",
-        "price": 250,
-        "description": "Large custom balloon arch for parties or events.",
-        "image": "balloon_arches/photo-6.jpg",
-        "category": "Decor"
-      },
-      {
-        "id": "room-decoration",
-        "name": "Room Decoration",
-        "price": 200,
-        "description": "Themed room decoration for special occasions.",
-        "image": "room_decorations/photo-7.jpg",
-        "category": "Decor"
-      },
-      {
-        "id": "money-bouquet",
-        "name": "Money Bouquet",
-        "price": 50,
-        "description": "Bouquet wrapped with roses and cash notes.",
-        "image": "money_bouquets/photo-10.jpg",
-        "category": "Specialty"
-      }
+      { id: "personalized-bouquet", name: "Personalized Bouquets", price: 50, description: "Custom-designed bouquets tailored to your theme or occasion.", imagePlaceholder: "personalized_bouquets", category: "Bouquets" },
+      { id: "flower-bouquet", name: "Flower Bouquets", price: 90, description: "Elegant fresh flower bouquets starting at $90.", imagePlaceholder: "flower_bouquets", category: "Bouquets" },
+      { id: "hotwheels-bouquet", name: "Hot Wheels Bouquet", price: 50, description: "Fun themed bouquet with Hot Wheels toys and flowers.", imagePlaceholder: "hotwheels_bouquets", category: "Specialty" },
+      { id: "plushie-arrangement", name: "Plushie Arrangements", price: 90, description: "Bouquet arrangements with plush toys included.", imagePlaceholder: "plushie_arrangements", category: "Specialty" },
+      { id: "flower-mix", name: "Flower Mix", price: 120, description: "A beautiful mix of seasonal flowers.", imagePlaceholder: "flower_mix", category: "Bouquets" },
+      { id: "graduation-lei-cap", name: "Graduation Leis & Cap", price: 75, description: "Festive leis and decorated graduation caps.", imagePlaceholder: "graduation", category: "Graduation" },
+      { id: "surprise-box", name: "Surprise Boxes", price: 100, description: "Customizable surprise gift boxes with flowers, treats, and more.", imagePlaceholder: "surprise_boxes", category: "Gifts" },
+      { id: "eternal-roses", name: "Eternal Roses", price: 65, description: "Long-lasting roses that make a perfect gift.", imagePlaceholder: "eternal_roses", category: "Bouquets" },
+      { id: "balloon-arch", name: "Balloon Arch", price: 250, description: "Large custom balloon arch for parties or events.", imagePlaceholder: "balloon_arches", category: "Decor" },
+      { id: "room-decoration", name: "Room Decoration", price: 200, description: "Themed room decoration for special occasions.", imagePlaceholder: "room_decorations", category: "Decor" },
+      { id: "money-bouquet", name: "Money Bouquet", price: 50, description: "Bouquet wrapped with roses and cash notes.", imagePlaceholder: "money_bouquets", category: "Specialty" }
     ];
 
-    // Social media data (equivalent to /data/sections.json)
     const socialData = {
       contact: {
         instagram: "https://www.instagram.com/moonlit_petals03?utm_source=instagram&utm_medium=social&utm_campaign=profile",
@@ -165,31 +86,20 @@
       }
     };
 
-    // Social Links Component
     function SocialLinks({ className = "" }) {
       return (
         <div className={`flex items-center gap-3 ${className}`}>
           {socialData.contact.instagram && (
-            <a 
-              href={socialData.contact.instagram} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              aria-label="Instagram"
-              className="text-mp-purple hover:text-mp-sky transition-colors"
-            >
+            <a href={socialData.contact.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+              className="text-mp-purple hover:text-mp-sky transition-colors">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
               </svg>
             </a>
           )}
           {socialData.contact.tiktok && (
-            <a 
-              href={socialData.contact.tiktok} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              aria-label="TikTok"
-              className="text-mp-purple hover:text-mp-sky transition-colors"
-            >
+            <a href={socialData.contact.tiktok} target="_blank" rel="noopener noreferrer" aria-label="TikTok"
+              className="text-mp-purple hover:text-mp-sky transition-colors">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-.33-.05A2.88 2.88 0 0 1 7.2 5.57a2.89 2.89 0 0 1 2.66-3.85 2.88 2.88 0 0 1 3.27 1.57h3.45v-.42a4.86 4.86 0 0 1 3.45 1.8zM12.05 20c-.23 0-.45-.02-.68-.05a2.89 2.89 0 0 1-2.24-3.74 2.89 2.89 0 0 1 2.31-1.62 2.89 2.89 0 0 1 2.53 1.57 2.89 2.89 0 0 1-1.92 4.84z" />
               </svg>
@@ -200,94 +110,85 @@
     }
 
     function App() {
+      const [heroImages, setHeroImages] = useState([]);
+      const [allImages, setAllImages] = useState([]);
+      const [loading, setLoading] = useState(true);
       const [currentSlide, setCurrentSlide] = useState(0);
       const [activeCategory, setActiveCategory] = useState('all');
 
-      /* ---------- HERO: Randomly pick one image from each folder ---------- */
-      const heroSlides = [
-        { image: "balloon_arches/photo-1.jpg",  title: "Custom Bouquets",   subtitle: "Handmade • Unique • Memorable" },
-        { image: "surprise_boxes/photo-5.jpg",  title: "Balloon Setups",    subtitle: "Backdrops & party decor" },
-        { image: "graduation/photo-8.jpg",  title: "Special Occasions", subtitle: "Birthdays • Quinceañeras • More" },
-        { image: "eternal_roses/photo-20.jpg", title: "Signature Style",   subtitle: "Moonlit Petals by Fátima" },
-      ];
+      const FOLDER_CATEGORIES = {
+        balloon_arches: 'birthdays',
+        money_bouquets: 'quinceaneras',
+        flower_bouquets: 'romantic',
+        plushie_arrangements: 'custom',
+        eternal_roses: 'romantic',
+        graduation: 'graduation',
+        surprise_boxes: 'custom',
+        room_decorations: 'decor'
+      };
 
-      /* ---------- GALLERY: All 26 photos from your manifest ---------- */
-      const galleryManifest = [
-        ["photo-1.jpg",  "birthdays",   "Balloon wall with plushies"],
-        ["photo-2.jpg",  "custom",      "Wrapped money bouquet"],
-        ["photo-3.jpg",  "romantic",    "Red rose bouquet"],
-        ["photo-4.jpg",  "custom",      "Dessert & balloons table"],
-        ["photo-5.jpg",  "custom",      "Trunk surprise setup"],
-        ["photo-6.jpg",  "birthdays",   "Pink balloon stand"],
-        ["photo-7.jpg",  "custom",      "Neon balloon room"],
-        ["photo-8.jpg",  "birthdays",   "Birthday gift box & roses"],
-        ["photo-9.jpg",  "romantic",    "Heart rose bouquet"],
-        ["photo-10.jpg", "quinceaneras","Crown money bouquet"],
-        ["photo-11.jpg", "romantic",    "Round rose bouquet"],
-        ["photo-12.jpg", "birthdays",   "Column balloon decor"],
-        ["photo-13.jpg", "romantic",    "Pink floral bouquet"],
-        ["photo-14.jpg", "quinceaneras","Crown floral bouquet"],
-        ["photo-15.jpg", "birthdays",   "Character bouquet"],
-        ["photo-16.jpg", "birthdays",   "Character bouquet 2"],
-        ["photo-17.jpg", "custom",      "Stitch plushie bouquet"],
-        ["photo-18.jpg", "romantic",    "Green & pink bouquet"],
-        ["photo-19.jpg", "custom",      "Treat box & balloons"],
-        ["photo-20.jpg", "romantic",    "Layered red bouquet"],
-        ["photo-21.jpg", "custom",      "Snack/drink bouquet"],
-        ["photo-22.jpg", "custom",      "LED red decor"],
-        ["photo-23.jpg", "romantic",    "Pink round bouquet"],
-        ["photo-24.jpg", "romantic",    "Purple floral bouquet"],
-        ["photo-25.jpg", "custom",      "Stitch plushie bouquet 2"],
-        ["photo-26.jpg", "romantic",    "Red & gold bouquet"],
-      ];
-
-      // Map each photo to its appropriate folder based on category
-      const galleryImages = galleryManifest.map(([file, category, alt]) => {
-        let folder;
-        switch(category) {
-          case 'birthdays':
-            folder = 'balloon_arches';
-            break;
-          case 'quinceaneras':
-            folder = 'money_bouquets';
-            break;
-          case 'romantic':
-            folder = 'flower_bouquets';
-            break;
-          case 'custom':
-            folder = 'plushie_arrangements';
-            break;
-          default:
-            folder = 'balloon_arches'; // default folder
-        }
-        return {
-          src: `${folder}/${file}`,
-          category,
-          alt
-        };
-      });
-
-      // Group products by category for display
-      const categories = [...new Set(products.map(p => p.category))];
-      const groupedProducts = categories.reduce((acc, category) => {
-        acc[category] = products.filter(p => p.category === category);
-        return acc;
-      }, {});
+      const fetchImagesFromFolder = async (folder) => {
+        const res = await fetch(`/api/list?dir=${folder}`);
+        const data = await res.json();
+        return data.images || [];
+      };
 
       useEffect(() => {
-        const timer = setInterval(() => {
-          setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-        }, 5000);
-        return () => clearInterval(timer);
+        const loadAllImages = async () => {
+          const folders = Object.keys(FOLDER_CATEGORIES);
+          const promises = folders.map(folder => fetchImagesFromFolder(folder));
+          const results = await Promise.all(promises);
+
+          const hero = [];
+          const gallery = [];
+
+          results.forEach((images, idx) => {
+            const folder = folders[idx];
+            const category = FOLDER_CATEGORIES[folder];
+            if (images.length > 0) {
+              // First image for hero (only for key folders)
+              if (['balloon_arches', 'surprise_boxes', 'graduation', 'eternal_roses'].includes(folder)) {
+                hero.push({ image: images[0], title: folder.replace(/_/g, ' '), subtitle: 'Handmade • Unique • Memorable' });
+              }
+              // All images for gallery
+              images.forEach(img => {
+                gallery.push({ src: img, category, alt: `${folder} creation` });
+              });
+            }
+          });
+
+          setHeroImages(hero);
+          setAllImages(gallery);
+          setLoading(false);
+        };
+
+        loadAllImages();
       }, []);
 
-      const filteredGallery = activeCategory === 'all'
-        ? galleryImages
-        : galleryImages.filter(img => img.category === activeCategory);
+      // Auto-rotate hero
+      useEffect(() => {
+        if (heroImages.length === 0) return;
+        const timer = setInterval(() => {
+          setCurrentSlide(prev => (prev + 1) % heroImages.length);
+        }, 5000);
+        return () => clearInterval(timer);
+      }, [heroImages]);
 
-      const whatsappUrl  = "https://wa.me/16093791145";
+      const filteredGallery = activeCategory === 'all'
+        ? allImages
+        : allImages.filter(img => img.category === activeCategory);
+
+      const whatsappUrl = "https://wa.me/16093791145";
       const instagramUrl = socialData.contact.instagram;
-      const tiktokUrl    = socialData.contact.tiktok;
+      const tiktokUrl = socialData.contact.tiktok;
+
+      if (loading) {
+        return (
+          <div className="min-h-screen bg-mp-bg flex items-center justify-center">
+            <div className="text-mp-purple text-xl">Loading your beautiful creations...</div>
+          </div>
+        );
+      }
 
       return (
         <div className="min-h-screen bg-mp-bg">
@@ -302,10 +203,10 @@
                   <span className="ml-3 text-2xl font-bold text-mp-text">Moonlit Petals</span>
                 </div>
                 <div className="hidden md:flex space-x-8">
-                  <a href="#home"    className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Home</a>
-                  <a href="#about"   className="text-mp-purple hover:text-mp-sky font-medium transition-colors">About</a>
-                  <a href="#services"className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Shop</a>
-                  <a href="#order"   className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Order</a>
+                  <a href="#home" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Home</a>
+                  <a href="#about" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">About</a>
+                  <a href="#services" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Shop</a>
+                  <a href="#order" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Order</a>
                   <a href="#gallery" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Gallery</a>
                   <a href="#contact" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Contact</a>
                 </div>
@@ -329,9 +230,9 @@
           {/* Hero */}
           <section id="home" className="relative h-screen overflow-hidden">
             <div className="absolute inset-0">
-              {heroSlides.map((slide, index) => (
+              {heroImages.map((slide, index) => (
                 <div key={index} className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}>
-                  <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
+                  <img src={`/${slide.image}`} alt={slide.title} className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-black/50"></div>
                 </div>
               ))}
@@ -356,8 +257,8 @@
               </div>
             </div>
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-2">
-              {heroSlides.map((_, index) => (
-                <button key={index} onClick={() => setCurrentSlide(index)} className={`w-3 h-3 rounded-full transition-colors ${index === currentSlide ? 'bg-white' : 'bg-white/50'}`} aria-label={`Go to slide ${index+1}`} />
+              {heroImages.map((_, index) => (
+                <button key={index} onClick={() => setCurrentSlide(index)} className={`w-3 h-3 rounded-full transition-colors ${index === currentSlide ? 'bg-white' : 'bg-white/50'}`} aria-label={`Go to slide ${index + 1}`} />
               ))}
             </div>
           </section>
@@ -372,7 +273,11 @@
               <div className="flex flex-col md:flex-row items-center gap-12">
                 <div className="md:w-1/2">
                   <div className="bg-white p-8 rounded-3xl shadow-xl">
-                    <img src="owner_picture/photo-23.jpg" alt="Owner & lead designer" className="w-full h-96 object-cover rounded-2xl mb-6" />
+                    {allImages.find(img => img.src.startsWith('owner_picture/')) ? (
+                      <img src={`/${allImages.find(img => img.src.startsWith('owner_picture/')).src}`} alt="Owner & lead designer" className="w-full h-96 object-cover rounded-2xl mb-6" />
+                    ) : (
+                      <div className="w-full h-96 bg-gray-200 rounded-2xl mb-6 flex items-center justify-center">Owner Photo</div>
+                    )}
                     <div className="text-center">
                       <h3 className="text-2xl font-bold text-mp-text mb-2">Fátima Marroquín</h3>
                       <p className="text-mp-purple font-medium">Owner & Lead Designer</p>
@@ -400,7 +305,7 @@
             </div>
           </section>
 
-          {/* Services - Updated with new product catalog */}
+          {/* Services */}
           <section id="services" className="py-20 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
@@ -408,14 +313,19 @@
                 <p className="text-xl text-mp-text max-w-3xl mx-auto">Explore our collection of beautifully crafted bouquets and decorations for every occasion</p>
                 <div className="w-24 h-1 bg-gradient-to-r from-mp-lilac to-mp-purple mx-auto mt-8"></div>
               </div>
-              
-              {Object.entries(groupedProducts).map(([category, items]) => (
-                <div key={category} className="mb-16">
-                  <h3 className="text-3xl font-bold text-mp-text mb-8 text-center">{category}</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {items.map((product, index) => (
-                      <div key={index} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                        <img src={product.image} alt={product.name} className="w-full h-64 object-cover" />
+
+              {products.map((product, idx) => {
+                const firstImage = allImages.find(img => img.src.startsWith(product.imagePlaceholder + '/'));
+                return (
+                  <div key={idx} className="mb-16">
+                    <h3 className="text-3xl font-bold text-mp-text mb-8 text-center">{product.category}</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                      <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                        {firstImage ? (
+                          <img src={`/${firstImage.src}`} alt={product.name} className="w-full h-64 object-cover" />
+                        ) : (
+                          <div className="w-full h-64 bg-gray-100 flex items-center justify-center">Image</div>
+                        )}
                         <div className="p-6">
                           <h4 className="text-xl font-bold text-mp-text mb-2">{product.name}</h4>
                           <p className="text-mp-purple font-semibold text-lg mb-2">Starting at ${product.price}</p>
@@ -424,18 +334,18 @@
                             href={`https://wa.me/16093791145?text=${encodeURIComponent(
                               `Hi! I’d like to order: ${product.name} (Starting at $${product.price}). My event date is: ____`
                             )}`}
-                            target="_blank" 
-                            rel="noopener noreferrer" 
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="block w-full text-center bg-mp-purple text-white py-3 rounded-lg font-medium hover:bg-mp-lilac transition-colors"
                           >
                             Order Now
                           </a>
                         </div>
                       </div>
-                    ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </section>
 
@@ -471,8 +381,8 @@
                     href={`https://wa.me/16093791145?text=${encodeURIComponent(
                       `Hi! I’d like to place an order. My event date is: ____`
                     )}`}
-                    target="_blank" 
-                    rel="noopener noreferrer" 
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-block bg-mp-purple text-white px-8 py-4 rounded-full text-xl font-semibold hover:bg-mp-lilac transform hover:scale-105 transition-all duration-300 shadow-lg"
                   >
                     Place Your Order
@@ -490,9 +400,9 @@
                 <p className="text-xl text-mp-text max-w-3xl mx-auto">Browse through our collection of stunning creations for every occasion</p>
                 <div className="w-24 h-1 bg-gradient-to-r from-mp-lilac to-mp-purple mx-auto mt-8 mb-8"></div>
                 <div className="flex flex-wrap justify-center gap-4 mb-12">
-                  {['all','birthdays','quinceaneras','romantic','custom'].map(cat => (
+                  {['all', 'birthdays', 'quinceaneras', 'romantic', 'custom', 'graduation', 'decor'].map(cat => (
                     <button key={cat} onClick={() => setActiveCategory(cat)} className={`px-6 py-3 rounded-full font-medium transition-colors ${activeCategory === cat ? 'bg-gradient-to-r from-mp-lilac to-mp-purple text-white' : 'bg-gray-100 text-mp-purple hover:bg-gray-200'}`}>
-                      {cat === 'all' ? 'All' : cat.charAt(0).toUpperCase()+cat.slice(1)}
+                      {cat === 'all' ? 'All' : cat.charAt(0).toUpperCase() + cat.slice(1)}
                     </button>
                   ))}
                 </div>
@@ -500,13 +410,14 @@
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {filteredGallery.map((image, index) => (
                   <div key={index} className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                    <img 
-                      loading="lazy" 
-                      width="800" 
+                    <img
+                      loading="lazy"
+                      width="800"
                       height="800"
-                      src={image.src} 
-                      alt={image.alt} 
-                      className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500" />
+                      src={`/${image.src}`}
+                      alt={image.alt}
+                      className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
                       <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white text-xl font-semibold">{image.alt}</div>
                     </div>
@@ -529,12 +440,12 @@
                   <div className="text-center">
                     <h4 className="text-xl font-bold text-mp-text mb-2">Phone/WhatsApp</h4>
                     <p className="text-mp-text">609-379-1145</p>
-                    <a 
+                    <a
                       href={`https://wa.me/16093791145?text=${encodeURIComponent(
                         `Hi! I have a question about my order.`
                       )}`}
-                      target="_blank" 
-                      rel="noopener noreferrer" 
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="inline-block mt-2 text-mp-purple font-medium hover:text-mp-sky"
                     >
                       Click to Chat
@@ -556,8 +467,8 @@
                     href={`https://wa.me/16093791145?text=${encodeURIComponent(
                       `Hi! I’d like to place an order. My event date is: ____`
                     )}`}
-                    target="_blank" 
-                    rel="noopener noreferrer" 
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-block bg-mp-purple text-white px-8 py-4 rounded-full text-xl font-semibold hover:bg-mp-lilac transform hover:scale-105 transition-all duration-300 shadow-lg"
                   >
                     Message Us on WhatsApp
