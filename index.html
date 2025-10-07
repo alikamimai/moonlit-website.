@@ -313,7 +313,7 @@
                 <div className="md:w-1/2">
                   <div className="bg-white p-8 rounded-3xl shadow-xl">
                     {allImages.find(img => img.src.startsWith('owner_picture/')) ? (
-                      <img src={`/${allImages.find(img => img.src.startsWith('owner_picture/')).src}`} alt="Owner & lead designer" className="w-full h-96 object-cover rounded-2xl mb-6" />
+                     <img src={allImages.find(img => img.src.startsWith('owner_picture/')).src} alt="Owner & lead designer" className="w-full h-96 object-cover rounded-2xl mb-6" />
                     ) : (
                       <div className="w-full h-96 bg-gray-200 rounded-2xl mb-6 flex items-center justify-center">Owner Photo</div>
                     )}
