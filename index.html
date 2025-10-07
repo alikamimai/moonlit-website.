@@ -1,17 +1,17 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Moonlit Petals — Bouquets & Party Décor</title>
   <meta name="description" content="Handmade bouquets, balloon backdrops, and custom party décor for quinceañeras, birthdays, and special moments. English & Spanish." />
   <meta name="theme-color" content="#e11d48">
   <meta property="og:title" content="Moonlit Petals — Bouquets & Party Décor">
   <meta property="og:description" content="Handmade bouquets, balloon backdrops & custom décor for quinceañeras, birthdays and more. Trenton, NJ & Bronx, NY.">
-  <meta property="og:image" content="photo-1.jpg">
+  <meta property="og:image" content="images/photo-1.jpg">
   <meta property="og:url" content="https://moonlitpetals.com">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" href="photo-23.jpg">
+  <link rel="icon" href="images/photo-23.jpg">
   <link rel="me" href="https://www.instagram.com/moonlit_petals03">
   
   <!-- JSON-LD Schema -->
@@ -28,23 +28,29 @@
   }
   </script>
   
-  <!-- Tailwind CSS -->
+  <!-- Tailwind (CDN) with custom colors -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            mp: {
+              lilac: '#C7A4F4',
+              sky: '#7EC8F8',
+              purple: '#6A3EEA',
+              text: '#1F1F29',
+              bg: '#FAF8FF'
+            }
+          }
+        }
+      }
+    }
+  </script>
   <style>
     @keyframes fade-in { from { opacity: 0 } to { opacity: 1 } }
     .animate-fade-in { animation: fade-in 0.8s ease-out both; }
     body { background-color: #FAF8FF; }
-    
-    /* Carousel CSS */
-    .mp-carousel{position:relative;border-radius:16px;overflow:hidden;background:#f8f6ff}
-    .mp-track{position:relative;height:220px}
-    .mp-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s}
-    .mp-slide.is-active{opacity:1}
-    .mp-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.38);color:#fff;border:0;width:34px;height:34px;border-radius:999px;cursor:pointer}
-    .mp-prev{left:8px} .mp-next{right:8px}
-    .mp-dots{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);display:flex;gap:6px}
-    .mp-dot{width:8px;height:8px;border-radius:50%;border:0;background:rgba(0,0,0,.25);cursor:pointer}
-    .mp-dot.is-active{background:#6d28d9}
   </style>
 </head>
 <body class="min-h-screen bg-mp-bg">
@@ -57,101 +63,101 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   <script type="text/babel">
-    const { useState, useEffect, useRef } = React;
+    const { useState, useEffect } = React;
 
-    // Product Catalog
+    // Updated Product Catalog with new pricing
     const products = [
       {
-        "id": "personalized_bouquets",
+        "id": "personalized-bouquet",
         "name": "Personalized Bouquets",
         "price": 50,
         "description": "Custom-designed bouquets tailored to your theme or occasion.",
-        "category": "Bouquets",
-        "imageFolder": "personalized_bouquets"
+        "image": "images/photo-11.jpg",
+        "category": "Bouquets"
       },
       {
-        "id": "flower_bouquets",
+        "id": "flower-bouquet",
         "name": "Flower Bouquets",
         "price": 90,
         "description": "Elegant fresh flower bouquets starting at $90.",
-        "category": "Bouquets",
-        "imageFolder": "flower_bouquets"
+        "image": "images/photo-3.jpg",
+        "category": "Bouquets"
       },
       {
-        "id": "hotwheels_bouquets",
-        "name": "Hot Wheels Bouquets",
+        "id": "hotwheels-bouquet",
+        "name": "Hot Wheels Bouquet",
         "price": 50,
         "description": "Fun themed bouquet with Hot Wheels toys and flowers.",
-        "category": "Specialty",
-        "imageFolder": "hotwheels_bouquets"
+        "image": "images/photo-3.jpg",
+        "category": "Specialty"
       },
       {
-        "id": "plushie_arrangements",
+        "id": "plushie-arrangement",
         "name": "Plushie Arrangements",
         "price": 90,
         "description": "Bouquet arrangements with plush toys included.",
-        "category": "Specialty",
-        "imageFolder": "plushie_arrangements"
+        "image": "images/photo-17.jpg",
+        "category": "Specialty"
       },
       {
-        "id": "flower_mix",
+        "id": "flower-mix",
         "name": "Flower Mix",
         "price": 120,
         "description": "A beautiful mix of seasonal flowers.",
-        "category": "Bouquets",
-        "imageFolder": "flower_mix"
+        "image": "images/photo-13.jpg",
+        "category": "Bouquets"
       },
       {
-        "id": "graduation",
-        "name": "Graduation Leis & Caps",
+        "id": "graduation-lei-cap",
+        "name": "Graduation Leis & Cap",
         "price": 75,
         "description": "Festive leis and decorated graduation caps.",
-        "category": "Graduation",
-        "imageFolder": "graduation"
+        "image": "images/photo-8.jpg",
+        "category": "Graduation"
       },
       {
-        "id": "surprise_boxes",
+        "id": "surprise-box",
         "name": "Surprise Boxes",
         "price": 100,
         "description": "Customizable surprise gift boxes with flowers, treats, and more.",
-        "category": "Gifts",
-        "imageFolder": "surprise_boxes"
+        "image": "images/photo-5.jpg",
+        "category": "Gifts"
       },
       {
-        "id": "eternal_roses",
+        "id": "eternal-roses",
         "name": "Eternal Roses",
         "price": 65,
         "description": "Long-lasting roses that make a perfect gift.",
-        "category": "Bouquets",
-        "imageFolder": "eternal_roses"
+        "image": "images/photo-20.jpg",
+        "category": "Bouquets"
       },
       {
-        "id": "balloon_arches",
-        "name": "Balloon Arches",
+        "id": "balloon-arch",
+        "name": "Balloon Arch",
         "price": 250,
         "description": "Large custom balloon arch for parties or events.",
-        "category": "Decor",
-        "imageFolder": "balloon_arches"
+        "image": "images/photo-6.jpg",
+        "category": "Decor"
       },
       {
-        "id": "room_decorations",
-        "name": "Room Decorations",
+        "id": "room-decoration",
+        "name": "Room Decoration",
         "price": 200,
         "description": "Themed room decoration for special occasions.",
-        "category": "Decor",
-        "imageFolder": "room_decorations"
+        "image": "images/photo-7.jpg",
+        "category": "Decor"
       },
       {
-        "id": "money_bouquets",
-        "name": "Money Bouquets",
+        "id": "money-bouquet",
+        "name": "Money Bouquet",
         "price": 50,
         "description": "Bouquet wrapped with roses and cash notes.",
-        "category": "Specialty",
-        "imageFolder": "money_bouquets"
+        "image": "images/photo-10.jpg",
+        "category": "Specialty"
       }
     ];
 
-    // Social media data
+    // Social media data (equivalent to /data/sections.json)
     const socialData = {
       contact: {
         instagram: "https://www.instagram.com/moonlit_petals03?utm_source=instagram&utm_medium=social&utm_campaign=profile",
@@ -193,292 +199,16 @@
       );
     }
 
-    // Image Loading Helper
-    async function loadImageList(folderName) {
-      // Try to load images with common naming patterns
-      const extensions = ['.jpg', '.jpeg', '.png', '.webp'];
-      const imageUrls = [];
-      
-      // Try numbered images first (1.jpg, 2.jpg, etc.)
-      for (let i = 1; i <= 30; i++) {
-        for (const ext of extensions) {
-          const url = `${folderName}/${i}${ext}`;
-          try {
-            const img = new Image();
-            img.src = url;
-            await new Promise((resolve, reject) => {
-              img.onload = () => resolve(true);
-              img.onerror = () => reject(false);
-            });
-            imageUrls.push(url);
-          } catch (error) {
-            // Continue to next image if this one fails
-          }
-        }
-      }
-      
-      // If no images found with numbered names, try to find any image
-      if (imageUrls.length === 0) {
-        // This is a fallback - in practice, you'd need to know the exact filenames
-        // For now, we'll just return an empty array
-        return [];
-      }
-      
-      return imageUrls;
-    }
-
-    // Carousel Component
-    function Carousel({ images, interval = 2500 }) {
-      const [currentIndex, setCurrentIndex] = useState(0);
-      const [isPaused, setIsPaused] = useState(false);
-      const containerRef = useRef(null);
-      const touchStartX = useRef(0);
-      const touchEndX = useRef(0);
-      
-      // Auto-advance
-      useEffect(() => {
-        if (images.length <= 1 || isPaused) return;
-        
-        const timer = setInterval(() => {
-          setCurrentIndex(prev => (prev + 1) % images.length);
-        }, interval);
-        
-        return () => clearInterval(timer);
-      }, [images.length, isPaused, interval]);
-      
-      // Handle touch events for swipe
-      const handleTouchStart = (e) => {
-        touchStartX.current = e.touches[0].clientX;
-      };
-      
-      const handleTouchEnd = (e) => {
-        touchEndX.current = e.changedTouches[0].clientX;
-        handleSwipe();
-      };
-      
-      const handleSwipe = useCallback(() => {
-        if (!touchStartX.current || !touchEndX.current) return;
-        
-        const diff = touchStartX.current - touchEndX.current;
-        
-        if (Math.abs(diff) > 50) { // Minimum swipe distance
-          if (diff > 0) {
-            // Swipe left - next image
-            setCurrentIndex(prev => (prev + 1) % images.length);
-          } else {
-            // Swipe right - previous image
-            setCurrentIndex(prev => (prev - 1 + images.length) % images.length);
-          }
-        }
-        
-        touchStartX.current = 0;
-        touchEndX.current = 0;
-      }, [images.length]);
-      
-      if (!images || images.length === 0) {
-        return (
-          <div className="h-56 bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
-            No images available
-          </div>
-        );
-      }
-      
-      return (
-        <div 
-          ref={containerRef}
-          className="relative h-56 overflow-hidden rounded-lg cursor-pointer"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-        >
-          {images.map((imageUrl, index) => {
-            const isCurrent = index === currentIndex;
-            const isPrevious = index === (currentIndex - 1 + images.length) % images.length;
-            const isNext = index === (currentIndex + 1) % images.length;
-            
-            let transform = '';
-            let zIndex = 0;
-            let scale = 1;
-            let rotate = 0;
-            
-            if (isCurrent) {
-              // Current image - front and center
-              zIndex = 3;
-              scale = 1;
-              rotate = 0;
-            } else if (isPrevious) {
-              // Previous image - slightly behind and rotated
-              zIndex = 2;
-              scale = 0.95;
-              rotate = -5;
-            } else if (isNext) {
-              // Next image - slightly behind and rotated the other way
-              zIndex = 2;
-              scale = 0.95;
-              rotate = 5;
-            } else {
-              // Other images - further back
-              zIndex = 1;
-              scale = 0.9;
-              rotate = Math.random() * 4 - 2; // Random small rotation for depth
-            }
-            
-            return (
-              <div
-                key={index}
-                className={`absolute inset-0 transition-all duration-500 ease-in-out ${isCurrent ? 'z-3' : 'z-2'}`}
-                style={{
-                  transform: `translateY(${isCurrent ? '0' : '2px'}) rotate(${rotate}deg) scale(${scale})`,
-                  transformOrigin: 'center',
-                  willChange: 'transform, z-index',
-                  zIndex: zIndex,
-                  opacity: isCurrent ? 1 : 0.8,
-                  pointerEvents: isCurrent ? 'auto' : 'none'
-                }}
-              >
-                <img
-                  src={imageUrl}
-                  alt={`Product image ${index + 1}`}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
-              </div>
-            );
-          })}
-          
-          {/* Navigation indicators */}
-          {images.length > 1 && (
-            <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-1">
-              {images.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentIndex(index)}
-                  className={`w-2 h-2 rounded-full transition-colors ${
-                    index === currentIndex ? 'bg-white' : 'bg-white/50'
-                  }`}
-                  aria-label={`Go to image ${index + 1}`}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-      );
-    }
-
-    // Product Card Component
-    function ProductCard({ product }) {
-      const [images, setImages] = useState([]);
-      
-      useEffect(() => {
-        loadImageList(product.imageFolder).then(urls => {
-          setImages(urls);
-        });
-      }, [product.imageFolder]);
-      
-      return (
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-          <div className="h-56 overflow-hidden">
-            <Carousel images={images} interval={2500} />
-          </div>
-          <div className="p-6">
-            <h4 className="text-xl font-bold text-mp-text mb-2">{product.name}</h4>
-            <p className="text-mp-purple font-semibold text-lg mb-2">Starting from ${product.price}</p>
-            <p className="text-mp-text text-sm mb-4">{product.description}</p>
-            <a
-              href={`https://wa.me/16093791145?text=${encodeURIComponent(
-                `Hi! I’d like to order: ${product.name} (Starting from $${product.price}). My event date is: ____`
-              )}`}
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="block w-full text-center bg-mp-purple text-white py-3 rounded-lg font-medium hover:bg-mp-lilac transition-colors"
-            >
-              Order Now
-            </a>
-          </div>
-        </div>
-      );
-    }
-
-    // Owner Image Component
-    function OwnerImage() {
-      const [ownerImages, setOwnerImages] = useState([]);
-      
-      useEffect(() => {
-        loadImageList('owner_picture').then(urls => {
-          setOwnerImages(urls);
-        });
-      }, []);
-      
-      const [currentIndex, setCurrentIndex] = useState(0);
-      const [isPaused, setIsPaused] = useState(false);
-      
-      useEffect(() => {
-        if (ownerImages.length <= 1) return;
-        
-        const timer = setInterval(() => {
-          if (!isPaused) {
-            setCurrentIndex(prev => (prev + 1) % ownerImages.length);
-          }
-        }, 3000);
-        
-        return () => clearInterval(timer);
-      }, [ownerImages.length, isPaused]);
-      
-      if (!ownerImages || ownerImages.length === 0) {
-        return (
-          <div className="w-full h-96 bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
-            No owner images available
-          </div>
-        );
-      }
-      
-      return (
-        <div 
-          className="relative w-full h-96 overflow-hidden rounded-2xl"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
-          {ownerImages.map((imageUrl, index) => (
-            <img
-              key={index}
-              src={imageUrl}
-              alt="Owner & lead designer"
-              className={`w-full h-full object-cover transition-opacity duration-1000 ${
-                index === currentIndex ? 'opacity-100' : 'opacity-0 absolute inset-0'
-              }`}
-              loading="lazy"
-            />
-          ))}
-          
-          {ownerImages.length > 1 && (
-            <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-1">
-              {ownerImages.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentIndex(index)}
-                  className={`w-2 h-2 rounded-full transition-colors ${
-                    index === currentIndex ? 'bg-white' : 'bg-white/50'
-                  }`}
-                  aria-label={`Go to owner image ${index + 1}`}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-      );
-    }
-
     function App() {
       const [currentSlide, setCurrentSlide] = useState(0);
       const [activeCategory, setActiveCategory] = useState('all');
 
       /* ---------- HERO: use your real photos ---------- */
       const heroSlides = [
-        { image: "photo-1.jpg",  title: "Custom Bouquets",   subtitle: "Handmade • Unique • Memorable" },
-        { image: "photo-5.jpg",  title: "Balloon Setups",    subtitle: "Backdrops & party decor" },
-        { image: "photo-8.jpg",  title: "Special Occasions", subtitle: "Birthdays • Quinceañeras • More" },
-        { image: "photo-20.jpg", title: "Signature Style",   subtitle: "Moonlit Petals by Fátima" },
+        { image: "images/photo-1.jpg",  title: "Custom Bouquets",   subtitle: "Handmade • Unique • Memorable" },
+        { image: "images/photo-5.jpg",  title: "Balloon Setups",    subtitle: "Backdrops & party decor" },
+        { image: "images/photo-8.jpg",  title: "Special Occasions", subtitle: "Birthdays • Quinceañeras • More" },
+        { image: "images/photo-20.jpg", title: "Signature Style",   subtitle: "Moonlit Petals by Fátima" },
       ];
 
       /* ---------- GALLERY: manifest for all 26 photos ---------- */
@@ -512,7 +242,7 @@
       ];
 
       const galleryImages = galleryManifest.map(([file, category, alt]) => ({
-        src: file,
+        src: `images/${file}`,
         category,
         alt
       }));
@@ -622,7 +352,7 @@
               <div className="flex flex-col md:flex-row items-center gap-12">
                 <div className="md:w-1/2">
                   <div className="bg-white p-8 rounded-3xl shadow-xl">
-                    <OwnerImage />
+                    <img src="images/photo-23.jpg" alt="Owner & lead designer" className="w-full h-96 object-cover rounded-2xl mb-6" />
                     <div className="text-center">
                       <h3 className="text-2xl font-bold text-mp-text mb-2">Fátima Marroquín</h3>
                       <p className="text-mp-purple font-medium">Owner & Lead Designer</p>
@@ -650,7 +380,7 @@
             </div>
           </section>
 
-          {/* Services - Updated with carousel */}
+          {/* Services - Updated with new product catalog */}
           <section id="services" className="py-20 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
@@ -664,7 +394,24 @@
                   <h3 className="text-3xl font-bold text-mp-text mb-8 text-center">{category}</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {items.map((product, index) => (
-                      <ProductCard key={index} product={product} />
+                      <div key={index} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                        <img src={product.image} alt={product.name} className="w-full h-64 object-cover" />
+                        <div className="p-6">
+                          <h4 className="text-xl font-bold text-mp-text mb-2">{product.name}</h4>
+                          <p className="text-mp-purple font-semibold text-lg mb-2">Starting at ${product.price}</p>
+                          <p className="text-mp-text text-sm mb-4">{product.description}</p>
+                          <a
+                            href={`https://wa.me/16093791145?text=${encodeURIComponent(
+                              `Hi! I’d like to order: ${product.name} (Starting at $${product.price}). My event date is: ____`
+                            )}`}
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="block w-full text-center bg-mp-purple text-white py-3 rounded-lg font-medium hover:bg-mp-lilac transition-colors"
+                          >
+                            Order Now
+                          </a>
+                        </div>
+                      </div>
                     ))}
                   </div>
                 </div>
