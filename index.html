@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Moonlit Petals — Bouquets & Party Décor</title>
   <meta name="description" content="Handmade bouquets, balloon backdrops, and custom party décor for quinceañeras, birthdays, and special moments. English & Spanish." />
   <meta name="theme-color" content="#e11d48">
@@ -28,8 +28,25 @@
   }
   </script>
   
-  <!-- Tailwind CSS -->
+  <!-- Tailwind (CDN) with custom colors -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            mp: {
+              lilac: '#C7A4F4',
+              sky: '#7EC8F8',
+              purple: '#6A3EEA',
+              text: '#1F1F29',
+              bg: '#FAF8FF'
+            }
+          }
+        }
+      }
+    }
+  </script>
   <style>
     @keyframes fade-in { from { opacity: 0 } to { opacity: 1 } }
     .animate-fade-in { animation: fade-in 0.8s ease-out both; }
@@ -59,7 +76,112 @@
   <script type="text/babel">
     const { useState, useEffect, useRef } = React;
 
-    // Product Catalog
+    // Carousel helpers
+    const IMG_EXTS = ['jpg','jpeg','png','webp'];
+
+    function preloadOk(url) {
+      return new Promise(r => {
+        const i = new Image();
+        i.onload = () => r(true);
+        i.onerror = () => r(false);
+        i.src = url;
+      });
+    }
+
+    async function collectImages(folder, max = 30) {
+      const urls = [];
+      for (let n = 1; n <= max; n++) {
+        let found = null;
+        for (const ext of IMG_EXTS) {
+          const u = `${folder}/${n}.${ext}`;
+          if (await preloadOk(u)) {
+            found = u;
+            break;
+          }
+        }
+        if (found) urls.push(found);
+      }
+      return urls;
+    }
+
+    // Build a carousel node; autoplay 4s; pause on hover; swipe on touch
+    function makeCarousel(urls, alt = '') {
+      const root = document.createElement('div'); 
+      root.className = 'mp-carousel';
+      root.innerHTML = `
+        <div class="mp-track"></div>
+        <button class="mp-nav mp-prev" aria-label="Previous">‹</button>
+        <button class="mp-nav mp-next" aria-label="Next">›</button>
+        <div class="mp-dots"></div>
+      `;
+      const track = root.querySelector('.mp-track');
+      const dots = root.querySelector('.mp-dots');
+      
+      urls.forEach((u, idx) => {
+        const img = document.createElement('img');
+        img.loading = 'lazy'; 
+        img.decoding = 'async';
+        img.src = u; 
+        img.alt = alt; 
+        img.className = 'mp-slide' + (idx === 0 ? ' is-active' : '');
+        track.appendChild(img);
+        
+        const d = document.createElement('button'); 
+        d.className = 'mp-dot' + (idx === 0 ? ' is-active' : ''); 
+        d.ariaLabel = `Go to slide ${idx + 1}`; 
+        d.onclick = () => go(idx);
+        dots.appendChild(d);
+      });
+      
+      let i = 0, N = urls.length, timer = null;
+      
+      function setActive(k) {
+        track.querySelectorAll('.mp-slide').forEach((el, idx) => el.classList.toggle('is-active', idx === k));
+        dots.querySelectorAll('.mp-dot').forEach((el, idx) => el.classList.toggle('is-active', idx === k));
+      }
+      
+      function go(k) { 
+        i = (k + N) % N; 
+        setActive(i); 
+      }
+      
+      function next() { 
+        go(i + 1); 
+      }
+      
+      root.querySelector('.mp-prev').onclick = () => go(i - 1);
+      root.querySelector('.mp-next').onclick = () => go(i + 1);
+      
+      const start = () => { 
+        if (timer || N < 2) return; 
+        timer = setInterval(next, 4000); 
+      };
+      
+      const stop = () => { 
+        if (!timer) return; 
+        clearInterval(timer); 
+        timer = null; 
+      };
+      
+      root.addEventListener('mouseenter', stop); 
+      root.addEventListener('mouseleave', start);
+      
+      // touch swipe
+      let sx = null; 
+      root.addEventListener('touchstart', e => sx = e.touches[0].clientX, { passive: true });
+      root.addEventListener('touchend', e => { 
+        if (sx == null) return; 
+        const dx = e.changedTouches[0].clientX - sx; 
+        if (Math.abs(dx) > 40) go(i + (dx < 0 ? 1 : -1)); 
+        sx = null; 
+      }, { passive: true });
+      
+      setActive(0); 
+      start(); 
+      return root;
+    }
+
+    // Updated Product Catalog with dynamic image paths
     const products = [
       {
         "id": "personalized_bouquets",
@@ -172,7 +294,7 @@
               className="text-mp-purple hover:text-mp-sky transition-colors"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-4.849 0-3.26-.149-4.771-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
               </svg>
             </a>
           )}
@@ -193,194 +315,29 @@
       );
     }
 
-    // Image Loading Helper (Simple approach)
-    async function loadImageList(folderName) {
-      // Try to load images with common naming patterns
-      const extensions = ['.jpg', '.jpeg', '.png', '.webp'];
-      const imageUrls = [];
-      
-      // Try numbered images first (1.jpg, 2.jpg, etc.)
-      for (let i = 1; i <= 30; i++) {
-        for (const ext of extensions) {
-          const url = `${folderName}/${i}${ext}`;
-          try {
-            const img = new Image();
-            img.src = url;
-            await new Promise((resolve, reject) => {
-              img.onload = () => resolve(true);
-              img.onerror = () => reject(false);
-            });
-            imageUrls.push(url);
-          } catch (error) {
-            // Continue to next image if this one fails
-          }
-        }
-      }
-      
-      // If no images found with numbered names, try to find any image
-      if (imageUrls.length === 0) {
-        // This is a fallback - in practice, you'd need to know the exact filenames
-        // For now, we'll just return an empty array
-        return [];
-      }
-      
-      return imageUrls;
-    }
-
-    // Carousel Component
-    function Carousel({ images, interval = 2500 }) {
-      const [currentIndex, setCurrentIndex] = useState(0);
-      const [isPaused, setIsPaused] = useState(false);
-      const containerRef = useRef(null);
-      const touchStartX = useRef(0);
-      const touchEndX = useRef(0);
-      
-      // Auto-advance
-      useEffect(() => {
-        if (images.length <= 1 || isPaused) return;
-        
-        const timer = setInterval(() => {
-          setCurrentIndex(prev => (prev + 1) % images.length);
-        }, interval);
-        
-        return () => clearInterval(timer);
-      }, [images.length, isPaused, interval]);
-      
-      // Handle touch events for swipe
-      const handleTouchStart = (e) => {
-        touchStartX.current = e.touches[0].clientX;
-      };
-      
-      const handleTouchEnd = (e) => {
-        touchEndX.current = e.changedTouches[0].clientX;
-        handleSwipe();
-      };
-      
-      const handleSwipe = useCallback(() => {
-        if (!touchStartX.current || !touchEndX.current) return;
-        
-        const diff = touchStartX.current - touchEndX.current;
-        
-        if (Math.abs(diff) > 50) { // Minimum swipe distance
-          if (diff > 0) {
-            // Swipe left - next image
-            setCurrentIndex(prev => (prev + 1) % images.length);
-          } else {
-            // Swipe right - previous image
-            setCurrentIndex(prev => (prev - 1 + images.length) % images.length);
-          }
-        }
-        
-        touchStartX.current = 0;
-        touchEndX.current = 0;
-      }, [images.length]);
-      
-      if (!images || images.length === 0) {
-        return (
-          <div className="h-56 bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
-            No images available
-          </div>
-        );
-      }
-      
-      return (
-        <div 
-          ref={containerRef}
-          className="relative h-56 overflow-hidden rounded-lg cursor-pointer"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-        >
-          {images.map((imageUrl, index) => {
-            const isCurrent = index === currentIndex;
-            const isPrevious = index === (currentIndex - 1 + images.length) % images.length;
-            const isNext = index === (currentIndex + 1) % images.length;
-            
-            let transform = '';
-            let zIndex = 0;
-            let scale = 1;
-            let rotate = 0;
-            
-            if (isCurrent) {
-              // Current image - front and center
-              zIndex = 3;
-              scale = 1;
-              rotate = 0;
-            } else if (isPrevious) {
-              // Previous image - slightly behind and rotated
-              zIndex = 2;
-              scale = 0.95;
-              rotate = -5;
-            } else if (isNext) {
-              // Next image - slightly behind and rotated the other way
-              zIndex = 2;
-              scale = 0.95;
-              rotate = 5;
-            } else {
-              // Other images - further back
-              zIndex = 1;
-              scale = 0.9;
-              rotate = Math.random() * 4 - 2; // Random small rotation for depth
-            }
-            
-            return (
-              <div
-                key={index}
-                className={`absolute inset-0 transition-all duration-500 ease-in-out ${isCurrent ? 'z-3' : 'z-2'}`}
-                style={{
-                  transform: `translateY(${isCurrent ? '0' : '2px'}) rotate(${rotate}deg) scale(${scale})`,
-                  transformOrigin: 'center',
-                  willChange: 'transform, z-index',
-                  zIndex: zIndex,
-                  opacity: isCurrent ? 1 : 0.8,
-                  pointerEvents: isCurrent ? 'auto' : 'none'
-                }}
-              >
-                <img
-                  src={imageUrl}
-                  alt={`Product image ${index + 1}`}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
-              </div>
-            );
-          })}
-          
-          {/* Navigation indicators */}
-          {images.length > 1 && (
-            <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-1">
-              {images.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentIndex(index)}
-                  className={`w-2 h-2 rounded-full transition-colors ${
-                    index === currentIndex ? 'bg-white' : 'bg-white/50'
-                  }`}
-                  aria-label={`Go to image ${index + 1}`}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-      );
-    }
-
-    // Product Card Component
+    // Product Card Component with Carousel
     function ProductCard({ product }) {
-      const [images, setImages] = useState([]);
+      const cardRef = useRef(null);
       
       useEffect(() => {
-        loadImageList(product.imageFolder).then(urls => {
-          setImages(urls);
-        });
-      }, [product.imageFolder]);
-      
+        if (cardRef.current) {
+          const imgHost = document.createElement('div');
+          imgHost.className = 'card-img-host';
+          const imgContainer = cardRef.current.querySelector('.product-image-container');
+          if (imgContainer) {
+            imgContainer.appendChild(imgHost);
+            
+            collectImages(product.imageFolder, 30).then(urls => {
+              if (!urls.length) urls = ['photo-1.jpg']; // fallback
+              imgHost.replaceWith(makeCarousel(urls, product.name));
+            });
+          }
+        }
+      }, [product.imageFolder, product.name]);
+
       return (
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-          <div className="h-56 overflow-hidden">
-            <Carousel images={images} interval={2500} />
-          </div>
+          <div className="product-image-container h-56"></div>
           <div className="p-6">
             <h4 className="text-xl font-bold text-mp-text mb-2">{product.name}</h4>
             <p className="text-mp-purple font-semibold text-lg mb-2">Starting from ${product.price}</p>
@@ -400,73 +357,27 @@
       );
     }
 
-    // Owner Image Component
+    // Owner Image Component (single image only)
     function OwnerImage() {
-      const [ownerImages, setOwnerImages] = useState([]);
+      const [ownerImage, setOwnerImage] = useState('photo-23.jpg');
       
       useEffect(() => {
-        loadImageList('owner_picture').then(urls => {
-          setOwnerImages(urls);
-        });
-      }, []);
-      
-      const [currentIndex, setCurrentIndex] = useState(0);
-      const [isPaused, setIsPaused] = useState(false);
-      
-      useEffect(() => {
-        if (ownerImages.length <= 1) return;
-        
-        const timer = setInterval(() => {
-          if (!isPaused) {
-            setCurrentIndex(prev => (prev + 1) % ownerImages.length);
+        // Try to load owner image from owner_picture folder
+        async function loadOwnerImage() {
+          for (const ext of IMG_EXTS) {
+            const url = `owner_picture/1.${ext}`;
+            if (await preloadOk(url)) {
+              setOwnerImage(url);
+              return;
+            }
           }
-        }, 3000);
-        
-        return () => clearInterval(timer);
-      }, [ownerImages.length, isPaused]);
-      
-      if (!ownerImages || ownerImages.length === 0) {
-        return (
-          <div className="w-full h-96 bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
-            No owner images available
-          </div>
-        );
-      }
-      
-      return (
-        <div 
-          className="relative w-full h-96 overflow-hidden rounded-2xl"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
-          {ownerImages.map((imageUrl, index) => (
-            <img
-              key={index}
-              src={imageUrl}
-              alt="Owner & lead designer"
-              className={`w-full h-full object-cover transition-opacity duration-1000 ${
-                index === currentIndex ? 'opacity-100' : 'opacity-0 absolute inset-0'
-              }`}
-              loading="lazy"
-            />
-          ))}
-          
-          {ownerImages.length > 1 && (
-            <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-1">
-              {ownerImages.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentIndex(index)}
-                  className={`w-2 h-2 rounded-full transition-colors ${
-                    index === currentIndex ? 'bg-white' : 'bg-white/50'
-                  }`}
-                  aria-label={`Go to owner image ${index + 1}`}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-      );
+          // Fallback to existing photo
+          setOwnerImage('photo-23.jpg');
+        }
+        loadOwnerImage();
+      }, []);
+
+      return <img src={ownerImage} alt="Owner & lead designer" className="w-full h-96 object-cover rounded-2xl mb-6" />;
     }
 
     function App() {
@@ -512,7 +423,7 @@
       ];
 
       const galleryImages = galleryManifest.map(([file, category, alt]) => ({
-        src: file,
+        src: `${file}`,
         category,
         alt
       }));
@@ -650,7 +561,7 @@
             </div>
           </section>
 
-          {/* Services - Updated with carousel */}
+          {/* Services - Updated with carousel product cards */}
           <section id="services" className="py-20 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
