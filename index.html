@@ -43,7 +43,7 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-  <script type="text/babel">
+  <script type="text/babel" data-presets="env,react">
     const { useState, useEffect, useRef } = React;
 
     const App = () => {
@@ -156,12 +156,14 @@
           {/* Hero Section */}
           <section id="home" className="relative h-screen overflow-hidden">
             <div className="absolute inset-0 transition-opacity duration-1000">
-              {heroImages.length > 0 && (
+              {heroImages.length > 0 ? (
                 <img 
                   src={`/${heroImages[currentSlide].image}`} 
                   alt="Hero" 
                   className="w-full h-full object-cover"
                 />
+              ) : (
+                <div className="w-full h-full bg-gray-200" />
               )}
             </div>
             <div className="absolute inset-0 bg-black bg-opacity-40"></div>
@@ -361,9 +363,6 @@
               </div>
             </div>
           </footer>
-
-          {/* Tidio Chat */}
-          <script src="//code.tidio.co/your-tidio-id.js" async></script>
         </div>
       );
     };
@@ -371,6 +370,9 @@
     const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(<App />);
   </script>
+
+  <!-- Tidio must be a normal script tag in the HTML, not inside JSX -->
+  <script src="//code.tidio.co/your-tidio-id.js" async></script>
 </body>
 </html>
 ```
