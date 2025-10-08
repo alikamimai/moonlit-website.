@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,9 +11,6 @@
   <meta property="og:image" content="/balloon_arches/IMG_1209.JPEG" />
   <meta property="og:url" content="https://bloomandco.vercel.app/" />
   <meta name="twitter:card" content="summary_large_image" />
-  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -41,10 +39,23 @@
 <body class="bg-white text-gray-800">
   <div id="root"></div>
 
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
   <script type="text/babel">
     const { useState, useEffect, useRef } = React;
 
     const App = () => {
+      const CATEGORY_FROM_FOLDER = (folder) => {
+        if (folder === 'balloon_arches') return 'birthdays';
+        if (folder === 'money_bouquets') return 'quinceaneras';
+        if (folder === 'flower_bouquets' || folder === 'flower_mix' || folder === 'eternal_roses') return 'romantic';
+        if (folder === 'graduation') return 'graduation';
+        if (folder === 'room_decorations') return 'decor';
+        return 'custom';
+      };
+
       const [manifest, setManifest] = useState(null);
       const [allImages, setAllImages] = useState([]);
       const [heroImages, setHeroImages] = useState([]);
@@ -53,7 +64,6 @@
       const [activeCategory, setActiveCategory] = useState('all');
       const [currentSlide, setCurrentSlide] = useState(0);
       const heroIntervalRef = useRef(null);
-      const heroImagesRef = useRef([]);
 
       const products = [
         { id: 1, title: 'Birthdays', description: 'Balloon arches, bouquets, and surprise boxes for the perfect birthday celebration.', imagePlaceholder: 'balloon_arches' },
@@ -64,61 +74,45 @@
         { id: 6, title: 'Custom Requests', description: 'Hot Wheels bouquets, plushie arrangements, and more—just ask!', imagePlaceholder: 'custom' },
       ];
 
-      const getCategory = (folder) => {
-        if (folder === 'balloon_arches') return 'birthdays';
-        if (folder === 'money_bouquets') return 'quinceaneras';
-        if (['flower_bouquets', 'flower_mix', 'eternal_roses'].includes(folder)) return 'romantic';
-        if (folder === 'graduation') return 'graduation';
-        if (folder === 'room_decorations') return 'decor';
-        return 'custom';
-      };
-
       useEffect(() => {
-        const fetchGalleryManifest = async () => {
-          try {
-            const response = await fetch('/gallery-manifest.json');
-            if (!response.ok) throw new Error('Failed to fetch manifest');
-            const data = await response.json();
-            
-            // Build gallery array
+        fetch('/gallery-manifest.json', { cache: 'no-cache' })
+          .then(r => r.ok ? r.json() : Promise.reject(new Error('manifest 404')))
+          .then(data => {
+            setManifest(data);
+
             const gallery = [];
-            const heroCandidates = [];
-            
-            Object.entries(data).forEach(([folder, files]) => {
-              files.forEach(file => {
-                const src = `/${folder}/${file}`;
-                const category = getCategory(folder);
-                gallery.push({ src, category, alt: `${category} arrangement` });
-                
-                if (['balloon_arches', 'surprise_boxes', 'graduation', 'eternal_roses'].includes(folder)) {
-                  heroCandidates.push(src);
-                }
+            Object.keys(data).forEach(folder => {
+              (data[folder] || []).forEach(file => {
+                gallery.push({ src: `${folder}/${file}`, category: CATEGORY_FROM_FOLDER(folder), alt: `${folder} creation` });
               });
             });
-            
-            setManifest(data);
             setAllImages(gallery);
-            setHeroImages(heroCandidates);
-            heroImagesRef.current = heroCandidates;
-            setIsGalleryLoaded(true);
-            setLoading(false);
-          } catch (error) {
-            console.warn('Gallery manifest fetch failed:', error);
-            // Set fallback hero image
-            heroImagesRef.current = ['/balloon_arches/IMG_1209.JPEG'];
-            setHeroImages(['/balloon_arches/IMG_1209.JPEG']);
-            setIsGalleryLoaded(true);
-            setLoading(false);
-          }
-        };
 
-        fetchGalleryManifest();
+            const pickRandom = (folder) => {
+              const arr = data[folder] || [];
+              if (!arr.length) return null;
+              return `${folder}/${arr[Math.floor(Math.random() * arr.length)]}`;
+            };
+            setHeroImages([
+              { image: pickRandom('balloon_arches'), title: "Custom Bouquets", subtitle: "Handmade • Unique • Memorable" },
+              { image: pickRandom('surprise_boxes'),  title: "Balloon Setups",  subtitle: "Backdrops & party decor" },
+              { image: pickRandom('graduation'),      title: "Special Occasions", subtitle: "Birthdays • Quinceañeras • More" },
+              { image: pickRandom('eternal_roses'),   title: "Signature Style", subtitle: "Moonlit Petals by Fátima" }
+            ].filter(s => !!s.image));
+
+            setIsGalleryLoaded(true);
+            setLoading(false);
+          })
+          .catch(() => { 
+            setLoading(false); 
+            setIsGalleryLoaded(false); 
+          });
       }, []);
 
       useEffect(() => {
-        if (heroImagesRef.current.length > 0) {
+        if (heroImages.length > 0) {
           heroIntervalRef.current = setInterval(() => {
-            setCurrentSlide(prev => (prev + 1) % heroImagesRef.current.length);
+            setCurrentSlide(prev => (prev + 1) % heroImages.length);
           }, 5000);
         }
         return () => {
@@ -126,38 +120,7 @@
             clearInterval(heroIntervalRef.current);
           }
         };
-      }, []);
-
-      const getOwnerImage = () => {
-        if (manifest && manifest.owner_picture && manifest.owner_picture.length > 0) {
-          return `/${'owner_picture'}/${manifest.owner_picture[0]}`;
-        }
-        return 'https://placehold.co/400x400/8B5CF6/white?text=Owner';
-      };
-
-      const getFirstImageForService = (placeholder) => {
-        if (!isGalleryLoaded) {
-          return 'https://placehold.co/600x400/EC4899/white?text=Loading';
-        }
-        
-        const folderMap = {
-          balloon_arches: ['balloon_arches'],
-          money_bouquets: ['money_bouquets'],
-          flower_bouquets: ['flower_bouquets', 'flower_mix', 'eternal_roses'],
-          graduation: ['graduation'],
-          room_decorations: ['room_decorations'],
-          custom: ['hotwheels_bouquets', 'plushie_arrangements', 'personalized_bouquets']
-        };
-        
-        const folders = folderMap[placeholder] || [];
-        for (const folder of folders) {
-          const imagesInFolder = allImages.filter(img => img.src.startsWith(`/${folder}/`));
-          if (imagesInFolder.length > 0) {
-            return imagesInFolder[0].src;
-          }
-        }
-        return 'https://placehold.co/600x400/8B5CF6/white?text=Service';
-      };
+      }, [heroImages]);
 
       const filteredImages = activeCategory === 'all' 
         ? allImages 
@@ -193,9 +156,9 @@
           {/* Hero Section */}
           <section id="home" className="relative h-screen overflow-hidden">
             <div className="absolute inset-0 transition-opacity duration-1000">
-              {heroImagesRef.current.length > 0 && (
+              {heroImages.length > 0 && (
                 <img 
-                  src={heroImagesRef.current[currentSlide] || '/balloon_arches/IMG_1209.JPEG'} 
+                  src={`/${heroImages[currentSlide].image}`} 
                   alt="Hero" 
                   className="w-full h-full object-cover"
                 />
@@ -232,21 +195,30 @@
                 </p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {products.map((product) => (
-                  <div key={product.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                    <div className="h-64 overflow-hidden">
-                      <img 
-                        src={getFirstImageForService(product.imagePlaceholder)} 
-                        alt={product.title} 
-                        className="w-full h-full object-cover"
-                      />
+                {products.map((product) => {
+                  const firstImage = allImages.find(img => img.src.startsWith(product.imagePlaceholder + '/'));
+                  return (
+                    <div key={product.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                      <div className="h-64 overflow-hidden">
+                        {firstImage ? (
+                          <img 
+                            src={`/${firstImage.src}`} 
+                            alt={product.title} 
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-64 bg-gray-100 flex items-center justify-center">
+                            <span className="text-gray-400">No image</span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="p-6">
+                        <h3 className="text-2xl font-bold mb-3">{product.title}</h3>
+                        <p className="text-gray-600">{product.description}</p>
+                      </div>
                     </div>
-                    <div className="p-6">
-                      <h3 className="text-2xl font-bold mb-3">{product.title}</h3>
-                      <p className="text-gray-600">{product.description}</p>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </section>
@@ -283,7 +255,7 @@
                     {filteredImages.slice(0, 16).map((image, index) => (
                       <div key={index} className="aspect-square overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow">
                         <img 
-                          src={image.src} 
+                          src={`/${image.src}`} 
                           alt={image.alt} 
                           className="w-full h-full object-cover"
                         />
@@ -309,7 +281,7 @@
               <div className="flex flex-col lg:flex-row items-center gap-12">
                 <div className="lg:w-1/2">
                   <img 
-                    src={getOwnerImage()} 
+                    src={manifest?.owner_picture?.length ? `/owner_picture/${manifest.owner_picture[0]}` : 'https://via.placeholder.com/400x300?text=Owner+Photo'} 
                     alt="Owner" 
                     className="rounded-full w-80 h-80 object-cover mx-auto shadow-lg"
                   />
@@ -401,3 +373,4 @@
   </script>
 </body>
 </html>
+```
