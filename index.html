@@ -9,25 +9,25 @@
   <meta property="og:title" content="Moonlit Petals — Bouquets & Party Décor">
   <meta property="og:description" content="Handmade bouquets, balloon backdrops & custom décor for quinceañeras, birthdays and more. Trenton, NJ & Bronx, NY.">
   <meta property="og:image" content="/balloon_arches/IMG_1209.JPEG">
-  <meta property="og:url" content="https://moonlitpetals.com">
+  <meta property="og:url" content="https://moonlit-website-m968.vercel.app">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" href="/owner_picture/1.JPEG">
+  <link rel="icon" href="/owner_picture/D6CC32B5-C827-4C26-B2B8-C29B83980CA2.JPEG">
   <link rel="me" href="https://www.instagram.com/moonlit_petals03">
-  
+
   <!-- JSON-LD Schema -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Moonlit Petals",
-    "url": "https://moonlitpetals.com",
+    "url": "https://moonlit-website-m968.vercel.app",
     "sameAs": [
       "https://www.instagram.com/moonlit_petals03",
       "https://www.tiktok.com/@moonlit_petals03"
     ]
   }
   </script>
-  
+
   <!-- Tailwind (CDN) with custom colors -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -51,7 +51,7 @@
     @keyframes fade-in { from { opacity: 0 } to { opacity: 1 } }
     .animate-fade-in { animation: fade-in 0.8s ease-out both; }
     body { background-color: #FAF8FF; }
-    
+
     /* Carousel CSS */
     .mp-carousel{position:relative;border-radius:16px;overflow:hidden;background:#f8f6ff}
     .mp-track{position:relative;height:220px}
@@ -65,6 +65,13 @@
   </style>
 </head>
 <body class="min-h-screen bg-mp-bg">
+  <!-- Debug Info - Remove before going live -->
+  <div style="position: fixed; top: 20px; left: 20px; background: white; padding: 10px; z-index: 9999; border: 1px solid #ccc; border-radius: 4px;">
+    <h3>Debug Info</h3>
+    <p>Manifest URL: <a href="/gallery_manifest.json" target="_blank">/gallery_manifest.json</a></p>
+    <p>Owner Image: <a href="/owner_picture/D6CC32B5-C827-4C26-B2B8-C29B83980CA2.JPEG" target="_blank">/owner_picture/D6CC32B5-C827-4C26-B2B8-C29B83980CA2.JPEG</a></p>
+  </div>
+
   <div id="root"></div>
 
   <!-- React + ReactDOM (CDN) -->
@@ -185,7 +192,7 @@
       const heroIntervalRef = useRef(null);
 
       useEffect(() => {
-        fetch('/gallery-manifest.json', { cache: 'no-cache' })
+        fetch('/gallery_manifest.json', { cache: 'no-cache' })
           .then(r => r.ok ? r.json() : Promise.reject(new Error('manifest 404')))
           .then(data => {
             setManifest(data);
