@@ -1,376 +1,198 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Bloom & Co. | Custom Bouquets & Decor</title>
-  <meta name="description" content="Handcrafted bouquets, balloon arches, surprise boxes, and more for every occasion in Puerto Rico." />
-  <meta property="og:title" content="Bloom & Co. | Custom Bouquets & Decor" />
-  <meta property="og:description" content="Handcrafted bouquets, balloon arches, surprise boxes, and more for every occasion in Puerto Rico." />
+  <meta name="description" content="Handcrafted bouquets, balloon arches, surprise boxes, and more." />
   <meta property="og:image" content="/balloon_arches/IMG_1209.JPEG" />
-  <meta property="og:url" content="https://bloomandco.vercel.app/" />
+  <meta property="og:url" content="/" />
   <meta name="twitter:card" content="summary_large_image" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#8B5CF6',
-            secondary: '#EC4899',
-            accent: '#10B981',
-          }
-        }
-      }
+      theme: { extend: { colors: { primary: '#8B5CF6', secondary: '#EC4899', accent: '#10B981' } } }
     }
   </script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap');
-    body {
-      font-family: 'Poppins', sans-serif;
-    }
-    h1, h2, h3, h4 {
-      font-family: 'Playfair Display', serif;
-    }
+    body { font-family: 'Poppins', sans-serif; }
+    h1,h2,h3,h4 { font-family: 'Playfair Display', serif; }
   </style>
 </head>
 <body class="bg-white text-gray-800">
-  <div id="root"></div>
+  <!-- Header -->
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <div class="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+        <h1 class="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Bloom & Co.</h1>
+      </div>
+      <nav class="hidden md:flex space-x-8">
+        <a href="#home" class="hover:text-primary">Home</a>
+        <a href="#gallery" class="hover:text-primary">Gallery</a>
+        <a href="#about" class="hover:text-primary">About</a>
+        <a href="#contact" class="hover:text-primary">Contact</a>
+      </nav>
+      <a href="https://wa.me/17871234567" class="text-green-500 hover:text-green-600" aria-label="WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.48A11.86 11.86 0 0012.07 0 12 12 0 000 12a11.86 11.86 0 003.48 8.52L2 24l3.6-1.44A12 12 0 1020.52 3.48zM12 22a10 10 0 01-5.1-1.4l-.37-.22-2.17.87.82-2.28-.24-.38A10 10 0 1122 12 10 10 0 0112 22zm5.6-7.47c-.31-.15-1.86-.92-2.15-1s-.5-.15-.71.15-.81 1-1 1.21-.37.23-.67.08a8.08 8.08 0 01-2.38-1.47A9 9 0 017.72 11c-.17-.29 0-.45.13-.6s.31-.37.46-.56a2 2 0 00.31-.52.54.54 0 000-.52c-.08-.15-.71-1.71-1-2.34s-.53-.54-.71-.55h-.6a1.15 1.15 0 00-.83.39 3.51 3.51 0 00-1.09 2.63 6.09 6.09 0 001.25 3.25 14 14 0 005.39 5 18.08 18.08 0 002.05.75 4.92 4.92 0 002.26.14 3.6 3.6 0 002.37-1.66 3 3 0 00.2-1.66c-.08-.14-.29-.23-.6-.38z"/></svg>
+      </a>
+    </div>
+  </header>
 
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- Hero -->
+  <section id="home" class="relative h-[60vh] md:h-[80vh] overflow-hidden">
+    <img id="heroImg" alt="Hero" class="absolute inset-0 w-full h-full object-cover" />
+    <div class="absolute inset-0 bg-black/40"></div>
+    <div class="relative container mx-auto px-4 h-full flex items-center justify-center text-center text-white">
+      <div class="max-w-3xl">
+        <h2 class="text-5xl md:text-7xl font-bold mb-6">Handcrafted with Love</h2>
+        <p class="text-xl md:text-2xl">Custom bouquets, balloon arches, and surprise boxes</p>
+      </div>
+    </div>
+  </section>
 
-  <script type="text/babel" data-presets="env,react">
-    const { useState, useEffect, useRef } = React;
+  <!-- Gallery -->
+  <section id="gallery" class="py-16">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-10">
+        <h2 class="text-4xl font-bold mb-3">Our Gallery</h2>
+        <p class="text-gray-600">Browse our latest creations</p>
+      </div>
 
-    const App = () => {
-      const CATEGORY_FROM_FOLDER = (folder) => {
-        if (folder === 'balloon_arches') return 'birthdays';
-        if (folder === 'money_bouquets') return 'quinceaneras';
-        if (folder === 'flower_bouquets' || folder === 'flower_mix' || folder === 'eternal_roses') return 'romantic';
-        if (folder === 'graduation') return 'graduation';
-        if (folder === 'room_decorations') return 'decor';
-        return 'custom';
-      };
+      <div class="flex flex-wrap justify-center gap-3 mb-8" id="filters"></div>
 
-      const [manifest, setManifest] = useState(null);
-      const [allImages, setAllImages] = useState([]);
-      const [heroImages, setHeroImages] = useState([]);
-      const [loading, setLoading] = useState(true);
-      const [isGalleryLoaded, setIsGalleryLoaded] = useState(false);
-      const [activeCategory, setActiveCategory] = useState('all');
-      const [currentSlide, setCurrentSlide] = useState(0);
-      const heroIntervalRef = useRef(null);
+      <div id="grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+    </div>
+  </section>
 
-      const products = [
-        { id: 1, title: 'Birthdays', description: 'Balloon arches, bouquets, and surprise boxes for the perfect birthday celebration.', imagePlaceholder: 'balloon_arches' },
-        { id: 2, title: 'Quinceañeras', description: 'Elegant money bouquets and custom arrangements to honor this special milestone.', imagePlaceholder: 'money_bouquets' },
-        { id: 3, title: 'Romantic', description: 'Fresh and eternal roses, flower bouquets, and personalized gifts for your loved one.', imagePlaceholder: 'flower_bouquets' },
-        { id: 4, title: 'Graduation', description: 'Celebrate academic achievements with custom graduation bouquets and decorations.', imagePlaceholder: 'graduation' },
-        { id: 5, title: 'Room Decor', description: 'Transform any space with beautiful balloon arrangements and floral decorations.', imagePlaceholder: 'room_decorations' },
-        { id: 6, title: 'Custom Requests', description: 'Hot Wheels bouquets, plushie arrangements, and more—just ask!', imagePlaceholder: 'custom' },
-      ];
-
-      useEffect(() => {
-        fetch('/gallery-manifest.json', { cache: 'no-cache' })
-          .then(r => r.ok ? r.json() : Promise.reject(new Error('manifest 404')))
-          .then(data => {
-            setManifest(data);
-
-            const gallery = [];
-            Object.keys(data).forEach(folder => {
-              (data[folder] || []).forEach(file => {
-                gallery.push({ src: `${folder}/${file}`, category: CATEGORY_FROM_FOLDER(folder), alt: `${folder} creation` });
-              });
-            });
-            setAllImages(gallery);
-
-            const pickRandom = (folder) => {
-              const arr = data[folder] || [];
-              if (!arr.length) return null;
-              return `${folder}/${arr[Math.floor(Math.random() * arr.length)]}`;
-            };
-            setHeroImages([
-              { image: pickRandom('balloon_arches'), title: "Custom Bouquets", subtitle: "Handmade • Unique • Memorable" },
-              { image: pickRandom('surprise_boxes'),  title: "Balloon Setups",  subtitle: "Backdrops & party decor" },
-              { image: pickRandom('graduation'),      title: "Special Occasions", subtitle: "Birthdays • Quinceañeras • More" },
-              { image: pickRandom('eternal_roses'),   title: "Signature Style", subtitle: "Moonlit Petals by Fátima" }
-            ].filter(s => !!s.image));
-
-            setIsGalleryLoaded(true);
-            setLoading(false);
-          })
-          .catch(() => { 
-            setLoading(false); 
-            setIsGalleryLoaded(false); 
-          });
-      }, []);
-
-      useEffect(() => {
-        if (heroImages.length > 0) {
-          heroIntervalRef.current = setInterval(() => {
-            setCurrentSlide(prev => (prev + 1) % heroImages.length);
-          }, 5000);
-        }
-        return () => {
-          if (heroIntervalRef.current) {
-            clearInterval(heroIntervalRef.current);
-          }
-        };
-      }, [heroImages]);
-
-      const filteredImages = activeCategory === 'all' 
-        ? allImages 
-        : allImages.filter(img => img.category === activeCategory);
-
-      return (
-        <div className="min-h-screen flex flex-col">
-          {/* Header */}
-          <header className="bg-white shadow-sm sticky top-0 z-50">
-            <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-              <div className="flex items-center space-x-2">
-                <div className="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Bloom & Co.</h1>
-              </div>
-              <nav className="hidden md:flex space-x-8">
-                <a href="#home" className="hover:text-primary transition-colors">Home</a>
-                <a href="#services" className="hover:text-primary transition-colors">Services</a>
-                <a href="#gallery" className="hover:text-primary transition-colors">Gallery</a>
-                <a href="#about" className="hover:text-primary transition-colors">About</a>
-                <a href="#contact" className="hover:text-primary transition-colors">Contact</a>
-              </nav>
-              <div className="flex items-center space-x-4">
-                <a href="https://wa.me/17871234567" target="_blank" rel="noopener noreferrer" className="text-green-500 hover:text-green-600 transition-colors">
-                  <i className="fab fa-whatsapp text-2xl"></i>
-                </a>
-                <button className="bg-primary text-white px-4 py-2 rounded-full hover:bg-purple-700 transition-colors">
-                  Order Now
-                </button>
-              </div>
-            </div>
-          </header>
-
-          {/* Hero Section */}
-          <section id="home" className="relative h-screen overflow-hidden">
-            <div className="absolute inset-0 transition-opacity duration-1000">
-              {heroImages.length > 0 ? (
-                <img 
-                  src={`/${heroImages[currentSlide].image}`} 
-                  alt="Hero" 
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="w-full h-full bg-gray-200" />
-              )}
-            </div>
-            <div className="absolute inset-0 bg-black bg-opacity-40"></div>
-            <div className="relative container mx-auto px-4 h-full flex items-center justify-center text-center text-white">
-              <div className="max-w-3xl">
-                <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
-                  Handcrafted with Love
-                </h1>
-                <p className="text-xl md:text-2xl mb-8 animate-fade-in-delay">
-                  Custom bouquets, balloon arches, and surprise boxes for every occasion in Puerto Rico
-                </p>
-                <div className="flex flex-col sm:flex-row justify-center gap-4 animate-fade-in-delay-2">
-                  <a href="#services" className="bg-primary hover:bg-purple-700 text-white px-8 py-3 rounded-full font-semibold transition-colors">
-                    View Services
-                  </a>
-                  <a href="https://wa.me/17871234567" className="bg-white text-primary hover:bg-gray-100 px-8 py-3 rounded-full font-semibold transition-colors">
-                    WhatsApp Order
-                  </a>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Services Section */}
-          <section id="services" className="py-20 bg-gray-50">
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold mb-4">Our Services</h2>
-                <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                  From birthdays to graduations, we create unforgettable moments with our custom arrangements
-                </p>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {products.map((product) => {
-                  const firstImage = allImages.find(img => img.src.startsWith(product.imagePlaceholder + '/'));
-                  return (
-                    <div key={product.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                      <div className="h-64 overflow-hidden">
-                        {firstImage ? (
-                          <img 
-                            src={`/${firstImage.src}`} 
-                            alt={product.title} 
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <div className="w-full h-64 bg-gray-100 flex items-center justify-center">
-                            <span className="text-gray-400">No image</span>
-                          </div>
-                        )}
-                      </div>
-                      <div className="p-6">
-                        <h3 className="text-2xl font-bold mb-3">{product.title}</h3>
-                        <p className="text-gray-600">{product.description}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </section>
-
-          {/* Gallery Section */}
-          <section id="gallery" className="py-20">
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold mb-4">Our Gallery</h2>
-                <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                  See our latest creations and the joy they bring to our customers
-                </p>
-              </div>
-              
-              <div className="flex flex-wrap justify-center gap-4 mb-8">
-                {['all', 'birthdays', 'quinceaneras', 'romantic', 'graduation', 'decor', 'custom'].map((category) => (
-                  <button
-                    key={category}
-                    onClick={() => setActiveCategory(category)}
-                    className={`px-4 py-2 rounded-full capitalize ${
-                      activeCategory === category
-                        ? 'bg-primary text-white'
-                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                    }`}
-                  >
-                    {category}
-                  </button>
-                ))}
-              </div>
-
-              {isGalleryLoaded ? (
-                filteredImages.length > 0 ? (
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {filteredImages.slice(0, 16).map((image, index) => (
-                      <div key={index} className="aspect-square overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                        <img 
-                          src={`/${image.src}`} 
-                          alt={image.alt} 
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-center py-12">
-                    <p className="text-xl text-gray-600">No images available in this category</p>
-                  </div>
-                )
-              ) : (
-                <div className="text-center py-12">
-                  <p className="text-xl text-gray-600">Gallery will appear after images load</p>
-                </div>
-              )}
-            </div>
-          </section>
-
-          {/* About Section */}
-          <section id="about" className="py-20 bg-gray-50">
-            <div className="container mx-auto px-4">
-              <div className="flex flex-col lg:flex-row items-center gap-12">
-                <div className="lg:w-1/2">
-                  <img 
-                    src={manifest?.owner_picture?.length ? `/owner_picture/${manifest.owner_picture[0]}` : 'https://via.placeholder.com/400x300?text=Owner+Photo'} 
-                    alt="Owner" 
-                    className="rounded-full w-80 h-80 object-cover mx-auto shadow-lg"
-                  />
-                </div>
-                <div className="lg:w-1/2">
-                  <h2 className="text-4xl font-bold mb-6">About Bloom & Co.</h2>
-                  <p className="text-lg text-gray-700 mb-4">
-                    Founded in 2020, Bloom & Co. started as a small passion project in my kitchen and has grown into Puerto Rico's most trusted custom bouquet and decoration service.
-                  </p>
-                  <p className="text-lg text-gray-700 mb-4">
-                    Every arrangement is handcrafted with love and attention to detail. We believe that every celebration deserves something special and unique.
-                  </p>
-                  <p className="text-lg text-gray-700">
-                    Our mission is to bring joy and create unforgettable moments through our beautiful, custom creations.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Contact Section */}
-          <section id="contact" className="py-20">
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold mb-4">Get In Touch</h2>
-                <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                  Ready to create something beautiful? Contact us today!
-                </p>
-              </div>
-              <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                  <div>
-                    <label className="block text-gray-700 mb-2">Name</label>
-                    <input type="text" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" />
-                  </div>
-                  <div>
-                    <label className="block text-gray-700 mb-2">Email</label>
-                    <input type="email" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" />
-                  </div>
-                </div>
-                <div className="mb-6">
-                  <label className="block text-gray-700 mb-2">Message</label>
-                  <textarea className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent h-32"></textarea>
-                </div>
-                <button className="w-full bg-primary hover:bg-purple-700 text-white py-3 rounded-lg font-semibold transition-colors">
-                  Send Message
-                </button>
-              </div>
-            </div>
-          </section>
-
-          {/* Footer */}
-          <footer className="bg-gray-900 text-white py-12">
-            <div className="container mx-auto px-4">
-              <div className="flex flex-col md:flex-row justify-between items-center">
-                <div className="mb-6 md:mb-0">
-                  <div className="flex items-center space-x-2 mb-4">
-                    <div className="w-8 h-8 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
-                    <h3 className="text-2xl font-bold">Bloom & Co.</h3>
-                  </div>
-                  <p className="text-gray-400">Handcrafted bouquets and decorations for every occasion in Puerto Rico</p>
-                </div>
-                <div className="flex space-x-6">
-                  <a href="https://wa.me/17871234567" target="_blank" rel="noopener noreferrer" className="text-green-400 hover:text-green-300 transition-colors">
-                    <i className="fab fa-whatsapp text-2xl"></i>
-                  </a>
-                  <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                    <i className="fab fa-instagram text-2xl"></i>
-                  </a>
-                  <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                    <i className="fab fa-facebook text-2xl"></i>
-                  </a>
-                </div>
-              </div>
-              <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2023 Bloom & Co. All rights reserved.</p>
-              </div>
-            </div>
-          </footer>
+  <!-- About -->
+  <section id="about" class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col lg:flex-row items-center gap-10">
+        <div class="lg:w-1/2 flex justify-center">
+          <img id="ownerImg" class="rounded-full w-72 h-72 object-cover shadow-lg" alt="Owner" />
         </div>
-      );
+        <div class="lg:w-1/2">
+          <h3 class="text-4xl font-bold mb-4">About Bloom & Co.</h3>
+          <p class="text-lg text-gray-700">
+            We craft custom bouquets and décor for birthdays, graduations, romantic moments and more.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="py-16">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-10">
+        <h2 class="text-4xl font-bold mb-3">Get In Touch</h2>
+        <p class="text-gray-600">Ready to create something beautiful? Message us!</p>
+      </div>
+      <div class="text-center">
+        <a href="https://wa.me/17871234567" class="inline-block bg-primary text-white px-8 py-3 rounded-full font-semibold hover:bg-purple-700">WhatsApp Order</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-10">
+    <div class="container mx-auto px-4 text-center text-gray-300">
+      © 2025 Bloom & Co.
+    </div>
+  </footer>
+
+  <script>
+    // Map folders -> categories for filters
+    const CATEGORY_FROM_FOLDER = (folder) => {
+      if (folder === 'balloon_arches') return 'birthdays';
+      if (folder === 'money_bouquets') return 'quinceaneras';
+      if (folder === 'flower_bouquets' || folder === 'flower_mix' || folder === 'eternal_roses') return 'romantic';
+      if (folder === 'graduation') return 'graduation';
+      if (folder === 'room_decorations') return 'decor';
+      return 'custom';
     };
 
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<App />);
+    // Build UI
+    async function main() {
+      // Load manifest
+      let data;
+      try {
+        const r = await fetch('/gallery-manifest.json', { cache: 'no-cache' });
+        if (!r.ok) throw new Error('manifest not found');
+        data = await r.json();
+      } catch (e) {
+        console.error(e);
+        document.getElementById('grid').innerHTML =
+          '<div class="col-span-full text-center text-gray-600">Could not load images.</div>';
+        return;
+      }
+
+      // Owner image
+      const owner = (data.owner_picture && data.owner_picture[0]) || null;
+      const ownerImg = document.getElementById('ownerImg');
+      ownerImg.src = owner ? `/owner_picture/${owner}` : 'https://via.placeholder.com/300x300?text=Owner';
+
+      // Hero image (pick random from a few folders)
+      const pickRandom = (folder) => {
+        const arr = (data[folder] || []);
+        return arr.length ? `/${folder}/${arr[Math.floor(Math.random()*arr.length)]}` : null;
+      };
+      const heroCandidates = ['balloon_arches','surprise_boxes','graduation','eternal_roses']
+        .map(pickRandom).filter(Boolean);
+      document.getElementById('heroImg').src = heroCandidates[0] || '/room_decorations/IMG_0035.JPEG';
+
+      // Flatten gallery
+      const all = [];
+      Object.keys(data).forEach(folder => {
+        (data[folder] || []).forEach(file => {
+          all.push({
+            src: `/${folder}/${file}`,
+            cat: CATEGORY_FROM_FOLDER(folder),
+            alt: `${folder} creation`
+          });
+        });
+      });
+
+      // Filters
+      const filters = ['all','birthdays','quinceaneras','romantic','graduation','decor','custom'];
+      const filtersEl = document.getElementById('filters');
+      let active = 'all';
+      filters.forEach(f => {
+        const btn = document.createElement('button');
+        btn.className = 'px-4 py-2 rounded-full capitalize bg-gray-200 text-gray-700 hover:bg-gray-300';
+        btn.textContent = f;
+        btn.onclick = () => { active = f; renderGrid(); highlight(); };
+        filtersEl.appendChild(btn);
+      });
+      function highlight() {
+        [...filtersEl.children].forEach(b => {
+          if (b.textContent === active) {
+            b.className = 'px-4 py-2 rounded-full capitalize bg-primary text-white';
+          } else {
+            b.className = 'px-4 py-2 rounded-full capitalize bg-gray-200 text-gray-700 hover:bg-gray-300';
+          }
+        });
+      }
+      highlight();
+
+      // Grid
+      const grid = document.getElementById('grid');
+      function renderGrid() {
+        const list = active === 'all' ? all : all.filter(i => i.cat === active);
+        grid.innerHTML = list.slice(0, 48).map(i =>
+          `<div class="aspect-square overflow-hidden rounded-lg shadow">
+             <img src="${i.src}" alt="${i.alt}" class="w-full h-full object-cover">
+           </div>`).join('');
+      }
+      renderGrid();
+    }
+
+    main();
   </script>
 
-  <!-- Tidio must be a normal script tag in the HTML, not inside JSX -->
-  <script src="//code.tidio.co/your-tidio-id.js" async></script>
+  <!-- (optional) Tidio or other scripts -->
+  <!-- <script src="//code.tidio.co/YOUR_ID.js" async></script> -->
 </body>
 </html>
