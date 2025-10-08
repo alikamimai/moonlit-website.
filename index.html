@@ -1,566 +1,367 @@
-<!doctype html>
+```html
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Moonlit Petals — Bouquets & Party Décor</title>
-  <meta name="description" content="Handmade bouquets, balloon backdrops, and custom party décor for quinceañeras, birthdays, and special moments. English & Spanish." />
-  <meta name="theme-color" content="#e11d48">
-  <meta property="og:title" content="Moonlit Petals — Bouquets & Party Décor">
-  <meta property="og:description" content="Handmade bouquets, balloon backdrops & custom décor for quinceañeras, birthdays and more. Trenton, NJ & Bronx, NY.">
-  <meta property="og:image" content="balloon_arches/IMG_1209.JPEG">
-  <meta property="og:url" content="https://moonlitpetals.com">
-  <meta name="twitter:card" content="summary_large_image">
-  <link rel="me" href="https://www.instagram.com/moonlit_petals03">
-
-  <!-- JSON-LD Schema -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Moonlit Petals",
-    "url": "https://moonlitpetals.com",
-    "sameAs": [
-      "https://www.instagram.com/moonlit_petals03",
-      "https://www.tiktok.com/@moonlit_petals03"
-    ]
-  }
-  </script>
-
-  <!-- Tailwind (CDN) -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bloom & Co. | Custom Bouquets & Decor</title>
+  <meta name="description" content="Handcrafted bouquets, balloon arches, surprise boxes, and more for every occasion in Puerto Rico." />
+  <meta property="og:title" content="Bloom & Co. | Custom Bouquets & Decor" />
+  <meta property="og:description" content="Handcrafted bouquets, balloon arches, surprise boxes, and more for every occasion in Puerto Rico." />
+  <meta property="og:image" content="/balloon_arches/IMG_1209.JPEG" />
+  <meta property="og:url" content="https://bloomandco.vercel.app/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            mp: {
-              lilac: '#C7A4F4',
-              sky: '#7EC8F8',
-              purple: '#6A3EEA',
-              text: '#1F1F29',
-              bg: '#FAF8FF'
-            }
+            primary: '#8B5CF6',
+            secondary: '#EC4899',
+            accent: '#10B981',
           }
         }
       }
     }
   </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
-    @keyframes fade-in { from { opacity: 0 } to { opacity: 1 } }
-    .animate-fade-in { animation: fade-in 0.8s ease-out both; }
-    body { background-color: #FAF8FF; }
-    .gallery-skeleton {
-      background: linear-gradient(45deg, #f3f4f6, #e5e7eb);
-      border-radius: 0.75rem;
-      overflow: hidden;
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap');
+    body {
+      font-family: 'Poppins', sans-serif;
     }
-    .gallery-skeleton img {
-      opacity: 0;
-    }
-    .gallery-skeleton:hover img {
-      opacity: 1;
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
     }
   </style>
 </head>
-<body class="min-h-screen bg-mp-bg">
+<body class="bg-white text-gray-800">
   <div id="root"></div>
 
-  <!-- React + ReactDOM (CDN) -->
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
   <script type="text/babel">
-    const { useState, useEffect } = React;
+    const { useState, useEffect, useRef } = React;
 
-    // Product catalog
-    const products = [
-      { id: "personalized-bouquet", name: "Personalized Bouquets", price: 50, description: "Custom-designed bouquets tailored to your theme or occasion.", imagePlaceholder: "personalized_bouquets", category: "Bouquets" },
-      { id: "flower-bouquet", name: "Flower Bouquets", price: 90, description: "Elegant fresh flower bouquets starting at $90.", imagePlaceholder: "flower_bouquets", category: "Bouquets" },
-      { id: "hotwheels-bouquet", name: "Hot Wheels Bouquet", price: 50, description: "Fun themed bouquet with Hot Wheels toys and flowers.", imagePlaceholder: "hotwheels_bouquets", category: "Specialty" },
-      { id: "plushie-arrangement", name: "Plushie Arrangements", price: 90, description: "Bouquet arrangements with plush toys included.", imagePlaceholder: "plushie_arrangements", category: "Specialty" },
-      { id: "flower-mix", name: "Flower Mix", price: 120, description: "A beautiful mix of seasonal flowers.", imagePlaceholder: "flower_mix", category: "Bouquets" },
-      { id: "graduation-lei-cap", name: "Graduation Leis & Cap", price: 75, description: "Festive leis and decorated graduation caps.", imagePlaceholder: "graduation", category: "Graduation" },
-      { id: "surprise-box", name: "Surprise Boxes", price: 100, description: "Customizable surprise gift boxes with flowers, treats, and more.", imagePlaceholder: "surprise_boxes", category: "Gifts" },
-      { id: "eternal-roses", name: "Eternal Roses", price: 65, description: "Long-lasting roses that make a perfect gift.", imagePlaceholder: "eternal_roses", category: "Bouquets" },
-      { id: "balloon-arch", name: "Balloon Arch", price: 250, description: "Large custom balloon arch for parties or events.", imagePlaceholder: "balloon_arches", category: "Decor" },
-      { id: "room-decoration", name: "Room Decoration", price: 200, description: "Themed room decoration for special occasions.", imagePlaceholder: "room_decorations", category: "Decor" },
-      { id: "money-bouquet", name: "Money Bouquet", price: 50, description: "Bouquet wrapped with roses and cash notes.", imagePlaceholder: "money_bouquets", category: "Specialty" }
-    ];
-
-    const socialData = {
-      contact: {
-        instagram: "https://www.instagram.com/moonlit_petals03?utm_source=instagram&utm_medium=social&utm_campaign=profile",
-        tiktok: "https://www.tiktok.com/@moonlit_petals03?utm_source=tiktok&utm_medium=social&utm_campaign=profile"
-      }
-    };
-
-    function SocialLinks({ className = "" }) {
-      return (
-        <div className={`flex items-center gap-3 ${className}`}>
-          {socialData.contact.instagram && (
-            <a href={socialData.contact.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram"
-              className="text-mp-purple hover:text-mp-sky transition-colors">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
-              </svg>
-            </a>
-          )}
-          {socialData.contact.tiktok && (
-            <a href={socialData.contact.tiktok} target="_blank" rel="noopener noreferrer" aria-label="TikTok"
-              className="text-mp-purple hover:text-mp-sky transition-colors">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-.33-.05A2.88 2.88 0 0 1 7.2 5.57a2.89 2.89 0 0 1 2.66-3.85 2.88 2.88 0 0 1 3.27 1.57h3.45v-.42a4.86 4.86 0 0 1 3.45 1.8zM12.05 20c-.23 0-.45-.02-.68-.05a2.89 2.89 0 0 1-2.24-3.74 2.89 2.89 0 0 1 2.31-1.62 2.89 2.89 0 0 1 2.53 1.57 2.89 2.89 0 0 1-1.92 4.84z" />
-              </svg>
-            </a>
-          )}
-        </div>
-      );
-    }
-
-    function App() {
-      const [heroImages, setHeroImages] = useState([]);
+    const App = () => {
+      const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
       const [allImages, setAllImages] = useState([]);
-      const [loading, setLoading] = useState(false);
-      const [currentSlide, setCurrentSlide] = useState(0);
-      const [activeCategory, setActiveCategory] = useState('all');
       const [isGalleryLoaded, setIsGalleryLoaded] = useState(false);
+      const [ownerImage, setOwnerImage] = useState('');
+      const heroImagesRef = useRef([]);
 
-      // Hardcoded image lists
-      const imageLists = {
-        balloon_arches: [
-          "IMG_1209.JPEG", "IMG_1211.JPEG", "IMG_2632.JPEG", "IMG_2639.JPEG", "IMG_5402.JPEG", "IMG_5404.JPEG", "IMG_6845.JPEG", "IMG_6848.JPEG", "IMG_7085.JPEG", "IMG_7088.JPEG", "IMG_7091.JPEG", "IMG_7292.JPEG", "IMG_7295.JPEG", "IMG_7305.JPEG", "IMG_7456.JPEG", "IMG_7462.JPEG", "b69968ae-906b-4402-ad1a-d4576762cb4b.jpg", "revelacion-2101_Original.JPG"
-        ],
-        eternal_roses: [
-          "IMG_0332.JPEG", "IMG_4902.JPEG", "IMG_5333.JPEG", "IMG_5336.JPEG", "IMG_5454.JPEG", "IMG_5456.JPEG", "IMG_6015.JPEG", "IMG_6026.JPEG", "IMG_6459.JPEG", "IMG_6461.JPEG", "IMG_6579.JPEG", "IMG_7454.JPEG", "IMG_9070.JPEG"
-        ],
-        flower_bouquets: [
-          "5ab5a548-c747-421d-9428-8a489a661fe8.JPG", "IMG_0485.JPEG", "IMG_4235.JPEG", "IMG_5105.JPEG", "IMG_5216.JPEG", "IMG_8641.JPEG"
-        ],
-        flower_mix: [
-          "IMG_1095.JPEG", "IMG_1228.JPEG", "IMG_1250.JPEG", "IMG_1256.JPEG", "IMG_1352.JPEG", "IMG_1355.JPEG", "IMG_1513.JPEG", "IMG_1526.JPEG", "IMG_1532.JPEG", "IMG_1547.JPEG", "IMG_1552.JPEG", "IMG_1556.JPEG", "IMG_1561.JPEG"
-        ],
-        graduation: [
-          "IMG_1095.JPEG", "IMG_1228.JPEG", "IMG_1250.JPEG", "IMG_1256.JPEG", "IMG_1352.JPEG", "IMG_1355.JPEG", "IMG_1513.JPEG", "IMG_1526.JPEG", "IMG_1532.JPEG", "IMG_1547.JPEG", "IMG_1552.JPEG", "IMG_1556.JPEG", "IMG_1561.JPEG"
-        ],
-        hotwheels_bouquets: [
-          "IMG_1405.JPEG", "IMG_1407.JPEG", "IMG_3472.JPEG", "IMG_3474.JPEG", "IMG_7763.JPEG", "IMG_8302.JPEG", "IMG_9822.JPEG"
-        ],
-        money_bouquets: [
-          "6aad6c07-539a-4ec7-acdc-54aed4b66b78.jpg", "IMG_0688.JPEG", "IMG_3227.JPEG", "IMG_3230.JPEG", "IMG_7524.JPEG", "IMG_8188.JPEG", "IMG_8767.JPEG", "IMG_8768.JPEG", "IMG_8800.JPEG"
-        ],
-        owner_picture: [
-          "D6CC32B5-C827-4C26-82B8-C29883980CA2.JPEG"
-        ],
-        personalized_bouquets: [
-          "IMG_4409.JPEG", "IMG_4410.JPEG", "IMG_4411.JPEG", "IMG_4412.JPEG", "IMG_4413.JPEG", "IMG_4414.JPEG", "IMG_4417.JPEG", "IMG_4418.JPEG", "IMG_4421.JPEG"
-        ],
-        plushie_arrangements: [
-          "0559e62d-0d16-4e86-aad6-36b6175ef7c8.jpg", "258e100e-a175-4ed4-b65e-0aa8d0893f54.jpg", "4d8caec4-8bf3-4123-9496-4b51293d7166.jpg", "IMG_0744.JPEG", "IMG_0828.JPEG", "IMG_1292.JPEG", "IMG_1396.JPEG", "IMG_1471.JPEG", "IMG_1699.JPEG", "IMG_3982.JPEG", "IMG_5115.JPEG", "IMG_5175.JPEG", "IMG_6037.JPEG", "IMG_6634.JPEG", "IMG_8099.PNG", "IMG_8123.JPEG", "IMG_8247.JPEG", "IMG_8539.JPEG", "IMG_8876.JPEG", "IMG_9304.JPEG"
-        ],
-        room_decorations: [
-          "IMG_0035.JPEG", "IMG_0036.JPEG", "IMG_0055.JPEG", "IMG_0058.JPEG", "IMG_1820.JPEG", "IMG_1842.JPEG", "IMG_4321.JPEG", "IMG_4322.JPEG", "IMG_4327.JPEG", "IMG_4335.JPEG", "IMG_4340.JPEG", "IMG_8177.JPEG", "IMG_8182.JPEG", "IMG_8186.JPEG", "IMG_8189.JPEG"
-        ],
-        surprise_boxes: [
-          "IMG_0910.JPEG", "IMG_0914.JPEG", "IMG_1334.JPEG", "IMG_1337.JPEG", "IMG_1362.JPEG", "IMG_1363.JPEG", "IMG_1951.JPEG", "IMG_1954.JPEG", "IMG_5088.JPEG", "IMG_5092.JPEG", "IMG_5517.JPEG", "IMG_5529.JPEG", "IMG_5540.JPEG", "IMG_5963.JPEG", "IMG_6040.JPEG"
-        ]
-      };
+      const services = [
+        { id: 1, title: 'Birthdays', description: 'Balloon arches, bouquets, and surprise boxes for the perfect birthday celebration.', imagePlaceholder: 'balloon_arches' },
+        { id: 2, title: 'Quinceañeras', description: 'Elegant money bouquets and custom arrangements to honor this special milestone.', imagePlaceholder: 'money_bouquets' },
+        { id: 3, title: 'Romantic', description: 'Fresh and eternal roses, flower bouquets, and personalized gifts for your loved one.', imagePlaceholder: 'flower_bouquets' },
+        { id: 4, title: 'Graduation', description: 'Celebrate academic achievements with custom graduation bouquets and decorations.', imagePlaceholder: 'graduation' },
+        { id: 5, title: 'Room Decor', description: 'Transform any space with beautiful balloon arrangements and floral decorations.', imagePlaceholder: 'room_decorations' },
+        { id: 6, title: 'Custom Requests', description: 'Hot Wheels bouquets, plushie arrangements, and more—just ask!', imagePlaceholder: 'custom' },
+      ];
 
-      // Function to pick a random image from a folder
-      const getRandomImage = (folder) => {
-        const images = imageLists[folder];
-        if (!images || images.length === 0) return null;
-        const randomIndex = Math.floor(Math.random() * images.length);
-        return `${folder}/${images[randomIndex]}`;
-      };
-
-      // Initialize hero images with random picks
       useEffect(() => {
-        const hero = [
-          { image: getRandomImage('balloon_arches'), title: "Custom Bouquets", subtitle: "Handmade • Unique • Memorable" },
-          { image: getRandomImage('surprise_boxes'), title: "Balloon Setups", subtitle: "Backdrops & party decor" },
-          { image: getRandomImage('graduation'), title: "Special Occasions", subtitle: "Birthdays • Quinceañeras • More" },
-          { image: getRandomImage('eternal_roses'), title: "Signature Style", subtitle: "Moonlit Petals by Fátima" }
-        ];
-        setHeroImages(hero);
+        const fetchGalleryManifest = async () => {
+          try {
+            const response = await fetch('/gallery-manifest.json');
+            if (!response.ok) throw new Error('Failed to fetch manifest');
+            const manifest = await response.json();
+            
+            // Build gallery array with all images
+            const gallery = [];
+            const heroCandidates = [];
+            
+            Object.entries(manifest).forEach(([folder, files]) => {
+              files.forEach(file => {
+                const fullPath = `/${folder}/${file}`;
+                gallery.push(fullPath);
+                
+                // Collect hero candidates from specified folders
+                if (['balloon_arches', 'surprise_boxes', 'graduation', 'eternal_roses'].includes(folder)) {
+                  heroCandidates.push(fullPath);
+                }
+              });
+            });
+            
+            // Set owner image (first from owner_picture or placeholder)
+            if (manifest.owner_picture && manifest.owner_picture.length > 0) {
+              setOwnerImage(`/${'owner_picture'}/${manifest.owner_picture[0]}`);
+            } else {
+              setOwnerImage('https://placehold.co/400x400/8B5CF6/white?text=Owner');
+            }
+            
+            // Set hero images
+            heroImagesRef.current = heroCandidates.length > 0 
+              ? heroCandidates 
+              : ['/balloon_arches/IMG_1209.JPEG'];
+            
+            setAllImages(gallery);
+            setIsGalleryLoaded(true);
+          } catch (error) {
+            console.warn('Gallery manifest fetch failed, using fallbacks');
+            // Set fallback owner image
+            setOwnerImage('https://placehold.co/400x400/8B5CF6/white?text=Owner');
+            // Set fallback hero image
+            heroImagesRef.current = ['/balloon_arches/IMG_1209.JPEG'];
+            setIsGalleryLoaded(true);
+          }
+        };
 
-        // Load all images for gallery
-        let gallery = [];
-        Object.keys(imageLists).forEach(folder => {
-          imageLists[folder].forEach(img => {
-            let category = 'custom';
-            if (folder === 'balloon_arches') category = 'birthdays';
-            else if (folder === 'money_bouquets') category = 'quinceaneras';
-            else if (folder === 'flower_bouquets' || folder === 'flower_mix' || folder === 'eternal_roses') category = 'romantic';
-            else if (folder === 'graduation') category = 'graduation';
-            else if (folder === 'room_decorations') category = 'decor';
-            gallery.push({ src: `${folder}/${img}`, category, alt: `${folder} creation` });
-          });
-        });
-
-        setAllImages(gallery);
-        setLoading(false);
+        fetchGalleryManifest();
       }, []);
 
-      // Auto-rotate hero
       useEffect(() => {
-        if (heroImages.length === 0) return;
-        const timer = setInterval(() => {
-          setCurrentSlide(prev => (prev + 1) % heroImages.length);
+        const interval = setInterval(() => {
+          setCurrentHeroIndex(prev => 
+            (prev + 1) % (heroImagesRef.current.length || 1)
+          );
         }, 5000);
-        return () => clearInterval(timer);
-      }, [heroImages]);
+        return () => clearInterval(interval);
+      }, []);
 
-      const filteredGallery = activeCategory === 'all'
-        ? allImages
-        : allImages.filter(img => img.category === activeCategory);
-
-      const whatsappUrl = "https://wa.me/16093791145";
-      const instagramUrl = socialData.contact.instagram;
-      const tiktokUrl = socialData.contact.tiktok;
-
-      if (loading) {
-        return (
-          <div className="min-h-screen bg-mp-bg flex items-center justify-center">
-            <div className="text-mp-purple text-xl">Loading your beautiful creations...</div>
-          </div>
-        );
-      }
+      const getFirstImageForService = (placeholder) => {
+        if (!isGalleryLoaded) return 'https://placehold.co/600x400/EC4899/white?text=Loading';
+        
+        // Map placeholder to actual folders
+        const folderMap = {
+          balloon_arches: ['balloon_arches'],
+          money_bouquets: ['money_bouquets'],
+          flower_bouquets: ['flower_bouquets', 'flower_mix', 'eternal_roses'],
+          graduation: ['graduation'],
+          room_decorations: ['room_decorations'],
+          custom: ['hotwheels_bouquets', 'plushie_arrangements', 'personalized_bouquets']
+        };
+        
+        const folders = folderMap[placeholder] || [];
+        for (const folder of folders) {
+          const imagesInFolder = allImages.filter(img => img.startsWith(`/${folder}/`));
+          if (imagesInFolder.length > 0) {
+            return imagesInFolder[0];
+          }
+        }
+        return 'https://placehold.co/600x400/8B5CF6/white?text=Service';
+      };
 
       return (
-        <div className="min-h-screen bg-mp-bg">
-          {/* Navigation */}
-          <nav className="bg-white shadow-lg sticky top-0 z-50">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex justify-between items-center py-4">
-                <div className="flex items-center">
-                  <div className="w-12 h-12 bg-gradient-to-r from-mp-lilac to-mp-purple rounded-full flex items-center justify-center">
-                    <span className="text-white font-bold text-xl">MP</span>
-                  </div>
-                  <span className="ml-3 text-2xl font-bold text-mp-text">Moonlit Petals</span>
-                </div>
-                <div className="hidden md:flex space-x-8">
-                  <a href="#home" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Home</a>
-                  <a href="#about" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">About</a>
-                  <a href="#services" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Shop</a>
-                  <a href="#order" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Order</a>
-                  <a href="#gallery" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Gallery</a>
-                  <a href="#contact" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Contact</a>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="bg-mp-purple text-white px-4 py-2 rounded-full font-medium hover:bg-mp-lilac transition-colors">
-                    WhatsApp
-                  </a>
-                  <SocialLinks className="hidden md:flex" />
-                  <div className="md:hidden">
-                    <button className="text-mp-purple hover:text-mp-sky" aria-label="Menu">
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
+        <div className="min-h-screen flex flex-col">
+          {/* Header */}
+          <header className="bg-white shadow-sm sticky top-0 z-50">
+            <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+              <div className="flex items-center space-x-2">
+                <div className="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Bloom & Co.</h1>
+              </div>
+              <nav className="hidden md:flex space-x-8">
+                <a href="#home" className="hover:text-primary transition-colors">Home</a>
+                <a href="#services" className="hover:text-primary transition-colors">Services</a>
+                <a href="#gallery" className="hover:text-primary transition-colors">Gallery</a>
+                <a href="#about" className="hover:text-primary transition-colors">About</a>
+                <a href="#contact" className="hover:text-primary transition-colors">Contact</a>
+              </nav>
+              <div className="flex items-center space-x-4">
+                <a href="https://wa.me/17871234567" target="_blank" rel="noopener noreferrer" className="text-green-500 hover:text-green-600 transition-colors">
+                  <i className="fab fa-whatsapp text-2xl"></i>
+                </a>
+                <button className="bg-primary text-white px-4 py-2 rounded-full hover:bg-purple-700 transition-colors">
+                  Order Now
+                </button>
               </div>
             </div>
-          </nav>
+          </header>
 
-          {/* Hero */}
+          {/* Hero Section */}
           <section id="home" className="relative h-screen overflow-hidden">
-            <div className="absolute inset-0">
-              {heroImages.map((slide, index) => (
-                <div key={index} className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}>
-                  <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-black/50"></div>
-                </div>
-              ))}
+            <div className="absolute inset-0 transition-opacity duration-1000">
+              {heroImagesRef.current.length > 0 && (
+                <img 
+                  src={heroImagesRef.current[currentHeroIndex] || '/balloon_arches/IMG_1209.JPEG'} 
+                  alt="Hero" 
+                  className="w-full h-full object-cover"
+                />
+              )}
             </div>
-            <div className="relative z-10 flex items-center justify-center h-full text-center text-white px-4">
-              <div className="max-w-4xl">
-                <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">Moonlit Petals</h1>
-                <p className="text-2xl md:text-3xl mb-8 font-light">Unique Bouquets & Party Decorations</p>
-                <div className="space-y-4">
-                  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="inline-block bg-mp-purple text-white px-8 py-4 rounded-full text-xl font-semibold hover:bg-mp-lilac transform hover:scale-105 transition-all duration-300 shadow-lg">
-                    Order Now on WhatsApp
+            <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+            <div className="relative container mx-auto px-4 h-full flex items-center justify-center text-center text-white">
+              <div className="max-w-3xl">
+                <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
+                  Handcrafted with Love
+                </h1>
+                <p className="text-xl md:text-2xl mb-8 animate-fade-in-delay">
+                  Custom bouquets, balloon arches, and surprise boxes for every occasion in Puerto Rico
+                </p>
+                <div className="flex flex-col sm:flex-row justify-center gap-4 animate-fade-in-delay-2">
+                  <a href="#services" className="bg-primary hover:bg-purple-700 text-white px-8 py-3 rounded-full font-semibold transition-colors">
+                    View Services
                   </a>
-                  <div className="flex justify-center space-x-4 mt-4">
-                    <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="bg-mp-purple text-white px-6 py-3 rounded-full font-medium hover:bg-mp-lilac transition-colors">
-                      Instagram
-                    </a>
-                    <a href={tiktokUrl} target="_blank" rel="noopener noreferrer" className="bg-black text-white px-6 py-3 rounded-full font-medium hover:bg-gray-800 transition-colors">
-                      TikTok
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-2">
-              {heroImages.map((_, index) => (
-                <button key={index} onClick={() => setCurrentSlide(index)} className={`w-3 h-3 rounded-full transition-colors ${index === currentSlide ? 'bg-white' : 'bg-white/50'}`} aria-label={`Go to slide ${index + 1}`} />
-              ))}
-            </div>
-          </section>
-
-          {/* About */}
-          <section id="about" className="py-20 bg-gradient-to-b from-mp-bg to-white">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">About Moonlit Petals</h2>
-                <div className="w-24 h-1 bg-gradient-to-r from-mp-lilac to-mp-purple mx-auto mb-8"></div>
-              </div>
-              <div className="flex flex-col md:flex-row items-center gap-12">
-                <div className="md:w-1/2">
-                  <div className="bg-white p-8 rounded-3xl shadow-xl">
-                    <img
-                      src="owner_picture/D6CC32B5-C827-4C26-82B8-C29883980CA2.JPEG"
-                      alt="Fátima Marroquín, Owner & Lead Designer"
-                      className="w-full h-96 object-cover rounded-2xl mb-6"
-                      onError={(e) => {
-                        e.target.src = "https://via.placeholder.com/400x300?text=Owner+Photo+Unavailable";
-                        e.target.alt = "Owner photo unavailable";
-                      }}
-                    />
-                    <div className="text-center">
-                      <h3 className="text-2xl font-bold text-mp-text mb-2">Fátima Marroquín</h3>
-                      <p className="text-mp-purple font-medium">Owner & Lead Designer</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="md:w-1/2">
-                  <p className="text-xl text-mp-text leading-relaxed mb-6">
-                    Moonlit Petals specializes in creating unforgettable gifts and decorations for every occasion — from quinceañeras to birthdays, anniversaries, and more.
-                  </p>
-                  <p className="text-xl text-mp-text leading-relaxed mb-6">
-                    Each bouquet is handmade with love, customizable with flowers, plushies, chocolates, money, or unique details to make your gift truly one-of-a-kind.
-                  </p>
-                  <p className="text-xl text-mp-text leading-relaxed">
-                    Based in Trenton, NJ & Bronx, NY, we bring joy and beauty to celebrations across the tri-state area.
-                  </p>
-                  <div className="mt-8 flex flex-wrap gap-4">
-                    <span className="bg-mp-lilac text-mp-purple px-4 py-2 rounded-full font-medium">Handmade with Love</span>
-                    <span className="bg-mp-sky text-mp-purple px-4 py-2 rounded-full font-medium">Customizable</span>
-                    <span className="bg-purple-100 text-mp-purple px-4 py-2 rounded-full font-medium">Unique Designs</span>
-                    <span className="bg-yellow-100 text-mp-purple px-4 py-2 rounded-full font-medium">Local Delivery</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Services */}
-          <section id="services" className="py-20 bg-white">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">Our Products</h2>
-                <p className="text-xl text-mp-text max-w-3xl mx-auto">Explore our collection of beautifully crafted bouquets and decorations for every occasion</p>
-                <div className="w-24 h-1 bg-gradient-to-r from-mp-lilac to-mp-purple mx-auto mt-8"></div>
-              </div>
-
-              {products.map((product, idx) => {
-                const firstImage = allImages.find(img => img.src.startsWith(product.imagePlaceholder + '/'));
-                return (
-                  <div key={idx} className="mb-16">
-                    <h3 className="text-3xl font-bold text-mp-text mb-8 text-center">{product.category}</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                      <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                        {firstImage ? (
-                          <img src={`/${firstImage.src}`} alt={product.name} className="w-full h-64 object-cover" />
-                        ) : (
-                          <div className="w-full h-64 bg-gray-100 flex items-center justify-center">Image</div>
-                        )}
-                        <div className="p-6">
-                          <h4 className="text-xl font-bold text-mp-text mb-2">{product.name}</h4>
-                          <p className="text-mp-purple font-semibold text-lg mb-2">Starting at ${product.price}</p>
-                          <p className="text-mp-text text-sm mb-4">{product.description}</p>
-                          <a
-                            href={`https://wa.me/16093791145?text=${encodeURIComponent(
-                              `Hi! I’d like to order: ${product.name} (Starting at $${product.price}). My event date is: ____`
-                            )}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="block w-full text-center bg-mp-purple text-white py-3 rounded-lg font-medium hover:bg-mp-lilac transition-colors"
-                          >
-                            Order Now
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </section>
-
-          {/* Order & Policies */}
-          <section id="order" className="py-20 bg-gradient-to-b from-mp-bg to-white">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">Order & Policies</h2>
-                <div className="w-24 h-1 bg-gradient-to-r from-mp-lilac to-mp-purple mx-auto mb-8"></div>
-              </div>
-              <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12">
-                <div className="grid md:grid-cols-2 gap-8">
-                  <div>
-                    <h3 className="text-2xl font-bold text-mp-text mb-6">Order Information</h3>
-                    <ul className="space-y-4 text-mp-text">
-                      <li>• Order 2–3 days in advance for best availability</li>
-                      <li>• 25% non-refundable deposit required to secure your order</li>
-                      <li>• Pick-up only. Late pick-up may result in additional fees</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-bold text-mp-text mb-6">Popular Add-ons</h3>
-                    <ul className="space-y-3 text-mp-text">
-                      <li><span className="font-semibold">Crown</span> — add elegance to any bouquet</li>
-                      <li><span className="font-semibold">Butterflies</span> — delicate decorative accents</li>
-                      <li><span className="font-semibold">Ribbons</span> — color-coordinated to match your theme</li>
-                      <li><span className="font-semibold">Lights</span> — sparkle for evening events</li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="mt-12 text-center">
-                  <a
-                    href={`https://wa.me/16093791145?text=${encodeURIComponent(
-                      `Hi! I’d like to place an order. My event date is: ____`
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block bg-mp-purple text-white px-8 py-4 rounded-full text-xl font-semibold hover:bg-mp-lilac transform hover:scale-105 transition-all duration-300 shadow-lg"
-                  >
-                    Place Your Order
+                  <a href="https://wa.me/17871234567" className="bg-white text-primary hover:bg-gray-100 px-8 py-3 rounded-full font-semibold transition-colors">
+                    WhatsApp Order
                   </a>
                 </div>
               </div>
             </div>
           </section>
 
-          {/* Gallery */}
-          <section id="gallery" className="py-20 bg-white" id="gallery-section">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Services Section */}
+          <section id="services" className="py-20 bg-gray-50">
+            <div className="container mx-auto px-4">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">Our Gallery</h2>
-                <p className="text-xl text-mp-text max-w-3xl mx-auto">Browse through our collection of stunning creations for every occasion</p>
-                <div className="w-24 h-1 bg-gradient-to-r from-mp-lilac to-mp-purple mx-auto mt-8 mb-8"></div>
-                <div className="flex flex-wrap justify-center gap-4 mb-12">
-                  {['all', 'birthdays', 'quinceaneras', 'romantic', 'custom', 'graduation', 'decor'].map(cat => (
-                    <button key={cat} onClick={() => setActiveCategory(cat)} className={`px-6 py-3 rounded-full font-medium transition-colors ${activeCategory === cat ? 'bg-gradient-to-r from-mp-lilac to-mp-purple text-white' : 'bg-gray-100 text-mp-purple hover:bg-gray-200'}`}>
-                      {cat === 'all' ? 'All' : cat.charAt(0).toUpperCase() + cat.slice(1)}
-                    </button>
-                  ))}
-                </div>
+                <h2 className="text-4xl font-bold mb-4">Our Services</h2>
+                <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                  From birthdays to graduations, we create unforgettable moments with our custom arrangements
+                </p>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {loading ? (
-                  Array.from({ length: 12 }).map((_, index) => (
-                    <div key={index} className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 gallery-skeleton">
-                      <div className="w-full h-80 bg-gray-300"></div>
-                    </div>
-                  ))
-                ) : isGalleryLoaded ? (
-                  filteredGallery.map((image, index) => (
-                    <div key={index} className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                      <img
-                        loading="lazy"
-                        width="800"
-                        height="800"
-                        src={`/${image.src}`}
-                        alt={image.alt}
-                        className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {services.map((service) => (
+                  <div key={service.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                    <div className="h-64 overflow-hidden">
+                      <img 
+                        src={getFirstImageForService(service.imagePlaceholder)} 
+                        alt={service.title} 
+                        className="w-full h-full object-cover"
                       />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
-                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white text-xl font-semibold">{image.alt}</div>
-                      </div>
                     </div>
-                  ))
-                ) : (
-                  <div className="col-span-full text-center py-12 text-mp-purple">
-                    Scroll down to see our gallery...
+                    <div className="p-6">
+                      <h3 className="text-2xl font-bold mb-3">{service.title}</h3>
+                      <p className="text-gray-600">{service.description}</p>
+                    </div>
                   </div>
-                )}
+                ))}
               </div>
             </div>
           </section>
 
-          {/* Contact */}
-          <section id="contact" className="py-20 bg-gradient-to-b from-white to-mp-bg">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Gallery Section */}
+          <section id="gallery" className="py-20">
+            <div className="container mx-auto px-4">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">Contact Us</h2>
-                <p className="text-xl text-mp-text mb-8">We speak English and Spanish // Hablamos inglés y español</p>
-                <div className="w-24 h-1 bg-gradient-to-r from-mp-lilac to-mp-purple mx-auto mb-8"></div>
+                <h2 className="text-4xl font-bold mb-4">Our Gallery</h2>
+                <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                  See our latest creations and the joy they bring to our customers
+                </p>
               </div>
-              <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12">
-                <div className="grid md:grid-cols-3 gap-8 mb-12">
-                  <div className="text-center">
-                    <h4 className="text-xl font-bold text-mp-text mb-2">Phone/WhatsApp</h4>
-                    <p className="text-mp-text">609-379-1145</p>
-                    <a
-                      href={`https://wa.me/16093791145?text=${encodeURIComponent(
-                        `Hi! I have a question about my order.`
-                      )}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-block mt-2 text-mp-purple font-medium hover:text-mp-sky"
-                    >
-                      Click to Chat
-                    </a>
+              {isGalleryLoaded ? (
+                allImages.length > 0 ? (
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    {allImages.slice(0, 16).map((image, index) => (
+                      <div key={index} className="aspect-square overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                        <img 
+                          src={image} 
+                          alt={`Gallery ${index + 1}`} 
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    ))}
                   </div>
-                  <div className="text-center">
-                    <h4 className="text-xl font-bold text-mp-text mb-2">Instagram</h4>
-                    <p className="text-mp-text">@moonlit_petals03</p>
-                    <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-2 text-mp-purple font-medium hover:text-mp-sky">Follow Us</a>
+                ) : (
+                  <div className="text-center py-12">
+                    <p className="text-xl text-gray-600">No images available in gallery</p>
                   </div>
-                  <div className="text-center">
-                    <h4 className="text-xl font-bold text-mp-text mb-2">TikTok</h4>
-                    <p className="text-mp-text">@moonlit_petals03</p>
-                    <a href={tiktokUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-2 text-mp-purple font-medium hover:text-mp-sky">Follow Us</a>
+                )
+              ) : (
+                <div className="text-center py-12">
+                  <p className="text-xl text-gray-600">Gallery will appear after images load</p>
+                </div>
+              )}
+            </div>
+          </section>
+
+          {/* About Section */}
+          <section id="about" className="py-20 bg-gray-50">
+            <div className="container mx-auto px-4">
+              <div className="flex flex-col lg:flex-row items-center gap-12">
+                <div className="lg:w-1/2">
+                  <img 
+                    src={ownerImage} 
+                    alt="Owner" 
+                    className="rounded-full w-80 h-80 object-cover mx-auto shadow-lg"
+                  />
+                </div>
+                <div className="lg:w-1/2">
+                  <h2 className="text-4xl font-bold mb-6">About Bloom & Co.</h2>
+                  <p className="text-lg text-gray-700 mb-4">
+                    Founded in 2020, Bloom & Co. started as a small passion project in my kitchen and has grown into Puerto Rico's most trusted custom bouquet and decoration service.
+                  </p>
+                  <p className="text-lg text-gray-700 mb-4">
+                    Every arrangement is handcrafted with love and attention to detail. We believe that every celebration deserves something special and unique.
+                  </p>
+                  <p className="text-lg text-gray-700">
+                    Our mission is to bring joy and create unforgettable moments through our beautiful, custom creations.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Contact Section */}
+          <section id="contact" className="py-20">
+            <div className="container mx-auto px-4">
+              <div className="text-center mb-16">
+                <h2 className="text-4xl font-bold mb-4">Get In Touch</h2>
+                <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                  Ready to create something beautiful? Contact us today!
+                </p>
+              </div>
+              <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div>
+                    <label className="block text-gray-700 mb-2">Name</label>
+                    <input type="text" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" />
+                  </div>
+                  <div>
+                    <label className="block text-gray-700 mb-2">Email</label>
+                    <input type="email" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" />
                   </div>
                 </div>
-                <div className="text-center">
-                  <a
-                    href={`https://wa.me/16093791145?text=${encodeURIComponent(
-                      `Hi! I’d like to place an order. My event date is: ____`
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block bg-mp-purple text-white px-8 py-4 rounded-full text-xl font-semibold hover:bg-mp-lilac transform hover:scale-105 transition-all duration-300 shadow-lg"
-                  >
-                    Message Us on WhatsApp
-                  </a>
+                <div className="mb-6">
+                  <label className="block text-gray-700 mb-2">Message</label>
+                  <textarea className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent h-32"></textarea>
                 </div>
-                <div className="mt-8 flex justify-center">
-                  <SocialLinks />
-                </div>
+                <button className="w-full bg-primary hover:bg-purple-700 text-white py-3 rounded-lg font-semibold transition-colors">
+                  Send Message
+                </button>
               </div>
             </div>
           </section>
 
           {/* Footer */}
-          <footer className="bg-mp-text text-white py-12">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-              <div className="flex items-center justify-center mb-6">
-                <div className="w-12 h-12 bg-gradient-to-r from-mp-lilac to-mp-purple rounded-full flex items-center justify-center mr-3">
-                  <span className="text-white font-bold text-xl">MP</span>
+          <footer className="bg-gray-900 text-white py-12">
+            <div className="container mx-auto px-4">
+              <div className="flex flex-col md:flex-row justify-between items-center">
+                <div className="mb-6 md:mb-0">
+                  <div className="flex items-center space-x-2 mb-4">
+                    <div className="w-8 h-8 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+                    <h3 className="text-2xl font-bold">Bloom & Co.</h3>
+                  </div>
+                  <p className="text-gray-400">Handcrafted bouquets and decorations for every occasion in Puerto Rico</p>
                 </div>
-                <span className="text-2xl font-bold">Moonlit Petals</span>
+                <div className="flex space-x-6">
+                  <a href="https://wa.me/17871234567" target="_blank" rel="noopener noreferrer" className="text-green-400 hover:text-green-300 transition-colors">
+                    <i className="fab fa-whatsapp text-2xl"></i>
+                  </a>
+                  <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                    <i className="fab fa-instagram text-2xl"></i>
+                  </a>
+                  <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                    <i className="fab fa-facebook text-2xl"></i>
+                  </a>
+                </div>
               </div>
-              <div className="mb-6">
-                <SocialLinks />
+              <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2023 Bloom & Co. All rights reserved.</p>
               </div>
-              <p className="text-gray-300 mb-6">Creating unforgettable moments with unique bouquets & party decorations</p>
-              <p className="text-gray-400 mb-8">Trenton, NJ & Bronx, NY | English & Spanish</p>
-              <p className="text-gray-400 text-sm">© 2024 Moonlit Petals. All rights reserved.</p>
             </div>
           </footer>
+
+          {/* Tidio Chat */}
+          <script src="//code.tidio.co/your-tidio-id.js" async></script>
         </div>
       );
-    }
+    };
 
     const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(<App />);
   </script>
-
-  <!-- Tidio Live Chat Widget -->
-  <script src="//code.tidio.co/rgji6f7tm0bpgy46zwvbo8bayrpjhbp7.js" async></script>
 </body>
 </html>
+```
