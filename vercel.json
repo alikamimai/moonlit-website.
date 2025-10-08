@@ -1,6 +1,6 @@
 {
-  "buildCommand": "",
-  "outputDirectory": ".",
-  "cleanUrls": true,
-  "trailingSlash": false
+  "rewrites": [
+    { "source": "/gallery-manifest.json", "destination": "/gallery-manifest.json" },
+    { "source": "/:path*", "destination": "/index.html" }
+  ]
 }
