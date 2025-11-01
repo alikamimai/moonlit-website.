@@ -1,3 +1,5 @@
+I'll update the site to use a beige and white color scheme with beige as the dominant color. Here's the modified code:
+
 ```html
 <!doctype html>
 <html lang="en">
@@ -6,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Moonlit Petals — Bouquets & Party Décor</title>
   <meta name="description" content="Handmade bouquets, balloon backdrops, and custom party décor for quinceañeras, birthdays, and special moments. English & Spanish." />
-  <meta name="theme-color" content="#e11d48">
+  <meta name="theme-color" content="#f5f5dc">
   <meta property="og:title" content="Moonlit Petals — Bouquets & Party Décor">
   <meta property="og:description" content="Handmade bouquets, balloon backdrops & custom décor for quinceañeras, birthdays and more. Trenton, NJ & Bronx, NY.">
   <meta property="og:image" content="/balloon_arches/IMG_1209.JPEG">
@@ -37,11 +39,12 @@
         extend: {
           colors: {
             mp: {
-              lilac: '#C7A4F4',
-              sky: '#7EC8F8',
-              purple: '#6A3EEA',
-              text: '#1F1F29',
-              bg: '#FAF8FF'
+              beige: '#f5f5dc',
+              lightBeige: '#fdf5e6',
+              warmBeige: '#f8f0e3',
+              accent: '#8B4513',
+              text: '#5D4037',
+              bg: '#fdf5e6'
             }
           }
         }
@@ -51,18 +54,18 @@
   <style>
     @keyframes fade-in { from { opacity: 0 } to { opacity: 1 } }
     .animate-fade-in { animation: fade-in 0.8s ease-out both; }
-    body { background-color: #FAF8FF; }
+    body { background-color: #fdf5e6; }
 
     /* Carousel CSS */
-    .mp-carousel{position:relative;border-radius:16px;overflow:hidden;background:#f8f6ff}
+    .mp-carousel{position:relative;border-radius:16px;overflow:hidden;background:#f8f0e3}
     .mp-track{position:relative;height:220px}
     .mp-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s}
     .mp-slide.is-active{opacity:1}
-    .mp-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.38);color:#fff;border:0;width:34px;height:34px;border-radius:999px;cursor:pointer}
+    .mp-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(93, 64, 55, .38);color:#fff;border:0;width:34px;height:34px;border-radius:999px;cursor:pointer}
     .mp-prev{left:8px} .mp-next{right:8px}
     .mp-dots{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);display:flex;gap:6px}
-    .mp-dot{width:8px;height:8px;border-radius:50%;border:0;background:rgba(0,0,0,.25);cursor:pointer}
-    .mp-dot.is-active{background:#6d28d9}
+    .mp-dot{width:8px;height:8px;border-radius:50%;border:0;background:rgba(93, 64, 55, .25);cursor:pointer}
+    .mp-dot.is-active{background:#8B4513}
   </style>
 </head>
 <body class="min-h-screen bg-mp-bg">
@@ -117,7 +120,7 @@
               target="_blank" 
               rel="noopener noreferrer" 
               aria-label="Instagram"
-              className="text-mp-purple hover:text-mp-sky transition-colors"
+              className="text-mp-accent hover:text-mp-text transition-colors"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
@@ -130,7 +133,7 @@
               target="_blank" 
               rel="noopener noreferrer" 
               aria-label="TikTok"
-              className="text-mp-purple hover:text-mp-sky transition-colors"
+              className="text-mp-accent hover:text-mp-text transition-colors"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-.33-.05A2.88 2.88 0 0 1 7.2 5.57a2.89 2.89 0 0 1 2.66-3.85 2.88 2.88 0 0 1 3.27 1.57h3.45v-.42a4.86 4.86 0 0 1 3.45 1.8zM12.05 20c-.23 0-.45-.02-.68-.05a2.89 2.89 0 0 1-2.24-3.74 2.89 2.89 0 0 1 2.31-1.62 2.89 2.89 0 0 1 2.53 1.57 2.89 2.89 0 0 1-1.92 4.84z" />
@@ -143,16 +146,16 @@
 
     function ProductCard({ product, allImages }) {
       const firstImage = allImages.find(img => img.src.startsWith(product.imagePlaceholder + '/'));
-      const imageUrl = firstImage ? `/${firstImage.src}` : 'https://placehold.co/600x400/6A3EEA/white?text=Product';
+      const imageUrl = firstImage ? `/${firstImage.src}` : 'https://placehold.co/600x400/8B4513/white?text=Product';
 
       return (
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+        <div className="bg-mp-beige rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
           <div className="h-56 overflow-hidden">
             <img src={imageUrl} alt={product.name} className="w-full h-full object-cover" />
           </div>
           <div className="p-6">
             <h4 className="text-xl font-bold text-mp-text mb-2">{product.name}</h4>
-            <p className="text-mp-purple font-semibold text-lg mb-2">Starting from ${product.price}</p>
+            <p className="text-mp-accent font-semibold text-lg mb-2">Starting from ${product.price}</p>
             <p className="text-mp-text text-sm mb-4">{product.description}</p>
             <a
               href={`https://wa.me/16093791145?text=${encodeURIComponent(
@@ -160,7 +163,7 @@
               )}`}
               target="_blank" 
               rel="noopener noreferrer" 
-              className="block w-full text-center bg-mp-purple text-white py-3 rounded-lg font-medium hover:bg-mp-lilac transition-colors"
+              className="block w-full text-center bg-mp-accent text-white py-3 rounded-lg font-medium hover:bg-mp-text transition-colors"
             >
               Order Now
             </a>
@@ -172,7 +175,7 @@
     function OwnerImage({ manifest }) {
       const ownerImage = manifest?.owner_picture?.length 
         ? `/owner_picture/${manifest.owner_picture[0]}`
-        : 'https://placehold.co/400x400/C7A4F4/white?text=Owner';
+        : 'https://placehold.co/400x400/f5f5dc/5D4037?text=Owner';
       return <img src={ownerImage} alt="Owner & lead designer" className="w-full h-96 object-cover rounded-2xl mb-6" />;
     }
 
@@ -251,30 +254,30 @@
       return (
         <div className="min-h-screen bg-mp-bg">
           {/* Navigation */}
-          <nav className="bg-white shadow-lg sticky top-0 z-50">
+          <nav className="bg-mp-beige shadow-lg sticky top-0 z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex justify-between items-center py-4">
                 <div className="flex items-center">
-                  <div className="w-12 h-12 bg-gradient-to-r from-mp-lilac to-mp-purple rounded-full flex items-center justify-center">
+                  <div className="w-12 h-12 bg-gradient-to-r from-mp-accent to-mp-text rounded-full flex items-center justify-center">
                     <span className="text-white font-bold text-xl">MP</span>
                   </div>
                   <span className="ml-3 text-2xl font-bold text-mp-text">Moonlit Petals</span>
                 </div>
                 <div className="hidden md:flex space-x-8">
-                  <a href="#home" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Home</a>
-                  <a href="#about" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">About</a>
-                  <a href="#services" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Shop</a>
-                  <a href="#order" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Order</a>
-                  <a href="#gallery" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Gallery</a>
-                  <a href="#contact" className="text-mp-purple hover:text-mp-sky font-medium transition-colors">Contact</a>
+                  <a href="#home" className="text-mp-text hover:text-mp-accent font-medium transition-colors">Home</a>
+                  <a href="#about" className="text-mp-text hover:text-mp-accent font-medium transition-colors">About</a>
+                  <a href="#services" className="text-mp-text hover:text-mp-accent font-medium transition-colors">Shop</a>
+                  <a href="#order" className="text-mp-text hover:text-mp-accent font-medium transition-colors">Order</a>
+                  <a href="#gallery" className="text-mp-text hover:text-mp-accent font-medium transition-colors">Gallery</a>
+                  <a href="#contact" className="text-mp-text hover:text-mp-accent font-medium transition-colors">Contact</a>
                 </div>
                 <div className="flex items-center space-x-4">
-                  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="bg-mp-purple text-white px-4 py-2 rounded-full font-medium hover:bg-mp-lilac transition-colors">
+                  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="bg-mp-accent text-white px-4 py-2 rounded-full font-medium hover:bg-mp-text transition-colors">
                     WhatsApp
                   </a>
                   <SocialLinks className="hidden md:flex" />
                   <div className="md:hidden">
-                    <button className="text-mp-purple hover:text-mp-sky" aria-label="Menu">
+                    <button className="text-mp-text hover:text-mp-accent" aria-label="Menu">
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
                       </svg>
@@ -292,28 +295,28 @@
                 heroImages.map((slide, index) => (
                   <div key={index} className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}>
                     <img src={`/${slide.image}`} alt={slide.title} className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-black/50"></div>
+                    <div className="absolute inset-0 bg-black/30"></div>
                   </div>
                 ))
               ) : (
-                <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                  <span className="text-gray-500">Loading hero images...</span>
+                <div className="w-full h-full bg-mp-lightBeige flex items-center justify-center">
+                  <span className="text-mp-text">Loading hero images...</span>
                 </div>
               )}
             </div>
-            <div className="relative z-10 flex items-center justify-center h-full text-center text-white px-4">
+            <div className="relative z-10 flex items-center justify-center h-full text-center px-4">
               <div className="max-w-4xl">
-                <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">Moonlit Petals</h1>
-                <p className="text-2xl md:text-3xl mb-8 font-light">Unique Bouquets & Party Decorations</p>
+                <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in text-mp-text">Moonlit Petals</h1>
+                <p className="text-2xl md:text-3xl mb-8 font-light text-mp-text">Unique Bouquets & Party Decorations</p>
                 <div className="space-y-4">
-                  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="inline-block bg-mp-purple text-white px-8 py-4 rounded-full text-xl font-semibold hover:bg-mp-lilac transform hover:scale-105 transition-all duration-300 shadow-lg">
+                  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="inline-block bg-mp-accent text-white px-8 py-4 rounded-full text-xl font-semibold hover:bg-mp-text transform hover:scale-105 transition-all duration-300 shadow-lg">
                     Order Now on WhatsApp
                   </a>
                   <div className="flex justify-center space-x-4 mt-4">
-                    <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="bg-mp-purple text-white px-6 py-3 rounded-full font-medium hover:bg-mp-lilac transition-colors">
+                    <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="bg-mp-accent text-white px-6 py-3 rounded-full font-medium hover:bg-mp-text transition-colors">
                       Instagram
                     </a>
-                    <a href={tiktokUrl} target="_blank" rel="noopener noreferrer" className="bg-black text-white px-6 py-3 rounded-full font-medium hover:bg-gray-800 transition-colors">
+                    <a href={tiktokUrl} target="_blank" rel="noopener noreferrer" className="bg-mp-text text-white px-6 py-3 rounded-full font-medium hover:bg-gray-800 transition-colors">
                       TikTok
                     </a>
                   </div>
@@ -328,24 +331,24 @@
           </section>
 
           {/* About */}
-          <section id="about" className="py-20 bg-gradient-to-b from-mp-bg to-white">
+          <section id="about" className="py-20 bg-gradient-to-b from-mp-bg to-mp-beige">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
                 <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">About Moonlit Petals</h2>
-                <div className="w-24 h-1 bg-gradient-to-r from-mp-lilac to-mp-purple mx-auto mb-8"></div>
+                <div className="w-24 h-1 bg-gradient-to-r from-mp-accent to-mp-text mx-auto mb-8"></div>
               </div>
               <div className="flex flex-col md:flex-row items-center gap-12">
                 <div className="md:w-1/2">
-                  <div className="bg-white p-8 rounded-3xl shadow-xl">
+                  <div className="bg-mp-beige p-8 rounded-3xl shadow-xl">
                     <OwnerImage manifest={manifest} />
                     <div className="text-center">
                       <h3 className="text-2xl font-bold text-mp-text mb-2">Fátima Marroquín</h3>
-                      <p className="text-mp-purple font-medium">Owner & Lead Designer</p>
+                      <p className="text-mp-accent font-medium">Owner & Lead Designer</p>
                     </div>
                   </div>
                 </div>
                 <div className="md:w-1/2">
-                  <div className="bg-white p-8 rounded-3xl shadow-xl">
+                  <div className="bg-mp-beige p-8 rounded-3xl shadow-xl">
                     <h3 className="text-2xl font-bold text-mp-text mb-4">About the Author</h3>
                     <p className="text-mp-text leading-relaxed mb-4">
                       Fatima Marroquin is a proud Latina writer, small business owner, and student based in Manhattan, NY. Originally from Trenton, NJ, and born outside of the United States, Fatima’s story is one of strength, resilience, and transformation. She became a U.S. citizen after six years of perseverance and continues to honor her cultural roots through everything she does.
@@ -356,7 +359,7 @@
                     <p className="text-mp-text leading-relaxed mb-4 italic">
                       <em>Chasing Dreams, Finding Home</em> is her debut book—a heartfelt journey through identity, ambition, and self-discovery. It is especially dedicated to Latina women who are constantly fighting against a world that tries to make them feel small or less than. This book is a reminder that they are powerful beyond measure—even if fear tries to hide it.
                     </p>
-                    <p className="text-mp-text leading-relaxed font-semibold text-mp-purple">
+                    <p className="text-mp-text leading-relaxed font-semibold text-mp-accent">
                       “No te temas a tu luz; naciste para brillar, no para esconderte.”
                     </p>
                   </div>
@@ -366,12 +369,12 @@
           </section>
 
           {/* Services */}
-          <section id="services" className="py-20 bg-white">
+          <section id="services" className="py-20 bg-mp-beige">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
                 <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">Our Products</h2>
                 <p className="text-xl text-mp-text max-w-3xl mx-auto">Explore our collection of beautifully crafted bouquets and decorations for every occasion</p>
-                <div className="w-24 h-1 bg-gradient-to-r from-mp-lilac to-mp-purple mx-auto mt-8"></div>
+                <div className="w-24 h-1 bg-gradient-to-r from-mp-accent to-mp-text mx-auto mt-8"></div>
               </div>
               
               {Object.entries(groupedProducts).map(([category, items]) => (
@@ -388,13 +391,13 @@
           </section>
 
           {/* Order & Policies */}
-          <section id="order" className="py-20 bg-gradient-to-b from-mp-bg to-white">
+          <section id="order" className="py-20 bg-gradient-to-b from-mp-bg to-mp-beige">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
                 <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">Order & Policies</h2>
-                <div className="w-24 h-1 bg-gradient-to-r from-mp-lilac to-mp-purple mx-auto mb-8"></div>
+                <div className="w-24 h-1 bg-gradient-to-r from-mp-accent to-mp-text mx-auto mb-8"></div>
               </div>
-              <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12">
+              <div className="bg-mp-beige rounded-3xl shadow-xl p-8 md:p-12">
                 <div className="grid md:grid-cols-2 gap-8">
                   <div>
                     <h3 className="text-2xl font-bold text-mp-text mb-6">Order Information</h3>
@@ -421,7 +424,7 @@
                     )}`}
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="inline-block bg-mp-purple text-white px-8 py-4 rounded-full text-xl font-semibold hover:bg-mp-lilac transform hover:scale-105 transition-all duration-300 shadow-lg"
+                    className="inline-block bg-mp-accent text-white px-8 py-4 rounded-full text-xl font-semibold hover:bg-mp-text transform hover:scale-105 transition-all duration-300 shadow-lg"
                   >
                     Place Your Order
                   </a>
@@ -431,15 +434,15 @@
           </section>
 
           {/* Gallery */}
-          <section id="gallery" className="py-20 bg-white">
+          <section id="gallery" className="py-20 bg-mp-beige">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
                 <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">Our Gallery</h2>
                 <p className="text-xl text-mp-text max-w-3xl mx-auto">Browse through our collection of stunning creations for every occasion</p>
-                <div className="w-24 h-1 bg-gradient-to-r from-mp-lilac to-mp-purple mx-auto mt-8 mb-8"></div>
+                <div className="w-24 h-1 bg-gradient-to-r from-mp-accent to-mp-text mx-auto mt-8 mb-8"></div>
                 <div className="flex flex-wrap justify-center gap-4 mb-12">
                   {['all','birthdays','quinceaneras','romantic','custom'].map(cat => (
-                    <button key={cat} onClick={() => setActiveCategory(cat)} className={`px-6 py-3 rounded-full font-medium transition-colors ${activeCategory === cat ? 'bg-gradient-to-r from-mp-lilac to-mp-purple text-white' : 'bg-gray-100 text-mp-purple hover:bg-gray-200'}`}>
+                    <button key={cat} onClick={() => setActiveCategory(cat)} className={`px-6 py-3 rounded-full font-medium transition-colors ${activeCategory === cat ? 'bg-gradient-to-r from-mp-accent to-mp-text text-white' : 'bg-mp-lightBeige text-mp-text hover:bg-mp-warmBeige'}`}>
                       {cat === 'all' ? 'All' : cat.charAt(0).toUpperCase()+cat.slice(1)}
                     </button>
                   ))}
@@ -464,12 +467,12 @@
                     ))
                   ) : (
                     <div className="col-span-4 text-center py-12">
-                      <p className="text-xl text-gray-600">No images available in this category</p>
+                      <p className="text-xl text-mp-text">No images available in this category</p>
                     </div>
                   )
                 ) : (
                   <div className="col-span-4 text-center py-12">
-                    <p className="text-xl text-gray-600">Gallery will appear after images load</p>
+                    <p className="text-xl text-mp-text">Gallery will appear after images load</p>
                   </div>
                 )}
               </div>
@@ -477,14 +480,14 @@
           </section>
 
           {/* Contact */}
-          <section id="contact" className="py-20 bg-gradient-to-b from-white to-mp-bg">
+          <section id="contact" className="py-20 bg-gradient-to-b from-mp-beige to-mp-bg">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
                 <h2 className="text-4xl md:text-5xl font-bold text-mp-text mb-6">Contact Us</h2>
                 <p className="text-xl text-mp-text mb-8">We speak English and Spanish // Hablamos inglés y español</p>
-                <div className="w-24 h-1 bg-gradient-to-r from-mp-lilac to-mp-purple mx-auto mb-8"></div>
+                <div className="w-24 h-1 bg-gradient-to-r from-mp-accent to-mp-text mx-auto mb-8"></div>
               </div>
-              <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12">
+              <div className="bg-mp-beige rounded-3xl shadow-xl p-8 md:p-12">
                 <div className="grid md:grid-cols-3 gap-8 mb-12">
                   <div className="text-center">
                     <h4 className="text-xl font-bold text-mp-text mb-2">Phone/WhatsApp</h4>
@@ -495,7 +498,7 @@
                       )}`}
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className="inline-block mt-2 text-mp-purple font-medium hover:text-mp-sky"
+                      className="inline-block mt-2 text-mp-accent font-medium hover:text-mp-text"
                     >
                       Click to Chat
                     </a>
@@ -503,12 +506,12 @@
                   <div className="text-center">
                     <h4 className="text-xl font-bold text-mp-text mb-2">Instagram</h4>
                     <p className="text-mp-text">@moonlit_petals03</p>
-                    <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-2 text-mp-purple font-medium hover:text-mp-sky">Follow Us</a>
+                    <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-2 text-mp-accent font-medium hover:text-mp-text">Follow Us</a>
                   </div>
                   <div className="text-center">
                     <h4 className="text-xl font-bold text-mp-text mb-2">TikTok</h4>
                     <p className="text-mp-text">@moonlit_petals03</p>
-                    <a href={tiktokUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-2 text-mp-purple font-medium hover:text-mp-sky">Follow Us</a>
+                    <a href={tiktokUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-2 text-mp-accent font-medium hover:text-mp-text">Follow Us</a>
                   </div>
                 </div>
                 <div className="text-center">
@@ -518,7 +521,7 @@
                     )}`}
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="inline-block bg-mp-purple text-white px-8 py-4 rounded-full text-xl font-semibold hover:bg-mp-lilac transform hover:scale-105 transition-all duration-300 shadow-lg"
+                    className="inline-block bg-mp-accent text-white px-8 py-4 rounded-full text-xl font-semibold hover:bg-mp-text transform hover:scale-105 transition-all duration-300 shadow-lg"
                   >
                     Message Us on WhatsApp
                   </a>
@@ -534,7 +537,7 @@
           <footer className="bg-mp-text text-white py-12">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
               <div className="flex items-center justify-center mb-6">
-                <div className="w-12 h-12 bg-gradient-to-r from-mp-lilac to-mp-purple rounded-full flex items-center justify-center mr-3">
+                <div className="w-12 h-12 bg-gradient-to-r from-mp-accent to-mp-beige rounded-full flex items-center justify-center mr-3">
                   <span className="text-white font-bold text-xl">MP</span>
                 </div>
                 <span className="text-2xl font-bold">Moonlit Petals</span>
@@ -560,3 +563,21 @@
 </body>
 </html>
 ```
+
+Key changes made:
+1. Changed the color palette to use beige as the dominant color:
+   - `bg: '#fdf5e6'` (light beige background)
+   - `beige: '#f5f5dc'` (standard beige)
+   - `lightBeige: '#fdf5e6'` (very light beige)
+   - `warmBeige: '#f8f0e3'` (warm beige)
+   - `accent: '#8B4513'` (saddle brown for contrast)
+   - `text: '#5D4037'` (dark brown text)
+
+2. Updated all color references throughout the site:
+   - Navigation bar background changed to beige
+   - Text colors changed to dark brown
+   - Buttons and accents use the saddle brown color
+   - Cards and sections use various beige tones
+   - Gradient accents use the new color scheme
+
+3. Maintained good contrast for readability while creating a warm, elegant beige-dominant aesthetic that complements the floral business theme.
