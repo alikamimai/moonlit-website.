@@ -1,13 +1,27 @@
-To **take payments with Stripe** securely for your small business **Moonlit Petals**, you should use **Stripe Checkout**—Stripe’s pre-built, hosted payment page. It’s the easiest and most secure way to accept payments without handling sensitive card data yourself.
-
-Here’s a step-by-step guide tailored to your **React + Tailwind** site:
+You’re seeing this because you’re trying to **use Stripe’s secret key (`sk_live_...`) in your frontend code**, which is **dangerous and incorrect**.
 
 ---
 
-### ✅ Step 1: Set Up a Backend (Required)
-Stripe **requires a backend** to create a secure **Checkout Session**. Since your site is hosted on **Vercel**, you can use a **Vercel Serverless Function**.
+## ❌ What’s Wrong
 
-#### Create: `pages/api/create-checkout-session.js` (or `app/api/...` if using App Router)
+The screenshot shows instructions that say:
+> “**Never put secret key in HTML/JS**” — ✅ You’re doing it right by using `pk_live_...` (public key)  
+> But then it says:  
+> “**You must set `STRIPE_SECRET_KEY` in your Vercel environment variables**”
+
+That means:  
+➡️ **Your backend (Vercel Serverless Function) needs the secret key.**  
+➡️ **Your frontend (React) should only use the public key.**
+
+---
+
+## ✅ How to Fix It
+
+### Step 1: Create a Vercel Serverless Function
+
+Create this file in your project:
+
+#### `pages/api/create-checkout-session.js`
 
 ```js
 // pages/api/create-checkout-session.js
@@ -38,22 +52,25 @@ export default async function handler(req, res) {
 }
 ```
 
-> 🔑 **Add your secret key** in Vercel environment variables:
-> - Key: `STRIPE_SECRET_KEY`
-> - Value: `sk_live_...` (from your [Stripe Dashboard](https://dashboard.stripe.com/apikeys))
+---
+
+### Step 2: Set Environment Variable in Vercel
+
+Go to [Vercel Dashboard → Your Project → Settings → Environment Variables](https://vercel.com/docs/projects/environment-variables)
+
+Add:
+
+| Name               | Value                 |
+|--------------------|-----------------------|
+| `STRIPE_SECRET_KEY` | `sk_live_...` (your secret key) |
+
+> 🔐 Never commit this to GitHub or expose it in frontend code.
 
 ---
 
-### ✅ Step 2: Create Products & Prices in Stripe Dashboard
-1. Go to [Stripe Dashboard → Products](https://dashboard.stripe.com/products)
-2. Click **+ Add product**
-3. Fill in name (e.g., "Personalized Bouquet"), description, and price ($50)
-4. Note the **Price ID** (e.g., `price_1NxYzABC123...`)
+### Step 3: Update Your Product Data
 
----
-
-### ✅ Step 3: Update Your Product Data
-Add `priceId` to each product in your React app:
+In your `products` array, add `priceId` for each product:
 
 ```js
 const products = [
@@ -61,33 +78,26 @@ const products = [
     id: "personalized_bouquets",
     name: "Personalized Bouquets",
     price: 50,
-    priceId: "price_1NxYzABC123...", // ← Add this
+    priceId: "price_1NxYzABC123...", // ← Get this from Stripe Dashboard
     description: "...",
     category: "Bouquets",
     imagePlaceholder: "personalized_bouquets"
   },
-  // ... other products
+  // ... others
 ];
 ```
 
-> 💡 For items not yet set up in Stripe, omit `priceId` and keep the WhatsApp button as fallback.
-
 ---
 
-### ✅ Step 4: Add Stripe.js & Update ProductCard
-Add this **before your React script** in HTML:
+### Step 4: Update ProductCard to Use Stripe Checkout
 
-```html
-<script src="https://js.stripe.com/v3/"></script>
-```
-
-Then update your `ProductCard` component:
+Replace your current “Order Now” button with this:
 
 ```jsx
 function ProductCard({ product, allImages }) {
   const handleCheckout = async () => {
-    // Fallback to WhatsApp if no Stripe price
     if (!product.priceId) {
+      // Fallback to WhatsApp
       window.open(
         `https://wa.me/16093791145?text=${encodeURIComponent(
           `Hi! I’d like to order: ${product.name} ($${product.price})`
@@ -115,7 +125,6 @@ function ProductCard({ product, allImages }) {
     await stripe.redirectToCheckout({ sessionId });
   };
 
-  // ... rest of your JSX
   return (
     <div className="...">
       {/* ... */}
@@ -132,49 +141,41 @@ function ProductCard({ product, allImages }) {
 
 ---
 
-### ✅ Step 5: Create a Success Page
-Create a simple page at `/success` to thank customers (e.g., `pages/success.js`):
+### Step 5: Add Stripe.js via CDN
 
-```jsx
-// pages/success.js
-export default function Success() {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-mp-bg">
-      <div className="text-center p-8 bg-white rounded-2xl shadow-lg max-w-md">
-        <h1 className="text-3xl font-bold text-mp-text mb-4">Thank You!</h1>
-        <p className="text-lg text-mp-purple">
-          Your order has been received. We’ll contact you soon to confirm details.
-        </p>
-        <a href="/" className="mt-6 inline-block text-mp-purple font-medium hover:underline">
-          ← Back to Home
-        </a>
-      </div>
-    </div>
-  );
-}
+Before your React script, add:
+
+```html
+<script src="https://js.stripe.com/v3/"></script>
+```
+
+And replace any `import { loadStripe }` with:
+
+```js
+const stripe = Stripe('pk_live_51SFMunRW4qIwWPIwoVHw2MRDqfzhdPfRSWfu5bCpgrupt98pJTBiFYchY2jiyksA4JHMiDHp1kS4x1MseC0Ia41v@0BkSkibF1');
 ```
 
 ---
 
-### ⚠️ Critical Security Notes
-- **Never put your `sk_live_...` key in frontend code** — only in backend (Vercel env vars).
-- **Always create Checkout Sessions server-side** — never trust the client to set prices.
-- Use **test mode first**:  
-  - Public key: `pk_test_...`  
-  - Secret key: `sk_test_...`  
-  - Test card: `4242 4242 4242 4242`
+## 🚫 Common Mistakes to Avoid
+
+| Mistake | Why It’s Bad | Fix |
+|--------|--------------|-----|
+| Using `sk_live_...` in frontend | Exposes your account to fraud | Only use it in backend (Vercel env vars) |
+| Hardcoding prices in frontend | User can change price | Prices must come from Stripe Price IDs |
+| Not validating webhook events | Can’t fulfill orders securely | Later, add webhook to mark orders as paid |
 
 ---
 
-### 🎯 Summary
-| Step | Action |
-|------|--------|
-| 1 | Add Vercel API route to create Checkout Session |
-| 2 | Create Products/Prices in Stripe Dashboard |
-| 3 | Add `priceId` to your product data |
-| 4 | Replace "Order Now" with Stripe Checkout button |
-| 5 | Create `/success` page |
+## ✅ Summary
+
+1. ✅ Keep `pk_live_...` in frontend — it’s safe.
+2. 🚫 Never put `sk_live_...` in frontend.
+3. ➕ Add Vercel serverless function `/api/create-checkout-session`.
+4. ➕ Set `STRIPE_SECRET_KEY` in Vercel environment variables.
+5. ➕ Add `priceId` to your products in Stripe Dashboard.
+6. 🔄 Replace WhatsApp button with Stripe Checkout button.
 
 Once done, customers can **pay securely** without leaving your brand experience.
 
-Would you like me to generate the **full updated React component** with these changes?
+Would you like me to generate the **full updated HTML file** with these changes?
